@@ -10,6 +10,8 @@ import EditRumahKost from './pages/EditRumahKost';
 import HomePage from "./pages/HomePage";
 import DetailKost from "./pages/DetailKost";
 import ListKost from './pages/ListKost';
+import PusatBantuan from "./pages/PusatBantuan";
+import TentangKami from "./pages/TentangKami";
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
         <Route path="/homepage" element={<HomePage/>}/>
         <Route path="/detail-kost" element={<DetailKost/>}/>
         <Route path="/kost-list" element={<ListKost/>}/>
+        <Route path="/pusat-bantuan" element={<PusatBantuan/>}/>
+        <Route path="/tentang-kami" element={<TentangKami/>}/>
       </Routes>
       </BrowserRouter>
     </div>
