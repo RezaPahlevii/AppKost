@@ -28,7 +28,7 @@ const Nav = () => {
           <Navbar.Text></Navbar.Text>
           <NavLink
             style={{ textDecoration: "none", paddingRight: 15, color: "Black" }}
-            to={"/homepage"}
+            to={"/pusat-bantuan"}
           >
             Pusat Bantuan
           </NavLink>

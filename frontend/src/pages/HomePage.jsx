@@ -14,7 +14,7 @@ const HomePage = () => {
   return (
     <div>
       <Nav />
-      <Container className="mt-5 pt-5">
+      <Container className="my-5 py-5">
         <div className="pb-5">
           <SearchBar />
         </div>
@@ -24,11 +24,11 @@ const HomePage = () => {
 
         <div className="row mt-5 pt-5">
           <div>
-            <h2 className="pb-4">
+            <h3 className="pb-4">
               <>
                 <strong>Rekomendasi Kost</strong>
               </>
-            </h2>
+            </h3>
           </div>
           <div className="col-4">
             <RekomendasiKost
