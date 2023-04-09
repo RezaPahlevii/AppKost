@@ -1,56 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./components/Login";
+import Dashboard from "./pages/Dashboard";
+import Users from './pages/Users';
+import RumahKost from './pages/RumahKost';
+import AddUser from "./pages/AddUser";
+import EditUser from "./pages/EditUser";
+import AddRumahKost from './pages/AddRumahKost';
+import EditRumahKost from './pages/EditRumahKost';
+import HomePage from "./pages/HomePage";
+import DetailKost from "./pages/DetailKost";
+import ListKost from './pages/ListKost';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+    <div>
+      <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login/>}/>
+        <Route path="/dashboard" element={<Dashboard/>}/>
+        <Route path="/users" element={<Users/>}/>
+        <Route path="/users/add" element={<AddUser/>}/>
+        <Route path="/users/edit/:id" element={<EditUser/>}/>
+        <Route path="/rumah-kost" element={<RumahKost/>}/>
+        <Route path="/rumah-kost/add" element={<AddRumahKost/>}/>
+        <Route path="/rumah-kost/:id" element={<EditRumahKost/>}/>
+      </Routes>
+      <Routes>
+        <Route path="/homepage" element={<HomePage/>}/>
+        <Route path="/detail-kost" element={<DetailKost/>}/>
+        <Route path="/kost-list" element={<ListKost/>}/>
+      </Routes>
+      </BrowserRouter>
     </div>
   );
 }
