@@ -8,8 +8,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 
-
-
 const container = document.getElementById('root');
 const root = createRoot(container);
 

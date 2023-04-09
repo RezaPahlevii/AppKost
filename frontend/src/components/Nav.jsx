@@ -1,10 +1,7 @@
 import React from "react";
 import {
-  Col,
   Container,
   Navbar,
-  NavDropdown,
-  Row,
   Form,
   Button,
 } from "react-bootstrap";
