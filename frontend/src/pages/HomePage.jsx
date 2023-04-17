@@ -8,7 +8,7 @@ import rumah4 from "./../image/rumah4.jpg";
 import Nav from "./../components/Nav";
 import Banner from "../components/Banner";
 import SearchBar from "../components/SearchBar";
-import Footer from "../components/Footer";
+import Footer2 from "../components/Footer2";
 
 const HomePage = () => {
   return (
@@ -68,7 +68,7 @@ const HomePage = () => {
           </div>
         </div>
       </Container>
-      <Footer />
+      <Footer2/>
     </div>
   );
 };

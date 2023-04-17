@@ -1,7 +1,7 @@
 import React from 'react'
 import Nav from '../components/Nav'
 import { Accordion, Container } from 'react-bootstrap'
-import Footer from '../components/Footer'
+import Footer2 from '../components/Footer2'
 
 const PusatBantuan = () => {
   return (
@@ -74,7 +74,7 @@ const PusatBantuan = () => {
       </Accordion.Item>
     </Accordion>
       </Container>
-        <Footer/>
+        <Footer2/>
     </div>
   )
 }
