@@ -3,8 +3,10 @@ import argon2 from "argon2";
 
  export const getUsers = async(req, res) =>{
     try {
-        const respons = await User.findAll();
-        res.status(200).json(response);
+        const respons = await User.findAll({
+            attributes:['uuid','name','email','role']
+        });
+        res.status(200).json(respons);
     } catch (error) {
         res.status(500).json({msg: error.massage});
     }
@@ -13,11 +15,12 @@ import argon2 from "argon2";
  export const getUsersById = async(req, res)=>{
     try {
         const respons = await User.findOne({
+            attributes:['uuid','name','email','role'],
             where:{
                 uuid: req.params.id
             }
         });
-        res.status(200).json(response);
+        res.status(200).json(respons);
     } catch (error) {
         res.status(500).json({msg: error.massage});
     }

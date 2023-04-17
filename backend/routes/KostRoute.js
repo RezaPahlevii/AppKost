@@ -5,8 +5,8 @@ const router = express.Router();
 
 router.get('/kost', getKost);
 router.get('/kost/:id', getKostById);
-router.get('/kost/', createKost);
-router.get('/kost/:id', updateKost);
-router.get('/kost/:id', deleteKost);
+router.post('/kost/', createKost);
+router.patch('/kost/:id', updateKost);
+router.delete('/kost/:id', deleteKost);
 
 export default router;

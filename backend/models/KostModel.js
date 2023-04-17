@@ -25,7 +25,6 @@ const Kost = db.define('kost',{
        allowNull: false,
        validate:{
            notEmpty: true,
-           len: [3, 100]
        }
    },
    userId:{
@@ -33,7 +32,6 @@ const Kost = db.define('kost',{
        allowNull: false,
        validate:{
            notEmpty: true,
-           len: [3, 100]
        }
    },
 },
