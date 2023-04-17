@@ -1,0 +1,19 @@
+// Create User (Register)
+POST http://localhost:5000/users
+Content-Type: application/json
+
+{
+    "name": "Ajo",
+    "email": "ajo@gmail.com",
+    "password": "123",
+    "confPassword": "123",
+    "role": "user"
+}
+
+###
+// get All Users
+GET http://localhost:5000/users 
+
+###
+// get Single User
+GET http://localhost:5000/users/d7b5d6c2-64ba-4314-9fe5-bc3a9eb28873
