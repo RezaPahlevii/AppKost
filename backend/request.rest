@@ -17,3 +17,20 @@ GET http://localhost:5000/users
 ###
 // get Single User
 GET http://localhost:5000/users/d7b5d6c2-64ba-4314-9fe5-bc3a9eb28873
+
+###
+// Update User
+PATCH  http://localhost:5000/users/c6886471-54dc-4f81-96ce-61a0cbf9d941
+Content-Type: application/json
+
+{
+    "name": "",
+    "email": "@gmail.com",
+    "password": "",
+    "confPassword": "",
+    "role": "" 
+}
+
+###
+// delete user
+DELETE http://localhost:5000/users/c6886471-54dc-4f81-96ce-61a0cbf9d941
