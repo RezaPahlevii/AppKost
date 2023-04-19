@@ -25,7 +25,7 @@ function App() {
         <Route path="/users/edit/:id" element={<EditUser/>}/>
         <Route path="/rumah-kost" element={<RumahKost/>}/>
         <Route path="/rumah-kost/add" element={<AddRumahKost/>}/>
-        <Route path="/rumah-kost/:id" element={<EditRumahKost/>}/>
+        <Route path="/rumah-kost/edit/:id" element={<EditRumahKost/>}/>
       </Routes>
       <Routes>
         <Route path="/homepage" element={<HomePage/>}/>
