@@ -38,7 +38,7 @@ const Login = () => {
                 <div className="field">
                   <label className="label">Email</label>
                   <div className="control">
-                    <imput
+                    <input
                       type="text"
                       className="input"
                       value={email}
@@ -50,7 +50,7 @@ const Login = () => {
                 <div className="field">
                   <label className="label">Password</label>
                   <div className="control">
-                    <imput
+                    <input
                       type="password"
                       className="input"
                       value={password}
