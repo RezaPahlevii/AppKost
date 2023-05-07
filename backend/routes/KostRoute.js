@@ -4,10 +4,10 @@ import { verifyUser } from "../middleware/AuthUser.js";
 
 const router = express.Router();
 
-router.get('/kost',verifyUser, getKost);
-router.get('/kost/:id', verifyUser, getKostById);
-router.post('/kost/',verifyUser, createKost);
-router.patch('/kost/:id', verifyUser, updateKost);
-router.delete('/kost/:id', verifyUser, deleteKost);
+router.get('/rumah-kost',verifyUser, getKost);
+router.get('/rumah-kost/:id', verifyUser, getKostById);
+router.post('/rumah-kost/',verifyUser, createKost);
+router.patch('/rumah-kost/:id', verifyUser, updateKost);
+router.delete('/rumah-kost/:id', verifyUser, deleteKost);
 
 export default router;
