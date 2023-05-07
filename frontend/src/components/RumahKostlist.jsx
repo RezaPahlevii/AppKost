@@ -10,12 +10,12 @@ const RumahKostlist = () => {
     }, []);
 
     const getKosts = async ()=>{
-        const response = await axios.get("http://localhost:5000/kost");
+        const response = await axios.get("http://localhost:5000/rumah-kost");
         setKosts(response.data);
     }
 
     const deleteKost = async(kostId) =>{
-        await axios.delete(`http://localhost:5000/kost/${kostId}`);
+        await axios.delete(`http://localhost:5000/rumah-kost/${kostId}`);
         getKosts();
     }
 
@@ -23,7 +23,7 @@ const RumahKostlist = () => {
     <div>
         <h1 className='title'>Rumah Kost</h1>
         <h2 className='subtitle'>List of Rumah Kost</h2>
-        <Link to="/kost/add" className="btn btn-primary">Add New</Link>
+        <Link to="/rumah-kost/add" className="btn btn-primary">Add New</Link>
         <table className='table is-striped is-fullwidth'>
             <thead>
                 <tr>
@@ -42,7 +42,7 @@ const RumahKostlist = () => {
                     <td>{kost.price}</td>
                     <td>{kost.user.name}</td>
                     <td>
-                        <Link to={`/kost/edit/${kost.uuid}`}className='btn btn-warning' >Edit</Link>
+                        <Link to={`/rumah-kost/edit/${kost.uuid}`}className='btn btn-warning' >Edit</Link>
                         <button onClick={()=> deleteKost(kost.uuid)} className='btn btn-danger' >Delete</button>
                     </td>
                 </tr>
