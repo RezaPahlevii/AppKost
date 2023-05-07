@@ -9,7 +9,7 @@ import { NavLink } from "react-router-dom";
 
 const Nav = () => {
   return (
-    <div className="mb-5">
+    <div className="mb-5 ">
       <Navbar
         fixed="top"
         collapseOnSelect
@@ -28,7 +28,7 @@ const Nav = () => {
           <Navbar.Text></Navbar.Text>
           <NavLink
             style={{ textDecoration: "none", paddingRight: 15, color: "Black" }}
-            to={"/homepage"}
+            to={"/pusat-bantuan"}
           >
             Pusat Bantuan
           </NavLink>
