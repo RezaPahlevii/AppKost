@@ -1,10 +1,29 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react';
+import {Link} from "react-router-dom";
+import axios from "axios";
 
 const RumahKostlist = () => {
+    const [kosts, setKosts] = useState ([]);
+
+    useEffect(()=>{
+        getKosts();
+    }, []);
+
+    const getKosts = async ()=>{
+        const response = await axios.get("http://localhost:5000/kost");
+        setKosts(response.data);
+    }
+
+    const deleteKost = async(kostId) =>{
+        await axios.delete(`http://localhost:5000/kost/${kostId}`);
+        getKosts();
+    }
+
   return (
     <div>
         <h1 className='title'>Rumah Kost</h1>
         <h2 className='subtitle'>List of Rumah Kost</h2>
+        <Link to="/kost/add" className="btn btn-primary">Add New</Link>
         <table className='table is-striped is-fullwidth'>
             <thead>
                 <tr>
@@ -16,13 +35,18 @@ const RumahKostlist = () => {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                {kosts.map((kost, index)=>(
+                <tr key={kosts.uuid}>
+                    <td>{index + 1}</td>
+                    <td>{kost.name}</td>
+                    <td>{kost.price}</td>
+                    <td>{kost.user.name}</td>
+                    <td>
+                        <Link to={`/kost/edit/${kost.uuid}`}className='btn btn-warning' >Edit</Link>
+                        <button onClick={()=> deleteKost(kost.uuid)} className='btn btn-danger' >Delete</button>
+                    </td>
                 </tr>
+                ))}
             </tbody>
         </table>
     </div>
