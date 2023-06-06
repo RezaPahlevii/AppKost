@@ -51,7 +51,7 @@ const FormAddKost = () => {
                     type="text"
                     className="input"
                     value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    onChange={(e)=> setPrice(e.target.value)}
                     placeholer="Harga"
                   />
                 </div>
