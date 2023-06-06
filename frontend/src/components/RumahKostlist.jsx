@@ -12,12 +12,12 @@ const RumahKostlist = () => {
     const getKosts = async ()=>{
         const response = await axios.get("http://localhost:5000/rumah-kost");
         setKosts(response.data);
-    }
+    };
 
     const deleteKost = async(kostId) =>{
         await axios.delete(`http://localhost:5000/rumah-kost/${kostId}`);
         getKosts();
-    }
+    };
 
   return (
     <div>
