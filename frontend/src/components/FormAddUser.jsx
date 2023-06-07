@@ -6,19 +6,23 @@ const FormAddUser = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confpassword, setConfPassword] = useState("");
+  const [confPassword, setConfPassword] = useState("");
   const [role, setRole] = useState("");
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
 
   const saveUser = async (e) => {
     e.preventDefault();
+    // if (password !== confpassword) {
+    //   setMsg("Password and Confirm Password do not match");
+    //   return; // Menghentikan eksekusi fungsi jika password tidak cocok
+    // }
     try {
       await axios.post("http://localhost:5000/users", {
         name: name,
         email: email,
         password: password,
-        confpassword: confpassword,
+        confPassword: confPassword,
         role: role
       });
       navigate("/users");
@@ -46,7 +50,7 @@ const FormAddUser = () => {
                     className="input"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholer="Name"
+                    placeholder="Name"
                   />
                 </div>
               </div>
@@ -58,7 +62,7 @@ const FormAddUser = () => {
                     className="input"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholer="Email"
+                    placeholder="Email"
                   />
                 </div>
               </div>
@@ -70,7 +74,7 @@ const FormAddUser = () => {
                     className="input"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholer="******"
+                    placeholder="******"
                   />
                 </div>
               </div>
@@ -80,13 +84,13 @@ const FormAddUser = () => {
                   <input
                     type="password"
                     className="input"
-                    value={confpassword}
+                    value={confPassword}
                     onChange={(e) => setConfPassword(e.target.value)}
-                    placeholer="******"
+                    placeholder="******"
                   />
                 </div>
               </div>
-              <form>
+              
                 <div className="field">
                   <label className="label">Role</label>
                   <div className="control">
@@ -100,10 +104,10 @@ const FormAddUser = () => {
                 </div>
                 <div className="field">
                   <div className="control">
-                    <button type="submit" className="button is-success">Save</button>
+                    <button type="submit" onClick={saveUser} className="button is-success">Save</button>
                   </div>
                 </div>
-              </form>
+              
             </form>
           </div>
         </div>
