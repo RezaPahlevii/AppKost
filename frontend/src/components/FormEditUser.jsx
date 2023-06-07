@@ -12,6 +12,7 @@ const FormEditUser = () => {
     const navigate = useNavigate();
     const {id} = useParams();
 
+    // tampilkan data form edit sesuai record database
     useEffect(()=>{
       const getUserById = async()=>{
           try {
@@ -31,7 +32,7 @@ const FormEditUser = () => {
     const updateUser = async (e) => {
       e.preventDefault();
       try {
-        await axios.patch("http://localhost:5000/users", {
+        await axios.patch(`http://localhost:5000/users/${id}`, {
           name: name,
           email: email,
           password: password,
@@ -117,7 +118,7 @@ const FormEditUser = () => {
                 </div>
                 <div className="field">
                   <div className="control">
-                    <button type="submit" className="button is-success">Update</button>
+                    <button type="submit" onClick={updateUser} className="button is-success">Update</button>
                   </div>
                 </div>
                 </form>
