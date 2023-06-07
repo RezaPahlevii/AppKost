@@ -62,7 +62,8 @@ import argon2 from "argon2";
         await User.update({
             name: name,
             email: email,
-            password: hashPassword,
+            password: hashPassword, 
+            // confPassword: hashPassword,
             role: role
         },{
             where:{
