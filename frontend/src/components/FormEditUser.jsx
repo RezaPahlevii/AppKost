@@ -6,7 +6,7 @@ const FormEditUser = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [confpassword, setConfPassword] = useState("");
+    const [confPassword, setConfPassword] = useState("");
     const [role, setRole] = useState("");
     const [msg, setMsg] = useState("");
     const navigate = useNavigate();
@@ -36,7 +36,7 @@ const FormEditUser = () => {
           name: name,
           email: email,
           password: password,
-          confpassword: confpassword,
+          confPassword: confPassword,
           role: role
         });
         navigate("/users");
@@ -98,7 +98,7 @@ const FormEditUser = () => {
                   <input
                     type="password"
                     className="input"
-                    value={confpassword}
+                    value={confPassword}
                     onChange={(e) => setConfPassword(e.target.value)}
                     placeholer="******"
                   />
