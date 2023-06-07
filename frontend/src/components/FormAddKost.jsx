@@ -59,7 +59,7 @@ const FormAddKost = () => {
               <form>
                 <div className="field">
                   <div className="control">
-                    <button type="submit" className="button is-success">
+                    <button type="submit" onClick={saveKost} className="button is-success">
                       Save
                     </button>
                   </div>
