@@ -9,8 +9,9 @@ const FormEditKost = () => {
   const navigate = useNavigate();
   const {id} = useParams();
 
+  // tampilkan data form edit sesuai record database
   useEffect(()=>{
-    const getProductById = async()=>{
+    const getKostById = async()=>{
         try {
             const response = await axios.get(`http://localhost:5000/rumah-kost/${id}`);
             setName(response.data.name);
@@ -21,7 +22,7 @@ const FormEditKost = () => {
               }
         }
     };
-    getProductById();
+    getKostById();
   }, [id]);
 
   const updateKost = async (e) => {
@@ -76,7 +77,7 @@ const FormEditKost = () => {
               <form>
                 <div className="field">
                   <div className="control">
-                    <button type="submit" className="button is-success">Update</button>
+                    <button onClick={updateKost} type="submit" className="button is-success">Update</button>
                   </div>
                 </div>
               </form>
