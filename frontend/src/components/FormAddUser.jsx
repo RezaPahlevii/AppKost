@@ -96,8 +96,10 @@ const FormAddUser = () => {
                   <div className="control">
                     <div className="select is-fullwidth">
                       <select value={role} onChange={(e)=> setRole(e.target.value)}>
-                        <option value="admin">Admin</option>
-                        <option value="user">user</option>
+                        <option value="admin">admin</option>
+                        <option value="pencari kost">pencari kost</option>
+                        <option value="pemilik kost">pemilik kost</option>
+ 
                       </select>
                     </div>
                   </div>

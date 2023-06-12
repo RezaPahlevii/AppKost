@@ -13,6 +13,9 @@ import DetailKost from "./pages/DetailKost";
 import ListKost from './pages/ListKost';
 import PusatBantuan from "./pages/PusatBantuan";
 import TentangKami from "./pages/TentangKami";
+import PencariKost from './pages/PencariKost';
+import EditFooter from './pages/EditFooter';
+import EditBanner from './pages/EditBanner';
 
 function App() {
   return (
@@ -27,6 +30,9 @@ function App() {
         <Route path="/rumah-kost" element={<RumahKost/>}/>
         <Route path="/rumah-kost/add" element={<AddRumahKost/>}/>
         <Route path="/rumah-kost/edit/:id" element={<EditRumahKost/>}/>
+        <Route path="/footer-edit" element={<EditFooter/>}/>
+        <Route path="/banner-edit" element={<EditBanner/>}/>
+        <Route path="/pencari-kost" element={<PencariKost/>}/>
       </Routes>
       <Routes>
         <Route path="/homepage" element={<HomePage/>}/>

@@ -20,15 +20,15 @@ GET http://localhost:5000/users/d7b5d6c2-64ba-4314-9fe5-bc3a9eb28873
 
 ###
 // Update User
-PATCH  http://localhost:5000/users/c6886471-54dc-4f81-96ce-61a0cbf9d941
+PATCH  http://localhost:5000/users/96cad46f-ba00-4208-91b3-cb5ae85c0bfc
 Content-Type: application/json
 
 {
-    "name": "",
-    "email": "@gmail.com",
+    "name": "rere",
+    "email": "rere@gmail.com",
     "password": "",
     "confPassword": "",
-    "role": "" 
+    "role": "pencari kost" 
 }
 
 ###
@@ -46,12 +46,22 @@ Content-Type: application/json
 }
 
 ###
-// Login User
+// Login Pemilik Kost
 POST http://localhost:5000/login
 Content-Type: application/json
 
 {
-    "email": "ajo@gmail.com",
+    "email": "sasa@gmail.com",
+    "password": "123"
+}
+
+###
+// Login Pencari Kost
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "email": "rere@gmail.com",
     "password": "123"
 }
 
@@ -60,7 +70,7 @@ Content-Type: application/json
 GET http://localhost:5000/me
 
 ###
-// logout
+// logout user
 DELETE http://localhost:5000/logout
 
 ###

@@ -16,37 +16,36 @@ function Sidebar() {
   };
 
   return (
-    <div>
+    <div className="user-access">
       <aside className="menu pl-3 has-shadow">
+        <div>
         <p className="menu-label">General</p>
         <ul className="menu-list">
           <li>
-            <NavLink to={"/dashboard"}>
-              <IoHome />
-              Dashboard
-            </NavLink>
+            <NavLink to={"/dashboard"}><IoHome />Dashboard</NavLink>
           </li>
           <li>
-            <NavLink to={"/rumah-kost"}>
-              <IoPricetag />
-              Rumah Kost
-            </NavLink>
+            <NavLink to={"/rumah-kost"}><IoPricetag />Rumah Kost</NavLink>
           </li>
         </ul>
+        </div>
+        <div className="adminOnly">
         {user && user.role === "admin" && (
-          <div>
-        <p className="menu-label">Admin</p>
-        <ul className="menu-list">
-          <li>
-            <NavLink to={"/users"}>
-              <IoPerson />
-              Users
-            </NavLink>
+          <ul className="menu-list">
+            <p className="menu-label">Admin</p>
+            <li>
+            <NavLink to={"/users"}><IoPerson />Users</NavLink>
+            </li>
+            <li>
+            <NavLink to={"/footer-edit"}><IoPerson />Footer</NavLink>
+            </li>
+            <li>
+            <NavLink to={"/banner-edit"}><IoPerson />Banner</NavLink>
           </li>
         </ul>
-          </div>
         )}
-
+        </div> 
+        <div className="settings">
         <p className="menu-label">Settings</p>
         <ul className="menu-list">
           <li>
@@ -56,6 +55,8 @@ function Sidebar() {
             </button>
           </li>
         </ul>
+        </div>
+
       </aside>
     </div>
   );
