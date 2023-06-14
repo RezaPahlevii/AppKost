@@ -1,6 +1,9 @@
-import { Sequelize } from "sequelize";
-import db from "../config/Database.js";
-import Users from "./UserModel.js";
+// import { Sequelize } from "sequelize";
+// import db from "../config/Database.js";
+// import Users from "./UserModel.js";
+const { Sequelize } = require('sequelize')
+const db = require('../config/Database.js')
+const Users = require('./UserModel.js')
 
 const {DataTypes} = Sequelize;
 const Kost = db.define('kost',{
@@ -42,4 +45,5 @@ freezeTableName: true
 Users.hasMany(Kost);
 Kost.belongsTo(Users, {foreignKey: 'userId'});
 
-export default Kost;
+// export default Kost;
+module.exports = Kost;

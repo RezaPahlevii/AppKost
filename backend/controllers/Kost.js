@@ -1,8 +1,11 @@
-import Kost from "../models/KostModel.js";
-import Users from "../models/UserModel.js";
-import { Op } from "sequelize";
+// import Kost from "../models/KostModel.js";
+// import Users from "../models/UserModel.js";
+// import { Op } from "sequelize";
+const Kost = require('../models/KostModel.js')
+const Users = require('../models/UserModel.js')
+const { Op } = require('sequelize')
 
- export const getKost = async (req, res) =>{
+module.exports.getKost = async (req, res) =>{
     try {
         let response;
         if(req.role === "admin"){
@@ -31,7 +34,7 @@ import { Op } from "sequelize";
     }
  }
 
- export const getKostById = async(req, res)=>{
+ module.exports.getKostById = async(req, res)=>{
     try {
         const kost = await Kost.findOne({
             where:{
@@ -69,7 +72,7 @@ import { Op } from "sequelize";
     }
  }
 
- export const createKost = async(req, res) =>{
+ module.exports.createKost = async(req, res) =>{
     const  {name, price} = req.body;
     try {
         await Kost.create({
@@ -83,7 +86,7 @@ import { Op } from "sequelize";
     }
  }
 
- export const updateKost = async(req, res) =>{
+ module.exports.updateKost = async(req, res) =>{
     try {
         const kost = await Kost.findOne({
             where:{
@@ -112,7 +115,7 @@ import { Op } from "sequelize";
     }
  }
 
- export const deleteKost = async(req, res) =>{
+ module.exports.deleteKost = async(req, res) =>{
     try {
         const kost = await Kost.findOne({
             where:{

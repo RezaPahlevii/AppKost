@@ -1,6 +1,9 @@
-import express from "express";
-import { getKost, getKostById, createKost, updateKost, deleteKost } from "../controllers/Kost.js";
-import { verifyUser } from "../middleware/AuthUser.js";
+// import express from "express";
+// import { getKost, getKostById, createKost, updateKost, deleteKost } from "../controllers/Kost.js";
+// import { verifyUser } from "../middleware/AuthUser.js";
+const express = require('express')
+const { getKost, getKostById, createKost, updateKost, deleteKost } = require('../controllers/Kost.js')
+const { verifyUser } = require('../middleware/AuthUser.js')
 
 const router = express.Router();
 
@@ -10,4 +13,4 @@ router.post('/rumah-kost/',verifyUser, createKost);
 router.patch('/rumah-kost/:id', verifyUser, updateKost);
 router.delete('/rumah-kost/:id', verifyUser, deleteKost);
 
-export default router;
+module.exports = router;

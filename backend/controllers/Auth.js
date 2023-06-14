@@ -1,7 +1,10 @@
-import Users from "../models/UserModel.js";
-import argon2 from "argon2";
+// import Users from "../models/UserModel.js";
+// import argon2 from "argon2";
+const Users = require('../models/UserModel.js')
+const argon2 = require('argon2')
 
-export const Login = async (req, res) =>{
+
+module.exports.Login = async (req, res) =>{
     const user = await Users.findOne({
         where: {
             // Login menggunakan Email
@@ -19,7 +22,7 @@ export const Login = async (req, res) =>{
     res.status(200).json({uuid, name, email, role});
 }
 
-export const Me = async (req, res) => {
+module.exports.Me = async (req, res) => {
     if(!req.session.userId){
         return res.status(401).json({msg: "Mohon login ke akun anda!"});
     }
@@ -34,7 +37,7 @@ export const Me = async (req, res) => {
     res.status(200).json(user);
 }
 
-export const logOut = (req, res) =>{
+module.exports.logOut = (req, res) =>{
     req.session.destroy((err)=>{
         if(err) return res.status(400).json({msg: "Tidak dapat logout"});
         res.status(200).json({msg: "Anda telah logout"});

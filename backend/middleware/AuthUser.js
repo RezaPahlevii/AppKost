@@ -1,7 +1,8 @@
-import User from "../models/UserModel.js";
+// import User from "../models/UserModel.js";
+const User = require('../models/UserModel.js')
 
 // fuction proteksi user
-export const verifyUser = async (req, res, next) =>{
+module.exports.verifyUser = async (req, res, next) =>{
     if(!req.session.userId){
         return res.status(401).json({msg: "Mohon login ke akun anda!"});
     }
@@ -18,7 +19,7 @@ export const verifyUser = async (req, res, next) =>{
 }
 
 // fuction proteksi user, hanya admin dapat melakukan
-export const adminOnly = async (req, res, next) =>{
+module.exports.adminOnly = async (req, res, next) =>{
     if(!req.session.userId){
         return res.status(401).json({msg: "Mohon login ke akun anda!"});
     }

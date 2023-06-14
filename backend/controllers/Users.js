@@ -1,7 +1,9 @@
-import User from "../models/UserModel.js";
-import argon2 from "argon2";
+// import User from "../models/UserModel.js";
+// import argon2 from "argon2";
+const User = require('../models/UserModel.js')
+const argon2 = require('argon2')
 
- export const getUsers = async(req, res) =>{
+module.exports.getUsers = async(req, res) =>{
     try {
         const response = await User.findAll({
             attributes:['uuid','name','email','role']
@@ -12,7 +14,7 @@ import argon2 from "argon2";
     }
  }
 
- export const getUsersById = async(req, res)=>{ 
+ module.exports.getUsersById = async(req, res)=>{ 
     try {
         const response = await User.findOne({
             attributes:['uuid','name','email','role'],
@@ -26,7 +28,7 @@ import argon2 from "argon2";
     }
  }
 
- export const createUsers = async(req, res) =>{
+ module.exports.createUsers = async(req, res) =>{
     const {name, email, password, confPassword, role} = req.body;
     if(password !== confPassword) return res.status(400).json({msg:"Password dan Confirm Password tidak cocok"});
     const hashPassword = await argon2.hash(password);
@@ -43,7 +45,7 @@ import argon2 from "argon2";
     }
  }
 
- export const updateUsers = async(req, res) =>{
+ module.exports.updateUsers = async(req, res) =>{
     const user = await User.findOne({
         where:{
             uuid: req.params.id
@@ -76,7 +78,7 @@ import argon2 from "argon2";
     }
  }
 
- export const deleteUsers = async(req, res) =>{
+ module.exports.deleteUsers = async(req, res) =>{
     const user = await User.findOne({
         where:{
             uuid: req.params.id
