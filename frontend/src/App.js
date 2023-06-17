@@ -22,7 +22,7 @@ function App() {
     <div>
       <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login/>}/>
+        <Route path="/login" element={<Login/>}/>
         <Route path="/dashboard" element={<Dashboard/>}/>
         <Route path="/users" element={<Users/>}/>
         <Route path="/users/add" element={<AddUser/>}/>
@@ -35,7 +35,7 @@ function App() {
         <Route path="/pencari-kost" element={<PencariKost/>}/>
       </Routes>
       <Routes>
-        <Route path="/homepage" element={<HomePage/>}/>
+        <Route path="/" element={<HomePage/>}/>
         <Route path="/detail-kost" element={<DetailKost/>}/>
         <Route path="/kost-list" element={<ListKost/>}/>
         <Route path="/pusat-bantuan" element={<PusatBantuan/>}/>
