@@ -1,12 +1,12 @@
 import React from 'react'
-import Nav from '../components/Nav'
+import Nav2 from '../components/Nav2'
 import { Accordion, Container } from 'react-bootstrap'
 import Footer2 from '../components/Footer2'
 
 const PusatBantuan = () => {
   return (
     <div>
-      <Nav/>
+      <Nav2/>
       <Container className="my-5 py-5">
         <div className="pb-5">
           <h3><strong>Hallo, ada yang bisa di bantu?</strong></h3>

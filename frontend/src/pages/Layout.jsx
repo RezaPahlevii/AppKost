@@ -8,7 +8,7 @@ import Nav2 from '../components/Nav2';
 const Layout = ({children}) => {
   return (
     <React.Fragment>
-        <Nav/>
+        <Nav2/>
         <div className="columns mt-6" style={{minHeight: "100vh"}}>
         <div className="column is-2"><Sidebar/></div>
         <div className="column has-background-light">

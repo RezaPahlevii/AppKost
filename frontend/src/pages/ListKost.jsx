@@ -3,7 +3,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import FilterFasilitas from "../components/FilterFasilitas";
 import Footer from "../components/Footer";
 import KostList from "../components/KostList";
-import Nav from "../components/Nav";
+import Nav2 from "../components/Nav2";
 import Maps from "./../components/Maps";
 import Rumah from "./../image/rumah.jpg";
 import Rumah2 from "./../image/rumah2.jpg";
@@ -15,7 +15,7 @@ const ListKost = () => {
     <div>
       <Container>
         <Row>
-          <Nav />
+          <Nav2 />
         </Row>
         <Row className="mt-4 pt-3">
           <Col md={6}>

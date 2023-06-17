@@ -5,7 +5,7 @@ import rumah from "./../image/rumah.jpg";
 import rumah2 from "./../image/rumah2.jpg";
 import rumah3 from "./../image/rumah3.jpg";
 import rumah4 from "./../image/rumah4.jpg";
-import Nav from "./../components/Nav";
+import Nav2 from "./../components/Nav2";
 import Banner from "../components/Banner";
 import SearchBar from "../components/SearchBar";
 import Footer2 from "../components/Footer2";
@@ -13,7 +13,7 @@ import Footer2 from "../components/Footer2";
 const HomePage = () => {
   return (
     <div>
-      <Nav />
+      <Nav2 />
       <Container className="my-5 py-5">
         <div className="pb-5">
           <SearchBar />

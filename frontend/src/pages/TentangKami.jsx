@@ -1,5 +1,5 @@
 import React from "react";
-import Nav from "../components/Nav";
+import Nav2 from "../components/Nav2";
 import { Col, Container, Image, Row } from "react-bootstrap";
 // import Footer from "../components/Footer";
 import Pendiri1 from "./../image/Levi.jpg";
@@ -12,7 +12,7 @@ import './../css/footer.css'
 const TentangKami = () => {
   return (
     <div>
-      <Nav />
+      <Nav2 />
       <Image src={Hero} width={1350} />
       <Container className="mt-2">
         <div >
