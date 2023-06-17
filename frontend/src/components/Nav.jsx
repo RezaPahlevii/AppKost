@@ -32,7 +32,7 @@ const Nav = () => {
         <Container>
           <NavLink
             style={{ textDecoration: "none", color: "Black" }}
-            to={"/homepage"}
+            to={"/"}
           >
             AppKost
           </NavLink>
