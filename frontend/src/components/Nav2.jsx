@@ -1,5 +1,5 @@
 import React from "react";
-import { LogOut, reset } from "../features/authSlice";
+import { LogOut, reset, getMe } from "../features/authSlice";
 import {
   Container,
   Navbar,
@@ -20,7 +20,7 @@ const Nav = () => {
     navigate("/");
   };
   const login = () =>{
-    dispatch(LogOut());
+    dispatch(getMe());
     dispatch(reset());
     navigate("/login");
   };
@@ -42,7 +42,6 @@ const Nav = () => {
             AppKost
           </NavLink>
           <Navbar.Collapse className="justify-content-end"></Navbar.Collapse>
-          <Navbar.Text></Navbar.Text>
           <NavLink
             style={{ textDecoration: "none", paddingRight: 15, color: "Black" }}
             to={"/pusat-bantuan"}
