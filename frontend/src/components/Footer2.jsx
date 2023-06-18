@@ -1,5 +1,6 @@
 import React from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
+import { NavLink } from 'react-router-dom'
 // import Iframe from 'react-iframe'
 
 const Footer2 = () => {
@@ -9,7 +10,11 @@ const Footer2 = () => {
       <Row className='main-foot'>
         <Col className='col col-lg-4 col-md-12 col-12'>
           <h2>
-            <a href="/homepage" className=' text-lg-start text-md-center text-center mb-lg-0 mb-md-5 mb-2 main-title'>AppKost.</a>
+          <NavLink
+            className='text-lg-start text-md-center text-center mb-lg-0 mb-md-5 mb-2 main-title'
+            to={"/"}>
+            AppKost
+          </NavLink>
           </h2>
         </Col>
         <Col className='col col-lg-2 col-md-3 col-12'>
@@ -18,10 +23,18 @@ const Footer2 = () => {
               <h5 className='mt-lg-0 mt-md-0 mt-4 mb-3'>AppKost</h5>
             </li>
             <li className='list-unstyled mb-2'>
-              <a href="/pusat-bantuan">Pusat Bantuan</a>
+            <NavLink
+            style={{ textDecoration: "none", paddingRight: 15, color: "green" }}
+            to={"/pusat-bantuan"}>
+            Pusat Bantuan
+            </NavLink>
             </li>
             <li className='list-unstyled mb-2'>
-              <a href="/tentang-kami">Tentang Kami</a>
+            <NavLink
+            style={{ textDecoration: "none", paddingRight: 15, color: "green" }}
+            to={"/tentang-kami"}>
+            Tentang Kami
+            </NavLink>
             </li>
           </ul>
         </Col>
