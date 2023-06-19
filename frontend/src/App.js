@@ -16,6 +16,8 @@ import TentangKami from "./pages/TentangKami";
 import PencariKost from './pages/PencariKost';
 import EditFooter from './pages/EditFooter';
 import EditBanner from './pages/EditBanner';
+import EditProfilPemilik from './pages/EditProfilPemilik';
+
 
 function App() {
   return (
@@ -33,6 +35,7 @@ function App() {
         <Route path="/footer-edit" element={<EditFooter/>}/>
         <Route path="/banner-edit" element={<EditBanner/>}/>
         <Route path="/pencari-kost" element={<PencariKost/>}/>
+        <Route path="/edit-profil-pemilik" element={<EditProfilPemilik/>}/>
       </Routes>
       <Routes>
         <Route path="/" element={<HomePage/>}/>
