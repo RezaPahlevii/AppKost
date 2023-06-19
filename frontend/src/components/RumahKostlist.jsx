@@ -23,7 +23,7 @@ const RumahKostlist = () => {
     <div>
         <h1 className='title'>Rumah Kost</h1>
         <h2 className='subtitle'>List of Rumah Kost</h2>
-        <Link to="/rumah-kost/add" className="btn btn-primary">Add New</Link>
+        <Link to="/rumah-kost/add" className="btn btn-primary mb-3">Tambah Kost</Link>
         <table className='table is-striped is-fullwidth'>
             <thead>
                 <tr>
@@ -42,7 +42,7 @@ const RumahKostlist = () => {
                     <td>{kost.price}</td>
                     <td>{kost.user.name}</td>
                     <td>
-                        <Link to={`/rumah-kost/edit/${kost.uuid}`}className='btn btn-warning' >Edit</Link>
+                        <Link to={`/rumah-kost/edit/${kost.uuid}`}className='btn btn-warning mr-1' >Edit</Link>
                         <button onClick={()=> deleteKost(kost.uuid)} className='btn btn-danger' >Delete</button>
                     </td>
                 </tr>
