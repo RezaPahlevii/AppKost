@@ -13,6 +13,8 @@ import { BiCarousel, BiTrendingUp } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LogOut, reset } from "../features/authSlice";
+import levi from "../image/Levi.jpg";
+import { Button, Col, Row } from 'react-bootstrap';
 
 // Import Icons =================>
 
@@ -26,12 +28,21 @@ const Sidebar = () => {
     dispatch(reset());
     navigate("/");
   };
+  const editProfil =()=>{
+    navigate("/edit-profil-pemilik");
+  }
   return (
-    <div className="sideBar grid">
-      <div className="logoDiv flex">
-        {/* <img src={"#"} alt="Imge Name" /> */}
-      </div>
-      <div className="menuDiv">
+    <div className="sideBar grid my-5">
+      <Row className="">
+        <Col className="text-center ml-5">
+        <img  src={levi} alt="Imge Name" class="rounded-circle" style={{ width: "100px" }} />
+        </Col>
+        <Col className="mt-4">
+        <Button onClick={editProfil} variant="outline-success">Edit Profil</Button>
+        </Col>
+        </Row>
+        <Row className="ml-4">
+        <div className="menuDiv">
         <h3 className="divTitle">MENU USER</h3>
 
         <ul className="menuLists grid">
@@ -77,9 +88,10 @@ const Sidebar = () => {
           )}
         </ul>
       </div>
+        </Row>
+      <Row className="ml-4">
       <div className="settingDiv">
         <h3 className="divTitle">SETTING</h3>
-
         <ul className="menuLists grid">
           <li className="listItem">
             <a href="#" className="menuLink flex">
@@ -89,7 +101,7 @@ const Sidebar = () => {
           </li>
         </ul>
       </div>
-
+      </Row>
       <div className="sideBarCard">
         <div className="circle">
           <b></b>
