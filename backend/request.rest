@@ -104,3 +104,7 @@ Content-Type: application/json
 ###
 // delete kost
 DELETE http://localhost:5000/rumah-kost/4fd197bf-7902-4398-8b17-5f99c7e458a7
+
+###
+// Rekomendasi Kost
+GET http://localhost:5000/rekomendasi-kost

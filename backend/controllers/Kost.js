@@ -140,3 +140,21 @@ import { Op } from "sequelize";
         res.status(500).json({msg: error.massage});
     }
  }
+
+ export const getRekomendasiKost = async (req, res) => {
+    try {
+        let response;
+      // Implementasi logika untuk mengambil data rekomendasi kost
+      response = await Kost.findAll({ 
+        attributes:['uuid','name','price'],
+        include: {
+            model: Users,
+            attributes: ['name'],
+          },
+       });
+      res.json(response);
+    } catch (error) {
+      res.status(500).json({ error: "Internal server error" });
+    }
+  };
+  
