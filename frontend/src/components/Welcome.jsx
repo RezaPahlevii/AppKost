@@ -16,20 +16,36 @@ const Welcome = () => {
         const response = await axios.get("http://localhost:5000/rumah-kost");
         setKosts(response.data);
     };
+
+    const myImageStyle = { width: '130px', height: 'auto' };
+
   return (
     <div>
         <h1 className='title'>Dashboard</h1>
         <h2 className='subtitle'>Selamat Datang {user && user.name}</h2>
         <Row>
             {kosts.map((kost, index) => (
-              <Col key={kost.uuid} xs={12} sm={6} md={4} lg={3}>
+              <Col key={kost.uuid} xs={12} sm={6} md={4} lg={4}>
                 <Card className="mb-3">
-                  <CardImg variant="top" src={rumah} />
-                  <Card.Body>
-                    <Card.Title>{kost.name}</Card.Title>
-                    <Card.Text>{kost.price}</Card.Text>
-                    <Card.Text>{kost.user.name}</Card.Text>
-                  </Card.Body>
+                  <Row>
+                    <Col className='ml-5 mt-5'>
+                      <h4><strong>{kost.name} <br /> </strong></h4> 
+                      <p>Kost Putra</p>
+                    </Col>
+                    <Col className='text-end'>
+                    <CardImg  style={myImageStyle} variant="top" src={rumah} />
+                    </Col>
+                    <Row className='ml-3 '>
+                      <Col>
+                    <p>Desa Sungai alam <br /> Jl. Bathin Alam Gg. AMD </p>
+                      </Col>
+                      <Col lg={4}></Col>
+                      <Row>
+                        <Col></Col>
+                        <Col className='text-end'><p>{kost.price} /bulan</p></Col>
+                      </Row>
+                    </Row>
+                  </Row>
                 </Card>
               </Col>
             ))}
