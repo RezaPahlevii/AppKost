@@ -108,3 +108,22 @@ DELETE http://localhost:5000/rumah-kost/4fd197bf-7902-4398-8b17-5f99c7e458a7
 ###
 // Rekomendasi Kost
 GET http://localhost:5000/rekomendasi-kost
+
+###
+// create detail kost
+POST http://localhost:5000/detail-rumah-kost
+Content-Type: application/json
+
+{
+    "no_hp": "085278685008",
+    "gender": "pria",
+    "fasilitas_kamar": "sasa sasa",
+    "spesifikasi_kamar": "sas",
+    "fasilitas_kamar_mandi": "sasaasa",
+    "fasilitas_umum": "sasa",
+    "fasilitas_parkir": "sasa sa",
+    "peraturan_kost": "ssasas",
+    "cerita_pemilik": "asasasasas",
+    "maps": "sasssaas",
+    "foto_kost": "sasas.jpg aja",
+}
