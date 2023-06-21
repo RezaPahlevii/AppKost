@@ -7,7 +7,7 @@ export const getKost = async (req, res) => {
     let response;
     if (req.role === "admin") {
       response = await Kost.findAll({
-        attributes: ["uuid", "name", "price"],
+        attributes: ["uuid", "name", "price","desa"],
         include: [
           {
             model: Users,
@@ -17,7 +17,7 @@ export const getKost = async (req, res) => {
       });
     } else {
       response = await Kost.findAll({
-        attributes: ["uuid", "name", "price"],
+        attributes: ["uuid", "name", "price","desa"],
         where: {
           userId: req.userId,
         },
@@ -46,7 +46,7 @@ export const getKostById = async (req, res) => {
     let response;
     if (req.role === "admin") {
       response = await Kost.findOne({
-        attributes: ["uuid", "name", "price"],
+        attributes: ["uuid", "name", "price","desa","gender","foto_kost"],
         where: {
           id: kost.id,
         },
@@ -59,7 +59,7 @@ export const getKostById = async (req, res) => {
       });
     } else {
       response = await Kost.findOne({
-        attributes: ["uuid", "name", "price"],
+        attributes: ["uuid", "name", "price","desa","gender","foto_kost"],
         where: {
           [Op.and]: [{ id: kost.id }, { userId: req.userId }],
         },
@@ -217,7 +217,24 @@ export const deleteKost = async (req, res) => {
       },
     });
     if (!kost) return res.status(404).json({ msg: "Data tidak ditemukan" });
-    const { name, price } = req.body;
+    const {
+      name,
+      no_hp,
+      desa,
+      alamat,
+      gender,
+      f_kamar,
+      s_kamar,
+      f_kamar_mandi,
+      f_umum,
+      f_parkir,
+      peraturan_kost,
+      cerita_pemmilik_kost,
+      catatan_tambahan,
+      maps,
+      foto_kost,
+      price,
+    } = req.body;
     if (req.role === "admin") {
       await Kost.destroy({
         where: {
@@ -244,7 +261,7 @@ export const getRekomendasiKost = async (req, res) => {
     let response;
     // Implementasi logika untuk mengambil data rekomendasi kost
     response = await Kost.findAll({
-      attributes: ["uuid", "name", "price"],
+      attributes: ["uuid", "name", "price","desa","alamat"],
       include: {
         model: Users,
         attributes: ["name"],
