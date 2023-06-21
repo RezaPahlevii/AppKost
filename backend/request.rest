@@ -87,18 +87,46 @@ POST http://localhost:5000/rumah-kost
 Content-Type: application/json
 
 {
-    "name": "kost merah",
+    "name": "kost Helo Kitty",
+    "no_hp": "085278685008",
+    "desa": "Air Putih",
+    "alamat": "Jl. Bathin alam",
+    "gender": "perempuan",
+    "f_kamar": "Ac",
+    "s_kamar": "3x3",
+    "f_kamar_mandi": "wc jongkok",
+    "f_umum": "Wifi",
+    "f_parkir": "sepeda",
+    "peraturan_kost": "dilarang merokok",
+    "cerita_pemmilik_kost": "kos berhantu",
+    "catatan_tambahan": "air PDAM",
+    "maps": "mkccnieuiuefbe",
+    "foto_kost": "foto.jpg aja",
     "price": "500.000"
 }
 
 ###
 // update data Kost
-PATCH http://localhost:5000/rumah-kost/8a85de40-a629-4fbd-b41c-d9556575715c
+PATCH http://localhost:5000/rumah-kost/82a53fe8-70e9-40b8-8239-b3ba8ecd14d2
 Content-Type: application/json
 
 {
-    "name": "kost merah update",
-    "price": "500.000"
+    "name": "kost donal itik",
+    "no_hp": "085278685008",
+    "desa": "Air Putih",
+    "alamat": "Jl. Bathin alam",
+    "gender": "perempuan",
+    "f_kamar": "Ac",
+    "s_kamar": "3x3",
+    "f_kamar_mandi": "wc jongkok",
+    "f_umum": "Wifi",
+    "f_parkir": "sepeda",
+    "peraturan_kost": "dilarang merokok",
+    "cerita_pemmilik_kost": "",
+    "catatan_tambahan": "",
+    "maps": "",
+    "foto_kost": "foto.jpg aja",
+    "price": "500000"
 }
 
 ###
