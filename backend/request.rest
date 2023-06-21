@@ -3,11 +3,11 @@ POST http://localhost:5000/users
 Content-Type: application/json
 
 {
-    "name": "Ajo",
-    "email": "ajo@gmail.com",
+    "name": "sasa",
+    "email": "sasa@gmail.com",
     "password": "123",
     "confPassword": "123",
-    "role": "user"
+    "role": "Pemilik Kost"
 }
 
 ###
@@ -79,7 +79,7 @@ GET http://localhost:5000/rumah-kost
 
 ###
 // get single Kost
-GET http://localhost:5000/rumah-kost/4fd197bf-7902-4398-8b17-5f99c7e458a7
+GET http://localhost:5000/rumah-kost/7295b05b-a925-42b4-81ac-7ab829969687
 
 ###
 // tambah data Kost
@@ -87,22 +87,22 @@ POST http://localhost:5000/rumah-kost
 Content-Type: application/json
 
 {
-    "name": "kost Helo Kitty",
-    "no_hp": "085278685008",
-    "desa": "Air Putih",
+    "name": "sweety Kitty",
+    "no_hp": "08520989099",
+    "desa": "Sungai Alam",
     "alamat": "Jl. Bathin alam",
     "gender": "perempuan",
     "f_kamar": "Ac",
     "s_kamar": "3x3",
-    "f_kamar_mandi": "wc jongkok",
+    "f_kamar_mandi": "wc terbang",
     "f_umum": "Wifi",
     "f_parkir": "sepeda",
     "peraturan_kost": "dilarang merokok",
     "cerita_pemmilik_kost": "kos berhantu",
-    "catatan_tambahan": "air PDAM",
-    "maps": "mkccnieuiuefbe",
+    "catatan_tambahan": "air hujan",
+    "maps": "",
     "foto_kost": "foto.jpg aja",
-    "price": "500.000"
+    "price": "600000"
 }
 
 ###
@@ -131,7 +131,7 @@ Content-Type: application/json
 
 ###
 // delete kost
-DELETE http://localhost:5000/rumah-kost/4fd197bf-7902-4398-8b17-5f99c7e458a7
+DELETE http://localhost:5000/rumah-kost/a0e8774e-8333-4a35-8aaf-8cc85f439bda
 
 ###
 // Rekomendasi Kost
