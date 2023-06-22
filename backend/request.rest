@@ -7,7 +7,7 @@ Content-Type: application/json
     "email": "sasa@gmail.com",
     "password": "123",
     "confPassword": "123",
-    "role": "Pemilik Kost"
+    "role": "pemilik kost"
 }
 
 ###

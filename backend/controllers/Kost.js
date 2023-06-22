@@ -7,7 +7,7 @@ export const getKost = async (req, res) => {
     let response;
     if (req.role === "admin") {
       response = await Kost.findAll({
-        attributes: ["uuid", "name", "price","desa"],
+        attributes: ["uuid", "nama_kost", "no_hp", "desa", "alamat", "jk"],
         include: [
           {
             model: Users,
@@ -17,7 +17,7 @@ export const getKost = async (req, res) => {
       });
     } else {
       response = await Kost.findAll({
-        attributes: ["uuid", "name", "price","desa"],
+        attributes: ["uuid", "nama_kost", "no_hp", "desa", "alamat", "jk"],
         where: {
           userId: req.userId,
         },
@@ -46,7 +46,7 @@ export const getKostById = async (req, res) => {
     let response;
     if (req.role === "admin") {
       response = await Kost.findOne({
-        attributes: ["uuid", "name", "price","desa","gender","foto_kost"],
+        attributes: ["uuid", "nama_kost", "no_hp", "desa", "alamat", "jk"],
         where: {
           id: kost.id,
         },
@@ -59,7 +59,7 @@ export const getKostById = async (req, res) => {
       });
     } else {
       response = await Kost.findOne({
-        attributes: ["uuid", "name", "price","desa","gender","foto_kost"],
+        attributes: ["uuid", "nama_kost", "no_hp", "desa", "alamat", "jk"],
         where: {
           [Op.and]: [{ id: kost.id }, { userId: req.userId }],
         },
@@ -78,43 +78,14 @@ export const getKostById = async (req, res) => {
 };
 
 export const createKost = async (req, res) => {
-  const {
-    name,
-    no_hp,
-    desa,
-    alamat,
-    gender,
-    f_kamar,
-    s_kamar,
-    f_kamar_mandi,
-    f_umum,
-    f_parkir,
-    peraturan_kost,
-    cerita_pemmilik_kost,
-    catatan_tambahan,
-    maps,
-    foto_kost,
-    price,
-  } = req.body;
+  const { nama_kost, no_hp, desa, alamat, jk } = req.body;
   try {
     await Kost.create({
-      name: name,
-      no_hp: no_hp,
-      desa: desa,
-      alamat: alamat,
-      gender: gender,
-      f_kamar: f_kamar,
-      s_kamar: s_kamar,
-      f_kamar_mandi: f_kamar_mandi,
-      f_umum: f_umum,
-      f_parkir: f_parkir,
-      peraturan_kost: peraturan_kost,
-      cerita_pemmilik_kost,
-      catatan_tambahan,
-      maps,
-      foto_kost,
-      price,
-      userId: req.userId,
+      nama_kost,
+      no_hp,
+      desa,
+      alamat,
+      jk,
     });
     res.status(201).json({ msg: "Berhasil menambahkan kamar kost" });
   } catch (error) {
@@ -130,43 +101,15 @@ export const updateKost = async (req, res) => {
       },
     });
     if (!kost) return res.status(404).json({ msg: "Data tidak ditemukan" });
-    const {
-      name,
-      no_hp,
-      desa,
-      alamat,
-      gender,
-      f_kamar,
-      s_kamar,
-      f_kamar_mandi,
-      f_umum,
-      f_parkir,
-      peraturan_kost,
-      cerita_pemmilik_kost,
-      catatan_tambahan,
-      maps,
-      foto_kost,
-      price,
-    } = req.body;
+    const { nama_kost, no_hp, desa, alamat, jk } = req.body;
     if (req.role === "admin") {
       await Kost.update(
         {
-          name,
+          nama_kost,
           no_hp,
           desa,
           alamat,
-          gender,
-          f_kamar,
-          s_kamar,
-          f_kamar_mandi,
-          f_umum,
-          f_parkir,
-          peraturan_kost,
-          cerita_pemmilik_kost,
-          catatan_tambahan,
-          maps,
-          foto_kost,
-          price,
+          jk,
         },
         {
           where: {
@@ -179,22 +122,11 @@ export const updateKost = async (req, res) => {
         return res.status(403).json({ msg: "Akses terlarang" });
       await Kost.update(
         {
-          name,
+          nama_kost,
           no_hp,
           desa,
           alamat,
-          gender,
-          f_kamar,
-          s_kamar,
-          f_kamar_mandi,
-          f_umum,
-          f_parkir,
-          peraturan_kost,
-          cerita_pemmilik_kost,
-          catatan_tambahan,
-          maps,
-          foto_kost,
-          price,
+          jk,
         },
         {
           where: {
@@ -217,24 +149,7 @@ export const deleteKost = async (req, res) => {
       },
     });
     if (!kost) return res.status(404).json({ msg: "Data tidak ditemukan" });
-    const {
-      name,
-      no_hp,
-      desa,
-      alamat,
-      gender,
-      f_kamar,
-      s_kamar,
-      f_kamar_mandi,
-      f_umum,
-      f_parkir,
-      peraturan_kost,
-      cerita_pemmilik_kost,
-      catatan_tambahan,
-      maps,
-      foto_kost,
-      price,
-    } = req.body;
+    const { nama_kost, no_hp, desa, alamat, jk } = req.body;
     if (req.role === "admin") {
       await Kost.destroy({
         where: {
@@ -261,7 +176,7 @@ export const getRekomendasiKost = async (req, res) => {
     let response;
     // Implementasi logika untuk mengambil data rekomendasi kost
     response = await Kost.findAll({
-      attributes: ["uuid", "name", "price","desa","alamat"],
+      attributes: ["uuid", "nama_kost", "no_hp", "desa", "alamat", "jk"],
       include: {
         model: Users,
         attributes: ["name"],
