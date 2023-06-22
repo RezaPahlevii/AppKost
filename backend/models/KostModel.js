@@ -14,7 +14,7 @@ const Kost = db.define(
         notEmpty: true,
       },
     },
-    name: {
+    nama_kost: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -44,76 +44,8 @@ const Kost = db.define(
         notEmpty: true,
       },
     },
-    gender: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    f_kamar: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    s_kamar: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    f_kamar_mandi: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    f_umum: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    f_parkir: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    peraturan_kost: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    cerita_pemmilik_kost: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    catatan_tambahan: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    maps: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    foto_kost: {
-      type: DataTypes.BLOB,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    price: {
-      type: DataTypes.INTEGER,
+    jk: {
+      type: DataTypes.ENUM ('Putra', 'Putri', 'Campur'),
       allowNull: false,
       validate: {
         notEmpty: true,
