@@ -1,7 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import { Button, Col, Container, Form } from "react-bootstrap";
 
 const SearchBar = () => {
+  const [seacrh, setseacrh] =  useState('');
+  console.log(seacrh)
+
   return (
     <div>
       <Container>
@@ -15,6 +18,7 @@ const SearchBar = () => {
           <Form sticky="top" className="d-flex pt-2 pb-5">
             <Form.Control
               type="search"
+              onChange={(e) => setseacrh(e.target.value)}
               placeholder="Masukkan nama kost/alamat/area"
               className="me-2"
               aria-label="Search"

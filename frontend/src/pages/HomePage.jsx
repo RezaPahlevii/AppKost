@@ -49,18 +49,24 @@ const HomePage = () => {
             </h3>
           </div>
           <Row>
-            {kosts.map((kost, index) => (
-              <Col key={kost.uuid} xs={12} sm={6} md={4} lg={3}>
-                <Card className="mb-3">
-                  <CardImg variant="top" src={rumah} />
-                  <Card.Body>
-                    <Card.Title>{kost.name}</Card.Title>
-                    <Card.Text>{kost.price}</Card.Text>
-                    <Card.Text>{kost.user.name}</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
+            {kosts
+              .filter((kost) => {
+                return SearchBar === ''
+                  ? kost
+                  : kost.name.toLowerCase().includes(SearchBar.toLowerCase());
+              })
+              .map((kost, index) => (
+                <Col key={kost.uuid} xs={12} sm={6} md={4} lg={3}>
+                  <Card className="mb-3">
+                    <CardImg variant="top" src={rumah} />
+                    <Card.Body>
+                      <Card.Title>{kost.name}</Card.Title>
+                      <Card.Text>{kost.price}</Card.Text>
+                      <Card.Text>{kost.user.name}</Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
           </Row>
 
           {/* <div className="col-4">
