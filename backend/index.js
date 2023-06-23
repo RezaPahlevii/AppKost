@@ -7,6 +7,7 @@ import SequelizeStore from "connect-session-sequelize";
 import UserRoute from "./routes/UserRoute.js";
 import KostRoute from "./routes/KostRoute.js";
 import AuthRoute from "./routes/AuthRoute.js";
+import TipeKostRoute from "./routes/TipeKostRoute.js";
 dotenv.config();
 
 const app = express();
@@ -39,6 +40,7 @@ app.use(cors({
 app.use(express.json());
 app.use(UserRoute);
 app.use(KostRoute);
+app.use(TipeKostRoute);
 app.use(AuthRoute);
 
 // store.sync();

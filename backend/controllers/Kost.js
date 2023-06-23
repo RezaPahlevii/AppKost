@@ -86,10 +86,11 @@ export const createKost = async (req, res) => {
       desa,
       alamat,
       jk,
+      userId: req.userId
     });
     res.status(201).json({ msg: "Berhasil menambahkan kamar kost" });
   } catch (error) {
-    res.status(500).json({ msg: error.massage });
+    res.status(500).json({ msg: error.message });
   }
 };
 

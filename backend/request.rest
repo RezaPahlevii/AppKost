@@ -87,46 +87,24 @@ POST http://localhost:5000/rumah-kost
 Content-Type: application/json
 
 {
-    "name": "sweety Kitty",
-    "no_hp": "08520989099",
-    "desa": "Sungai Alam",
-    "alamat": "Jl. Bathin alam",
-    "gender": "perempuan",
-    "f_kamar": "Ac",
-    "s_kamar": "3x3",
-    "f_kamar_mandi": "wc terbang",
-    "f_umum": "Wifi",
-    "f_parkir": "sepeda",
-    "peraturan_kost": "dilarang merokok",
-    "cerita_pemmilik_kost": "kos berhantu",
-    "catatan_tambahan": "air hujan",
-    "maps": "",
-    "foto_kost": "foto.jpg aja",
-    "price": "600000"
+    "nama_kost": "hello Kitty",
+    "no_hp": "08523989789",
+    "desa": "Air Putih",
+    "alamat": "Jl. Bathin aja",
+    "jk": "putri"
 }
 
 ###
 // update data Kost
-PATCH http://localhost:5000/rumah-kost/82a53fe8-70e9-40b8-8239-b3ba8ecd14d2
+PATCH http://localhost:5000/rumah-kost/fa284aa3-a99f-40bd-a966-ebabda35b884
 Content-Type: application/json
 
 {
-    "name": "kost donal itik",
-    "no_hp": "085278685008",
-    "desa": "Air Putih",
+    "nama_kost": "sweety Kitty banget",
+    "no_hp": "08520989099",
+    "desa": "Sungai Alam",
     "alamat": "Jl. Bathin alam",
-    "gender": "perempuan",
-    "f_kamar": "Ac",
-    "s_kamar": "3x3",
-    "f_kamar_mandi": "wc jongkok",
-    "f_umum": "Wifi",
-    "f_parkir": "sepeda",
-    "peraturan_kost": "dilarang merokok",
-    "cerita_pemmilik_kost": "",
-    "catatan_tambahan": "",
-    "maps": "",
-    "foto_kost": "foto.jpg aja",
-    "price": "500000"
+    "jk": "putra"
 }
 
 ###
@@ -136,3 +114,20 @@ DELETE http://localhost:5000/rumah-kost/a0e8774e-8333-4a35-8aaf-8cc85f439bda
 ###
 // Rekomendasi Kost
 GET http://localhost:5000/rekomendasi-kost
+
+###
+// create tipe kamar
+POST http://localhost:5000/tipe-rumah-kost/
+Content-Type: application/json
+
+{
+"f_kamar": "ada ada aja",
+"f_umum": "Wifi",
+"peraturan_kost": "di larang merokok",
+"catatan_tambahan": "",
+"foto_kost": "lala.apagitu",
+"jumlah_kamar": "3",
+"ukuran_kamar": "3x3",
+"harga": "300000"
+}
+
