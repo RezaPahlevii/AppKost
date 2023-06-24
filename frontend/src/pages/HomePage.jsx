@@ -8,7 +8,7 @@ import {
   Form,
   Row,
 } from "react-bootstrap";
-import RekomendasiKost from "../components/RekomendasiKost";
+// import RekomendasiKost from "../components/RekomendasiKost";
 import rumah from "./../image/rumah.jpg";
 import rumah2 from "./../image/rumah2.jpg";
 // import rumah3 from "./../image/rumah3.jpg";
