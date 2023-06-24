@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Card,
-  CardImg,
-  Col,
-  Container,
-  Form,
-  Row,
-} from "react-bootstrap";
+import {Button,Card,CardImg,Col,Container,Form,Row,} from "react-bootstrap";
 // import RekomendasiKost from "../components/RekomendasiKost";
 import rumah from "./../image/rumah.jpg";
 import rumah2 from "./../image/rumah2.jpg";
@@ -18,10 +10,11 @@ import Banner from "../components/Banner";
 // import SearchBar from "../components/SearchBar";
 import Footer2 from "../components/Footer2";
 import axios from "axios";
-// import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const [kosts, setKosts] = useState([]);
+  const [search, setSearch] = useState("");
+  console.log(search);
 
   const getRekomendasiKosts = async () => {
     try {
@@ -34,8 +27,7 @@ const HomePage = () => {
     }
   };
 
-  const [search, setSearch] = useState("");
-  console.log(search);
+
 
   useEffect(() => {
     getRekomendasiKosts();
