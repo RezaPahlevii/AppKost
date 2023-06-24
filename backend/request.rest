@@ -3,11 +3,11 @@ POST http://localhost:5000/users
 Content-Type: application/json
 
 {
-    "name": "Ajo",
-    "email": "ajo@gmail.com",
+    "name": "levi",
+    "email": "levi@gmail.com",
     "password": "123",
     "confPassword": "123",
-    "role": "user"
+    "role": "admin"
 }
 
 ###
@@ -87,9 +87,22 @@ POST http://localhost:5000/rumah-kost
 Content-Type: application/json
 
 {
-    "name": "kost merah",
-    "price": "500.000"
+    "nama": "Hello Kitty",
+    "no_hp": "085278685008",
+    "harga": "500000",
+    "desa": "Sungai Alam",
+    "alamat": "Jl. Bathin Alam",
+    "jk": "Putri",
+    "f_kamar": "ac",
+    "peraturan_kost": "kost merah",
+    "catatan_tambahan": "kost merah",
+    "foto_kost": "kost merah",
+    "longitude": "kost merah",
+    "latitude": "kost merah"
 }
+// Apakah bisa 1 field f_kamar di isi dengan 
+// banyak fasilitas? pakai enum gitu?
+
 
 ###
 // update data Kost
@@ -108,3 +121,20 @@ DELETE http://localhost:5000/rumah-kost/4fd197bf-7902-4398-8b17-5f99c7e458a7
 ###
 // Rekomendasi Kost
 GET http://localhost:5000/rekomendasi-kost
+
+###
+/// create fasilitas
+POST http://localhost:5000/fasilitas-kost
+Content-Type: application/json
+
+{
+    "nama_f": "Lemari"
+}
+
+###
+// get all fasilitas
+GET http://localhost:5000/fasilitas-kost
+
+###
+// get single fasilitas
+GET http://localhost:5000/fasilitas-kost/8766a521-0b1f-4357-b068-32408855eb7f
