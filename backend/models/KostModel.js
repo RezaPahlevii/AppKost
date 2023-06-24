@@ -57,7 +57,7 @@ const Kost = db.define('kost',{
        }
    },
    f_kamar:{
-       type: DataTypes.STRING,
+       type: DataTypes.TEXT,
        allowNull: false,
        validate:{
            notEmpty: true

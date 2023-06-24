@@ -1,5 +1,6 @@
 import Kost from "../models/KostModel.js";
 import Users from "../models/UserModel.js";
+import Fasilitas from "../models/FasilitasModel.js";
 import { Op } from "sequelize";
 
 export const getKost = async (req, res) => {
@@ -10,9 +11,13 @@ export const getKost = async (req, res) => {
         attributes: ["uuid", "nama", "harga"],
         include: [
           {
+            model: Fasilitas,
+            attributes: ["nama_f"],
+          },
+          {
             model: Users,
             attributes: ["name", "email"],
-          },
+          }
         ],
       });
     } else {
@@ -196,3 +201,22 @@ export const getRekomendasiKost = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+// async function addFasilitasToKost(kostId, fasilitasId) {
+//   try {
+//     const kost = await Kost.findByPk(kostId);
+//     const fasilitas = await Fasilitas.findByPk(fasilitasId);
+
+//     if (!kost || !fasilitas) {
+//       // Handle error if Kost or Fasilitas is not found
+//       return;
+//     }
+
+//     await kost.addFasilitas(fasilitas);
+//   } catch (error) {
+//     // Handle error
+//   }
+// }
+
+// // Export the functions
+// export { addFasilitasToKost };

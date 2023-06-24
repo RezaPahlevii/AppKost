@@ -101,7 +101,7 @@ Content-Type: application/json
     "latitude": "kost merah"
 }
 // Apakah bisa 1 field f_kamar di isi dengan 
-// banyak fasilitas? pakai enum gitu?
+// banyak fasilitas? pakai enum gitu? atau pakai text array?
 
 
 ###
@@ -128,7 +128,7 @@ POST http://localhost:5000/fasilitas-kost
 Content-Type: application/json
 
 {
-    "nama_f": "Lemari"
+    "nama_f": "Kasur"
 }
 
 ###

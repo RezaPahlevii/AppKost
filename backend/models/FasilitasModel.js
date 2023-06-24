@@ -21,7 +21,7 @@ const Fasilitas = db.define(
       allowNull: false,
       validate: {
         notEmpty: true,
-      },
+      }
     }
   },
   {
@@ -29,14 +29,17 @@ const Fasilitas = db.define(
   }
 );
 
-Kost.belongsToMany(Fasilitas, {
-  through: "kost_fasilitas",
-  foreignKey: "kostId",
-});
-Fasilitas.belongsToMany(Kost, {
-  through: "kost_fasilitas",
-  foreignKey: "fasilitasId",
-});
+// Kost.belongsToMany(Fasilitas, {
+//   through: "kost_fasilitas",
+//   foreignKey: "kostId",
+// });
+// Fasilitas.belongsToMany(Kost, {
+//   through: "kost_fasilitas",
+//   foreignKey: "fasilitasId",
+// });
+
+Kost.hasMany(Fasilitas);
+Fasilitas.belongsTo(Kost);
 // Relasi One-to-Many antara Users dan Fasilitas
 Users.hasMany(Fasilitas);
 Fasilitas.belongsTo(Users, { foreignKey: "userId" });
