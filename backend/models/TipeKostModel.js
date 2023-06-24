@@ -1,7 +1,9 @@
 import { Sequelize } from "sequelize";
 import db from "../config/Database.js";
-// import Users from "./UserModel.js";
 import Kost from "./KostModel.js";
+import Users from "./UserModel.js";
+// import Users from "./UserModel.js";
+// import Kost from "./KostModel.js";
 
 const { DataTypes } = Sequelize;
 const TipeKost = db.define(
@@ -68,11 +70,12 @@ const TipeKost = db.define(
         notEmpty: true,
       },
     },
-    kostId: {
+    userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         notEmpty: true,
+        
       },
     },
   },
@@ -81,7 +84,29 @@ const TipeKost = db.define(
   }
 );
 
-Kost.hasMany(TipeKost);
-TipeKost.belongsTo(Kost, { foreignKey: "kostId" });
+  // // Definisikan relasi antara TipeKost dan Users
+  // Users.hasMany(TipeKost, { foreignKey: "userId" });
+  // TipeKost.belongsTo(Users, { foreignKey: "userId" });
+  // Kost.hasMany(TipeKost, { foreignKey: "kostId" });
+  // TipeKost.belongsTo(Kost, { foreignKey: "kostId" });
+
+  // // Fungsi beforeCreate untuk mengatur nilai userId dengan ID user
+  // TipeKost.beforeCreate(async (tipeKost, options) => {
+  //   // Ambil user yang membuat tipe kost
+  //   const user = await Users.findByPk(tipeKost.userId);
+
+  //   if (user && user.id) {
+  //     tipeKost.userId = user.id; // Mengatur nilai userId dengan ID user
+  //   } else {
+  //     throw new Error("User tidak valid");
+  //   }
+  //   console.log('User ID:', tipeKost.userId);
+
+  //   return tipeKost;
+  // });
+
+
+Users.hasMany(TipeKost);
+TipeKost.belongsTo(Users, { foreignKey: 'userId' });
 
 export default TipeKost;

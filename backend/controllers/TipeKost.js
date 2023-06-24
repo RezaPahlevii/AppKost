@@ -31,12 +31,16 @@ export const getTipeKost = async (req, res) => {
             model: Users,
             attributes: ["name", "email"],
           },
+          {
+            model: Kost,
+            attributes:["nama_kost", "no_hp"]
+          }
         ],
       });
     }
     res.status(200).json(response);
   } catch (error) {
-    res.status(500).json({ msg: error.massage });
+    res.status(500).json({ msg: error.message });
   }
 };
 

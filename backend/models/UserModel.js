@@ -36,7 +36,7 @@ const Users = db.define('users',{
         }
     },
     role:{
-        type: DataTypes.ENUM ('Pencari Kost', 'Pemilik Kost', 'Admin'),
+        type: DataTypes.ENUM ('pencari kost', 'pemilik kost', 'admin'),
         allowNull: false,
         validate:{
             notEmpty: true
@@ -47,4 +47,6 @@ const Users = db.define('users',{
 freezeTableName: true
  });
 
+
+ 
  export default Users;

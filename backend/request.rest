@@ -3,11 +3,11 @@ POST http://localhost:5000/users
 Content-Type: application/json
 
 {
-    "name": "dede",
-    "email": "dede@gmail.com",
+    "name": "levi",
+    "email": "levi@gmail.com",
     "password": "123",
     "confPassword": "123",
-    "role": "user"
+    "role": "admin"
 }
 
 ###
@@ -82,7 +82,7 @@ GET http://localhost:5000/rumah-kost
 GET http://localhost:5000/rumah-kost/7295b05b-a925-42b4-81ac-7ab829969687
 
 ###
-// tambah data Kost
+// tambah Kost
 POST http://localhost:5000/rumah-kost
 Content-Type: application/json
 
@@ -131,3 +131,6 @@ Content-Type: application/json
 "harga": "300000"
 }
 
+###
+// get all tipe kamar
+GET http://localhost:5000/tipe-rumah-kost/

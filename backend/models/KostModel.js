@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize";
 import db from "../config/Database.js";
 import Users from "./UserModel.js";
+// import TipeKost from "./TipeKostModel.js";
 
 const { DataTypes } = Sequelize;
 const Kost = db.define(
@@ -58,6 +59,7 @@ const Kost = db.define(
         notEmpty: true,
       },
     },
+    
   },
   {
     freezeTableName: true,
@@ -66,5 +68,9 @@ const Kost = db.define(
 
 Users.hasMany(Kost);
 Kost.belongsTo(Users, { foreignKey: "userId" });
+
+
+// TipeKost.hasMany(Kost);
+
 
 export default Kost;
