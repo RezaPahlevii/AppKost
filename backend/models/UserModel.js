@@ -36,7 +36,7 @@ const Users = db.define('users',{
         }
     },
     role:{
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM('admin','pencari kost','pemilik kost'),
         allowNull: false,
         validate:{
             notEmpty: true
