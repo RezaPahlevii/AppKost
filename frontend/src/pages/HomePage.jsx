@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Card, CardImg, Col, Container, Row } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  CardImg,
+  Col,
+  Container,
+  Form,
+  Row,
+} from "react-bootstrap";
 import RekomendasiKost from "../components/RekomendasiKost";
 import rumah from "./../image/rumah.jpg";
 import rumah2 from "./../image/rumah2.jpg";
-import rumah3 from "./../image/rumah3.jpg";
-import rumah4 from "./../image/rumah4.jpg";
+// import rumah3 from "./../image/rumah3.jpg";
+// import rumah4 from "./../image/rumah4.jpg";
 import Nav2 from "./../components/Nav2";
 import Banner from "../components/Banner";
-import SearchBar from "../components/SearchBar";
+// import SearchBar from "../components/SearchBar";
 import Footer2 from "../components/Footer2";
 import axios from "axios";
 // import { Link } from "react-router-dom";
@@ -26,6 +34,9 @@ const HomePage = () => {
     }
   };
 
+  const [search, setSearch] = useState("");
+  console.log(search);
+
   useEffect(() => {
     getRekomendasiKosts();
   }, []);
@@ -34,8 +45,24 @@ const HomePage = () => {
     <div>
       <Nav2 />
       <Container className="my-5 py-5">
-        <div className="pb-5">
-          <SearchBar />
+        <div className="pb-5 search-container">
+          <h2>
+            <strong>Temukan Kost Kebutuhan Anda</strong>
+          </h2>
+          <p> Dapatkan infonya dan langsung sewa di AppKost</p>
+          <Col sm={4}>
+            <Form sticky="top" className="d-flex pt-2 pb-5">
+              <Form.Control
+                onChange={(e) => setSearch(e.target.value)}
+                type="search"
+                placeholder="Masukkan nama kost/alamat/area"
+                className="me-2"
+                aria-label="Search"
+                style={{ height: "2.5rem", width: "2" }}
+              />
+              <Button variant="outline-success">Search</Button>
+            </Form>
+          </Col>
         </div>
         <div>
           <Banner banner={rumah2} />
@@ -51,9 +78,9 @@ const HomePage = () => {
           <Row>
             {kosts
               .filter((kost) => {
-                return SearchBar === ''
+                return search.toLowerCase() === ""
                   ? kost
-                  : kost.name.toLowerCase().includes(SearchBar.toLowerCase());
+                  : kost.name.toLowerCase().includes(search);
               })
               .map((kost, index) => (
                 <Col key={kost.uuid} xs={12} sm={6} md={4} lg={3}>
