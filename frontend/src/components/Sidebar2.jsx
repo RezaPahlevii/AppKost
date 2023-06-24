@@ -3,13 +3,8 @@ import "../css/sidebar.css";
 // import logo from "../../Asset/logo.png";
 import { IoIosHome, IoIosLogOut, IoIosPeople, IoMdSpeedometer } from "react-icons/io";
 import { ImPlay } from "react-icons/im";
-import {
-  MdDeliveryDining,
-  MdOutlineExplore,
-  MdOutlinePermContactCalendar,
-} from "react-icons/md";
-import { BsTrophy, BsCreditCard2Front, BsQuestion } from "react-icons/bs";
-import { BiCarousel, BiTrendingUp } from "react-icons/bi";
+import { BsQuestion } from "react-icons/bs";
+import { BiCarousel } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LogOut, reset } from "../features/authSlice";
@@ -67,19 +62,19 @@ const Sidebar = () => {
             </a>
           </li>
           <li className="listItem">
-            <a href="#" className="menuLink flex">
+            <a href="/dashboard" className="menuLink flex">
               <ImPlay className="icon" />
               <span className="smallText">Sosmed</span>
             </a>
           </li>
           <li className="listItem">
-            <a href="#" className="menuLink flex">
+            <a href="/dashboard" className="menuLink flex">
               <BiCarousel className="icon" />
               <span className="smallText">Carousel</span>
             </a>
           </li>
           <li className="listItem">
-            <a href="#" className="menuLink flex">
+            <a href="/dashboard" className="menuLink flex">
               <IoIosPeople className="icon" />
               <span className="smallText">Footer</span>
             </a>
@@ -94,7 +89,7 @@ const Sidebar = () => {
         <h3 className="divTitle">SETTING</h3>
         <ul className="menuLists grid">
           <li className="listItem">
-            <a href="#" className="menuLink flex">
+            <a href="/dashboard" className="menuLink flex">
               <IoIosLogOut className="icon" />
               <span onClick={logout} className="smallText">Logout</span>
             </a>
