@@ -78,9 +78,16 @@ const HomePage = () => {
           <Row>
             {kosts
               .filter((kost) => {
-                return search.toLowerCase() === ""
-                  ? kost
-                  : kost.name.toLowerCase().includes(search);
+                const searchLower = search.toLowerCase();
+                const nameLower = kost.name.toLowerCase();
+                const priceLower = kost.price.toString().toLowerCase();
+                const ownerNameLower = kost.user.name.toLowerCase();
+
+                return search.toLowerCase() === "" ||
+                nameLower.includes(searchLower) ||
+                priceLower.includes(searchLower) ||
+                ownerNameLower.includes(searchLower);
+                
               })
               .map((kost, index) => (
                 <Col key={kost.uuid} xs={12} sm={6} md={4} lg={3}>
