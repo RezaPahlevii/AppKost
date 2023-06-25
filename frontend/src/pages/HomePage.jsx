@@ -54,8 +54,8 @@ const HomePage = () => {
                 <Card className="mb-3">
                   <CardImg variant="top" src={rumah} />
                   <Card.Body>
-                    <Card.Title>{kost.name}</Card.Title>
-                    <Card.Text>{kost.price}</Card.Text>
+                    <Card.Title>{kost.nama}</Card.Title>
+                    <Card.Text>{kost.harga}</Card.Text>
                     <Card.Text>{kost.user.name}</Card.Text>
                   </Card.Body>
                 </Card>

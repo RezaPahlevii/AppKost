@@ -38,8 +38,8 @@ const RumahKostlist = () => {
                 {kosts.map((kost, index)=>(
                 <tr key={kosts.uuid}>
                     <td>{index + 1}</td>
-                    <td>{kost.name}</td>
-                    <td>{kost.price}</td>
+                    <td>{kost.nama}</td>
+                    <td>{kost.harga}</td>
                     <td>{kost.user.name}</td>
                     <td>
                         <Link to={`/rumah-kost/edit/${kost.uuid}`}className='btn btn-warning mr-1' >Edit</Link>

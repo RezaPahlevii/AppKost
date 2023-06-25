@@ -29,7 +29,7 @@ const Welcome = () => {
                 <Card className="mb-3">
                   <Row>
                     <Col className='ml-5 mt-5'>
-                      <h4><strong>{kost.name} <br /> </strong></h4> 
+                      <h4><strong>{kost.nama} <br /> </strong></h4> 
                       <p>Kost Putra</p>
                     </Col>
                     <Col className='text-end'>
@@ -37,12 +37,12 @@ const Welcome = () => {
                     </Col>
                     <Row className='ml-3 '>
                       <Col>
-                    <p>Desa Sungai alam <br /> Jl. Bathin Alam Gg. AMD </p>
+                    <p>{kost.desa} <br /> {kost.alamat} </p>
                       </Col>
                       <Col lg={4}></Col>
                       <Row>
                         <Col></Col>
-                        <Col className='text-end'><p>{kost.price} /bulan</p></Col>
+                        <Col className='text-end'><p>{kost.harga} /bulan</p></Col>
                       </Row>
                     </Row>
                   </Row>
