@@ -1,6 +1,6 @@
 import Kost from "../models/KostModel.js";
 import Users from "../models/UserModel.js";
-import Fasilitas from "../models/FasilitasModel.js";
+// import Fasilitas from "../models/FasilitasModel.js";
 import { Op } from "sequelize";
 
 export const getKost = async (req, res) => {
@@ -11,13 +11,9 @@ export const getKost = async (req, res) => {
         attributes: ["uuid", "nama", "harga"],
         include: [
           {
-            model: Fasilitas,
-            attributes: ["nama_f"],
-          },
-          {
             model: Users,
             attributes: ["name", "email"],
-          }
+          },
         ],
       });
     } else {
@@ -127,10 +123,36 @@ export const updateKost = async (req, res) => {
       },
     });
     if (!kost) return res.status(404).json({ msg: "Data tidak ditemukan" });
-    const { nama, harga } = req.body;
+    const {
+      nama,
+      no_hp,
+      harga,
+      desa,
+      alamat,
+      jk,
+      f_kamar,
+      peraturan_kost,
+      catatan_tambahan,
+      foto_kost,
+      longitude,
+      latitude,
+    } = req.body;
     if (req.role === "admin") {
       await Kost.update(
-        { nama, harga },
+        {
+          nama,
+          no_hp,
+          harga,
+          desa,
+          alamat,
+          jk,
+          f_kamar,
+          peraturan_kost,
+          catatan_tambahan,
+          foto_kost,
+          longitude,
+          latitude,
+        },
         {
           where: {
             id: kost.id,
@@ -141,7 +163,20 @@ export const updateKost = async (req, res) => {
       if (req.userId !== kost.userId)
         return res.status(403).json({ msg: "Akses terlarang" });
       await Kost.update(
-        { nama, harga },
+        {
+          nama,
+          no_hp,
+          harga,
+          desa,
+          alamat,
+          jk,
+          f_kamar,
+          peraturan_kost,
+          catatan_tambahan,
+          foto_kost,
+          longitude,
+          latitude,
+        },
         {
           where: {
             [Op.and]: [{ id: kost.id }, { userId: req.userId }],
@@ -163,7 +198,20 @@ export const deleteKost = async (req, res) => {
       },
     });
     if (!kost) return res.status(404).json({ msg: "Data tidak ditemukan" });
-    const { nama, harga } = req.body;
+    const {
+      nama,
+      no_hp,
+      harga,
+      desa,
+      alamat,
+      jk,
+      f_kamar,
+      peraturan_kost,
+      catatan_tambahan,
+      foto_kost,
+      longitude,
+      latitude,
+    } = req.body;
     if (req.role === "admin") {
       await Kost.destroy({
         where: {
@@ -202,21 +250,61 @@ export const getRekomendasiKost = async (req, res) => {
   }
 };
 
-// async function addFasilitasToKost(kostId, fasilitasId) {
+export const filterKostByFacilities = async (req, res) => {
+  try {
+    const { facilities } = req.query;
+
+    // Split string facilities menjadi array
+    const facilitiesArray = facilities.split(',');
+
+    // Filter pencarian berdasarkan fasilitas
+    const response = await Kost.findAll({
+      attributes: ["uuid", "nama", "harga", "f_kamar"],
+      where: {
+        f_kamar: {
+          [Op.or]: facilitiesArray.map(facility => ({ [Op.like]: `%${facility}%` }))
+        }
+      },
+      include: [
+        {
+          model: Users,
+          attributes: ["name", "email"],
+        },
+      ],
+    });
+
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
+// export const filterKostByFacilities = async (req, res) => {
 //   try {
-//     const kost = await Kost.findByPk(kostId);
-//     const fasilitas = await Fasilitas.findByPk(fasilitasId);
+//     const { facilities } = req.query;
 
-//     if (!kost || !fasilitas) {
-//       // Handle error if Kost or Fasilitas is not found
-//       return;
-//     }
+//     // Split string facilities menjadi array
+//     const facilitiesArray = facilities.split(',');
 
-//     await kost.addFasilitas(fasilitas);
+//     // Filter pencarian berdasarkan fasilitas
+//     const response = await Kost.findAll({
+//       attributes: ['uuid', 'nama', 'harga'],
+//       where: {
+//         f_kamar: {
+//           [Op.contains]: facilitiesArray
+//         }
+//       },
+//       include: [
+//         {
+//           model: Users,
+//           attributes: ['name', 'email'],
+//         },
+//       ],
+//     });
+
+//     res.status(200).json(response);
 //   } catch (error) {
-//     // Handle error
+//     res.status(500).json({ msg: error.message });
 //   }
-// }
+// };
 
-// // Export the functions
-// export { addFasilitasToKost };
