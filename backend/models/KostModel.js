@@ -61,7 +61,14 @@ const Kost = db.define('kost',{
        allowNull: false,
        validate:{
            notEmpty: true
-       }
+       },
+       get() {
+        const value = this.getDataValue('f_kamar');
+        return value ? JSON.parse(value) : [];
+      },
+      set(value) {
+        this.setDataValue('f_kamar', JSON.stringify(value));
+      },
    },
    peraturan_kost:{
        type: DataTypes.STRING,
