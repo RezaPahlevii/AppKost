@@ -8,7 +8,21 @@ export const getKost = async (req, res) => {
     let response;
     if (req.role === "admin") {
       response = await Kost.findAll({
-        attributes: ["uuid", "nama", "harga"],
+        attributes: [
+          "uuid",
+          "nama",
+          "harga",
+          "no_hp",
+          "desa",
+          "alamat",
+          "jk",
+          "f_kamar",
+          "peraturan_kost",
+          "catatan_tambahan",
+          "foto_kost",
+          "longitude",
+          "latitude",
+        ],
         include: [
           {
             model: Users,
@@ -18,7 +32,21 @@ export const getKost = async (req, res) => {
       });
     } else {
       response = await Kost.findAll({
-        attributes: ["uuid", "nama", "harga"],
+        attributes: [
+          "uuid",
+          "nama",
+          "harga",
+          "no_hp",
+          "desa",
+          "alamat",
+          "jk",
+          "f_kamar",
+          "peraturan_kost",
+          "catatan_tambahan",
+          "foto_kost",
+          "longitude",
+          "latitude",
+        ],
         where: {
           userId: req.userId,
         },
@@ -47,7 +75,21 @@ export const getKostById = async (req, res) => {
     let response;
     if (req.role === "admin") {
       response = await Kost.findOne({
-        attributes: ["uuid", "nama", "harga"],
+        attributes: [
+          "uuid",
+          "nama",
+          "harga",
+          "no_hp",
+          "desa",
+          "alamat",
+          "jk",
+          "f_kamar",
+          "peraturan_kost",
+          "catatan_tambahan",
+          "foto_kost",
+          "longitude",
+          "latitude",
+        ],
         where: {
           id: kost.id,
         },
@@ -60,7 +102,21 @@ export const getKostById = async (req, res) => {
       });
     } else {
       response = await Kost.findOne({
-        attributes: ["uuid", "nama", "harga"],
+        attributes: [
+          "uuid",
+          "nama",
+          "harga",
+          "no_hp",
+          "desa",
+          "alamat",
+          "jk",
+          "f_kamar",
+          "peraturan_kost",
+          "catatan_tambahan",
+          "foto_kost",
+          "longitude",
+          "latitude",
+        ],
         where: {
           [Op.and]: [{ id: kost.id }, { userId: req.userId }],
         },
@@ -238,7 +294,21 @@ export const getRekomendasiKost = async (req, res) => {
     let response;
     // Implementasi logika untuk mengambil data rekomendasi kost
     response = await Kost.findAll({
-      attributes: ["uuid", "nama", "harga"],
+      attributes: [
+        "uuid",
+        "nama",
+        "harga",
+        "no_hp",
+        "desa",
+        "alamat",
+        "jk",
+        "f_kamar",
+        "peraturan_kost",
+        "catatan_tambahan",
+        "foto_kost",
+        "longitude",
+        "latitude",
+      ],
       include: {
         model: Users,
         attributes: ["name"],
@@ -255,15 +325,17 @@ export const filterKostByFacilities = async (req, res) => {
     const { facilities } = req.query;
 
     // Split string facilities menjadi array
-    const facilitiesArray = facilities.split(',');
+    const facilitiesArray = facilities.split(",");
 
     // Filter pencarian berdasarkan fasilitas
     const response = await Kost.findAll({
       attributes: ["uuid", "nama", "harga", "f_kamar"],
       where: {
         f_kamar: {
-          [Op.or]: facilitiesArray.map(facility => ({ [Op.like]: `%${facility}%` }))
-        }
+          [Op.or]: facilitiesArray.map((facility) => ({
+            [Op.like]: `%${facility}%`,
+          })),
+        },
       },
       include: [
         {
@@ -307,4 +379,3 @@ export const filterKostByFacilities = async (req, res) => {
 //     res.status(500).json({ msg: error.message });
 //   }
 // };
-
