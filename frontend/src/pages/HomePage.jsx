@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardImg, Col, Container, Row } from "react-bootstrap";
-import RekomendasiKost from "../components/RekomendasiKost";
+// import RekomendasiKost from "../components/RekomendasiKost";
 import rumah from "./../image/rumah.jpg";
 import rumah2 from "./../image/rumah2.jpg";
-import rumah3 from "./../image/rumah3.jpg";
-import rumah4 from "./../image/rumah4.jpg";
+// import rumah3 from "./../image/rumah3.jpg";
+// import rumah4 from "./../image/rumah4.jpg";
 import Nav2 from "./../components/Nav2";
 import Banner from "../components/Banner";
 import SearchBar from "../components/SearchBar";
