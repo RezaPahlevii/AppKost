@@ -142,7 +142,7 @@ GET http://localhost:5000/rekomendasi-kost
 # }
 
 ###
-// get all fasilitas
+// get fasilitas berdasarkan fasilitas yg dipilih
 GET http://localhost:5000/filter-kost?facilities=Kasur
 ###
 // get single fasilitas
