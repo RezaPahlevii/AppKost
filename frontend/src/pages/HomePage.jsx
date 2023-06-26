@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, CardImg, Col, Container, Form, Row } from "react-bootstrap";
 // import RekomendasiKost from "../components/RekomendasiKost";
 import rumah from "./../image/rumah.jpg";
-// import rumah2 from "./../image/rumah2.jpg";
-// import Banner from "../components/Banner";
-// import rumah3 from "./../image/rumah3.jpg";
-// import rumah4 from "./../image/rumah4.jpg";
+import rumah2 from "./../image/rumah2.jpg";
+import Banner from "../components/Banner";
+// import rumah3 from "./../image/rumah3.jpg";s
 import Nav2 from "./../components/Nav2";
 // import SearchBar from "../components/SearchBar";
 import Footer2 from "../components/Footer2";
@@ -55,9 +54,9 @@ const HomePage = () => {
             </Form>
           </Col>
         </div>
-        {/* <div>
+        <div>
           <Banner banner={rumah2} />
-        </div> */}
+        </div>
         <div className="row mt-5 pt-5">
           <div>
             <h3 className="pb-4">
@@ -92,7 +91,7 @@ const HomePage = () => {
                       <Card.Title>{kost.nama}</Card.Title>
                       <Card.Text>{kost.harga}</Card.Text>
                       <Card.Text>{kost.user.name}</Card.Text>
-                      <Card.Text>{kost.f_kamar}</Card.Text>
+                      <Card.Text>{kost.f_kamar.join(", ")}</Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
