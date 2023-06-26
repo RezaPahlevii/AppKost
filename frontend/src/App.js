@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./components/Login";
+// import Login from "./components/Login";
 import Dashboard from "./pages/Dashboard";
 import Users from './pages/Users';
 import RumahKost from './pages/RumahKost';
@@ -17,6 +17,7 @@ import PencariKost from './pages/PencariKost';
 import EditFooter from './pages/EditFooter';
 import EditBanner from './pages/EditBanner';
 import EditProfilPemilik from './pages/EditProfilPemilik';
+import LoginRegister from './pages/LoginRegister';
 
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
     <div>
       <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login/>}/>
+        <Route path="/login" element={<LoginRegister/>}/>
         <Route path="/dashboard" element={<Dashboard/>}/>
         <Route path="/users" element={<Users/>}/>
         <Route path="/users/add" element={<AddUser/>}/>
