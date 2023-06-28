@@ -1,0 +1,12 @@
+.checkbox-container {
+  display: grid;
+  grid-template-columns: repeat(2, 230px);
+  grid-gap: 10px;
+  /* justify-content: space-between; */
+  grid-column-gap: 5px; /* Mengatur jarak antara checkbox di sisi kanan dan kiri */
+}
+
+.checkbox-item {
+  margin-right: 5px; /* Mengatur jarak kanan antara checkbox */
+}
+
