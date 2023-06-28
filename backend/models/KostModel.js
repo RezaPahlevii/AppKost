@@ -75,7 +75,14 @@ const Kost = db.define('kost',{
        allowNull: false,
        validate:{
            notEmpty: true
-       }
+       },
+       get() {
+        const value = this.getDataValue('peraturan_kost');
+        return value ? JSON.parse(value) : [];
+      },
+      set(value) {
+        this.setDataValue('peraturan_kost', JSON.stringify(value));
+      },
    },
    catatan_tambahan:{
        type: DataTypes.TEXT,
@@ -86,7 +93,14 @@ const Kost = db.define('kost',{
        allowNull: false,
        validate:{
            notEmpty: true
-       }
+       },
+       get() {
+        const value = this.getDataValue('foto_kost');
+        return value ? JSON.parse(value) : [];
+      },
+      set(value) {
+        this.setDataValue('foto_kost', JSON.stringify(value));
+      },
    },
    longitude:{
        type: DataTypes.STRING,
