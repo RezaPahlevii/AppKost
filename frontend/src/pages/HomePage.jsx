@@ -91,7 +91,7 @@ const HomePage = () => {
                       <Card.Title>{kost.nama}</Card.Title>
                       <Card.Text>{kost.harga}</Card.Text>
                       <Card.Text>{kost.user.name}</Card.Text>
-                      <Card.Text>{kost.f_kamar.join(", ")}</Card.Text>
+                      <Card.Text>{kost.f_kamar.slice(0, 4).join(", ")}</Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>

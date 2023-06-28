@@ -111,7 +111,7 @@ const ListKost = () => {
                           <Row>
                           <Card.Text>Desa {kost.desa}<br/>{kost.alamat}</Card.Text> 
                           <Row>
-                          <Card.Text>{kost.f_kamar.slice(0, 3).join(", ")}</Card.Text>
+                          <Card.Text>{kost.f_kamar.slice(0, 5).join(", ")}</Card.Text>
                           </Row>
                           </Row>
                           <Row>
