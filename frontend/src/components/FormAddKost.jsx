@@ -25,27 +25,36 @@ const FormAddKost = () => {
   const saveKost = async (e) => {
     e.preventDefault();
     try {
-      const formData = new FormData();
-      for (let i = 0; i < foto_kost.length; i++) {
-        formData.append("foto_kost", foto_kost[i]);
-      }
+      // const formData = new FormData();
+      // for (let i = 0; i < foto_kost.length; i++) {
+      //   formData.append("foto_kost", foto_kost[i]);
+      // }
 
-      formData.append("nama", nama || "");
-      formData.append("harga", harga || "");
-      formData.append("no_hp", no_hp || "");
-      formData.append("desa", desa || "");
-      formData.append("alamat", alamat || "");
-      formData.append("jk", jk || "");
-      formData.append("f_kamar", f_kamar || []);
-      formData.append("peraturan_kost", peraturan_kost || []);
-      formData.append("catatan_tambahan", catatan_tambahan || "");
-      formData.append("longitude", longitude || "");
-      formData.append("latitude", latitude || "");
+      // formData.append("nama", nama || "");
+      // formData.append("harga", harga || "");
+      // formData.append("no_hp", no_hp || "");
+      // formData.append("desa", desa || "");
+      // formData.append("alamat", alamat || "");
+      // formData.append("jk", jk || "");
+      // formData.append("f_kamar", f_kamar || []);
+      // formData.append("peraturan_kost", peraturan_kost || []);
+      // formData.append("catatan_tambahan", catatan_tambahan || "");
+      // formData.append("longitude", longitude || "");
+      // formData.append("latitude", latitude || "");
 
-      await axios.post("http://localhost:5000/rumah-kost", formData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
+      await axios.post("http://localhost:5000/rumah-kost", {
+          nama: nama,
+          harga: harga,
+          no_hp: no_hp,
+          desa: desa,
+          alamat: alamat,
+          jk: jk,
+          f_kamar: f_kamar,
+          peraturan_kost: peraturan_kost,
+          catatan_tambahan: catatan_tambahan,
+          foto_kost: foto_kost,
+          longitude: longitude,
+          latitude: latitude
       });
       navigate("/rumah-kost");
     } catch (error) {
