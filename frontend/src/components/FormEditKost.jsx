@@ -37,6 +37,7 @@ const FormEditKost = () => {
         setF_kamar(response.data.f_kamar);
         setPeraturan_kost(response.data.peraturan_kost);
         setCatatan_tambahan(response.data.catatan_tambahan);
+        setFoto_kost(response.data.foto_kost);
         setLongitude(response.data.longitude);
         setLatitude(response.data.latitude);
       } catch (error) {

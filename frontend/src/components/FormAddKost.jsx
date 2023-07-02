@@ -25,19 +25,27 @@ const FormAddKost = () => {
   const saveKost = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/rumah-kost", {
-        nama: nama,
-        harga: harga,
-        no_hp: no_hp,
-        desa: desa,
-        alamat: alamat,
-        jk: jk,
-        f_kamar: f_kamar,
-        peraturan_kost: peraturan_kost,
-        catatan_tambahan: catatan_tambahan,
-        foto_kost: foto_kost,
-        longitude: longitude,
-        latitude: latitude,
+      const formData = new FormData();
+      for (let i = 0; i < foto_kost.length; i++) {
+        formData.append("foto_kost", foto_kost[i]);
+      }
+
+      formData.append("nama", nama || "");
+      formData.append("harga", harga || "");
+      formData.append("no_hp", no_hp || "");
+      formData.append("desa", desa || "");
+      formData.append("alamat", alamat || "");
+      formData.append("jk", jk || "");
+      formData.append("f_kamar", f_kamar || []);
+      formData.append("peraturan_kost", peraturan_kost || []);
+      formData.append("catatan_tambahan", catatan_tambahan || "");
+      formData.append("longitude", longitude || "");
+      formData.append("latitude", latitude || "");
+
+      await axios.post("http://localhost:5000/rumah-kost", formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
       navigate("/rumah-kost");
     } catch (error) {
@@ -106,6 +114,7 @@ const FormAddKost = () => {
             <form onSubmit={saveKost}>
               <p className="has-text-centered">{msg}</p>
 
+              {/* Nama Kost */}
               <div className="field mb-4">
                 <label className="label">Nama</label>
                 <div className="control">
@@ -119,6 +128,7 @@ const FormAddKost = () => {
                 </div>
               </div>
 
+              {/* Harga Kost */}
               <div className="field mb-4">
                 <label className="label">Harga</label>
                 <div className="control">
@@ -131,6 +141,8 @@ const FormAddKost = () => {
                   />
                 </div>
               </div>
+
+              {/* No WA */}
               <div className="field mb-4">
                 <label className="label">Nomor Whatsapp</label>
                 <div className="control">
@@ -144,15 +156,20 @@ const FormAddKost = () => {
                 </div>
               </div>
 
+              {/* Desa */}
               <div className="field mb-4">
                 <label className="label">Desa</label>
-                <Form.Select onChange={(e) => setDesa(e.target.value)} value={desa}>
+                <Form.Select
+                  onChange={(e) => setDesa(e.target.value)}
+                  value={desa}
+                >
                   <option hidden>Pilih desa</option>
-                  <option >Sungai Alam</option>
+                  <option>Sungai Alam</option>
                   <option>Air Putih</option>
                 </Form.Select>
               </div>
-              
+
+              {/* Alamat */}
               <div className="field mb-4">
                 <label className="label">Alamat</label>
                 <div className="control">
@@ -166,29 +183,18 @@ const FormAddKost = () => {
                 </div>
               </div>
 
+              {/* gender kost */}
               <div className="field mb-4">
                 <label className="label">Jenis Kost</label>
                 <Form.Select onChange={(e) => setJk(e.target.value)} value={jk}>
                   <option hidden>Pilih Jenis Kost</option>
-                  <option >Putra</option>
+                  <option>Putra</option>
                   <option>Putri</option>
                   <option>Campur</option>
                 </Form.Select>
               </div>
 
-              {/* <div className="field mb-4">
-                <label className="label">Jenis Kost</label>
-                <div className="control">
-                  <input
-                    type="text"
-                    className="input"
-                    value={jk}
-                    onChange={(e) => setJk(e.target.value)}
-                    placeholder="Putra/Putri/Campur"
-                  />
-                </div>
-              </div> */}
-
+              {/* Fasilitas Kamar */}
               <div className="field mb-4">
                 <label className="label">Fasilitas Kamar</label>
                 <div className="control ml-5 checkbox-container">
@@ -243,6 +249,7 @@ const FormAddKost = () => {
                 </div>
               </div>
 
+              {/* Fasilitas Keamanan */}
               <div className="field mb-4">
                 <label className="label">Fasilitas Keamanan</label>
                 <div className="control ml-5 checkbox-container">
@@ -272,6 +279,7 @@ const FormAddKost = () => {
                 </div>
               </div>
 
+              {/* Fasilitas Umum */}
               <div className="field mb-4">
                 <label className="label">Fasilitas Umum</label>
                 <div className="control ml-5 checkbox-container">
@@ -315,6 +323,7 @@ const FormAddKost = () => {
                 </div>
               </div>
 
+              {/* Peraturan Kost*/}
               <div className="field mb-4">
                 <label className="label">Peraturan Kost</label>
                 <div className="control ml-5 checkbox-container">
@@ -345,6 +354,7 @@ const FormAddKost = () => {
                 </div>
               </div>
 
+              {/* Catatan Tambahan*/}
               <div className="field mb-4">
                 <label className="label">Catatan Tambahan</label>
                 <div className="control">
@@ -357,19 +367,7 @@ const FormAddKost = () => {
                 </div>
               </div>
 
-              {/* <div className="field mb-4">
-                <label className="label">Catatan Tambahan</label>
-                <div className="control">
-                  <input
-                    type="text"
-                    className="input"
-                    value={catatan_tambahan}
-                    onChange={(e) => setCatatan_tambahan(e.target.value)}
-                    placeholder="Catatan tambahan"
-                  />
-                </div>
-              </div> */}
-
+              {/* Foto Kost */}
               <div className="field">
                 <label className="label">Foto Kost</label>
                 <div className="control">
@@ -382,6 +380,7 @@ const FormAddKost = () => {
                 </div>
               </div>
 
+              {/* Preview Foto Kost */}
               <div className="field">
                 <label className="label">Preview Foto</label>
                 <div className="control">
@@ -399,6 +398,7 @@ const FormAddKost = () => {
                 </div>
               </div>
 
+              {/* Longitude */}
               <div className="field mb-4">
                 <label className="label">Longitude</label>
                 <div className="control">
@@ -411,6 +411,7 @@ const FormAddKost = () => {
                   />
                 </div>
               </div>
+              {/* Latitude */}
               <div className="field mb-4">
                 <label className="label">Latitude</label>
                 <div className="control">
