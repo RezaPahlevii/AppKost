@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Card, CardImg, Col, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux'
-import rumah from "./../image/rumah.jpg";
+// import rumah from "./../image/rumah.jpg";
 
 const Welcome = () => {
   const {user} = useSelector((state)=> state.auth);
@@ -33,7 +33,7 @@ const Welcome = () => {
                       <p>Kost Putra</p>
                     </Col>
                     <Col className='text-end'>
-                    <CardImg  style={myImageStyle} variant="top" src={rumah} />
+                    <CardImg  style={myImageStyle} variant="top" src={kost.foto_kost} />
                     </Col>
                     <Row className='ml-3 '>
                       <Col>

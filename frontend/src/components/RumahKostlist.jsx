@@ -48,7 +48,7 @@ const RumahKostlist = () => {
           <tbody>
             {kosts.map((kost, index) => (
               <tr key={kosts.uuid}>
-                <td scope="row">{index + 1}</td>
+                <td >{index + 1}</td>
                 <td>{kost.nama}</td>
                 <td>{kost.harga}</td>
                 <td>{kost.user.name}</td>

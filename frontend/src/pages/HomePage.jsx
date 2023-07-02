@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card, CardImg, Col, Container, Form, Row } from "react-bootstrap";
 // import RekomendasiKost from "../components/RekomendasiKost";
-import rumah from "./../image/rumah.jpg";
+// import rumah from "./../image/rumah.jpg";
 import rumah2 from "./../image/rumah2.jpg";
 import Banner from "../components/Banner";
 // import rumah3 from "./../image/rumah3.jpg";s
@@ -86,7 +86,7 @@ const HomePage = () => {
               .map((kost, index) => (
                 <Col key={kost.uuid} xs={12} sm={6} md={4} lg={3}>
                   <Card className="mb-3">
-                    <CardImg variant="top" src={rumah} />
+                    <CardImg variant="top" src={kost.foto_kost} />
                     <Card.Body>
                       <Card.Title>{kost.nama}</Card.Title>
                       <Card.Text>{kost.harga}</Card.Text>
@@ -126,6 +126,8 @@ const HomePage = () => {
             />
           </div> */}
         </div>
+
+        
       </Container>
       <Footer2 />
     </div>

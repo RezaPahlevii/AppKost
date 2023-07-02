@@ -2,6 +2,7 @@ import Kost from "../models/KostModel.js";
 import Users from "../models/UserModel.js";
 // import Fasilitas from "../models/FasilitasModel.js";
 import { Op } from "sequelize";
+import path from "path";
 
 export const getKost = async (req, res) => {
   try {
@@ -133,6 +134,73 @@ export const getKostById = async (req, res) => {
     res.status(500).json({ msg: error.message });
   }
 };
+
+// export const createKost = async (req, res) => {
+//   const {
+//     nama,
+//     no_hp,
+//     harga,
+//     desa,
+//     alamat,
+//     jk,
+//     f_kamar,
+//     peraturan_kost,
+//     catatan_tambahan,
+//     longitude,
+//     latitude,
+//   } = req.body;
+  
+//   try {
+//     if (req.file === null) {
+//       return res.status(400).json({ msg: "No File Uploaded" });
+//     }
+    
+//     const file = req.file;
+//     const fileSize = file.size;
+//     const ext = path.extname(file.originalname);
+//     const allowedTypes = ['.png', '.jpg', '.jpeg'];
+    
+//     if (!allowedTypes.includes(ext.toLowerCase())) {
+//       return res.status(422).json({ msg: "Foto harus dalam format PNG, JPG, atau JPEG" });
+//     }
+    
+//     if (fileSize > 5 * 1024 * 1024) {
+//       return res.status(422).json({ msg: "Ukuran foto harus kurang dari 5 MB" });
+//     }
+    
+//     const fileName = `${Date.now()}${ext}`;
+//     const url = `${req.protocol}://${req.get("host")}/image/${fileName}`;
+    
+//     file.mv(`public/images/${fileName}`, async (err) => {
+//       if (err) {
+//         return res.status(500).json({ msg: err.message });
+//       }
+      
+//       try {
+//         await Kost.create({
+//           nama,
+//           no_hp,
+//           harga,
+//           desa,
+//           alamat,
+//           jk,
+//           f_kamar,
+//           peraturan_kost,
+//           catatan_tambahan,
+//           foto_kost: fileName,
+//           longitude,
+//           latitude,
+//           userId: req.userId,
+//         });
+//         res.status(201).json({ msg: "Berhasil menambahkan kamar kost" });
+//       } catch (error) {
+//         res.status(500).json({ msg: error.message });
+//       }
+//     });
+//   } catch (error) {
+//     res.status(500).json({ msg: error.message });
+//   }
+// };
 
 export const createKost = async (req, res) => {
   const {
@@ -351,31 +419,23 @@ export const filterKostByFacilities = async (req, res) => {
   }
 };
 
-// export const filterKostByFacilities = async (req, res) => {
+// export const saveFoto =(req, res)=>{
+//   if(req.file === null) return res.status(400).json({msg: "No File Uploaded"});
+//   const file = req.files.file;
+//   const fileSize = file.data.length;
+//   const ext = path.extname(file.name);
+//   const url = `${req.protocol}://${req.get("host")}/image/${fileName}`;
+//   const allowedType = [' png','.jpg','jpeg'];
+
+//   if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({msg: "foto harus di bawah 5 MB"});
+// }
+
+// file.mv(`.public/images/${fileName}`), async(err)=>{
+//   if(err) return res.status(500).json({msg: err.message});
 //   try {
-//     const { facilities } = req.query;
-
-//     // Split string facilities menjadi array
-//     const facilitiesArray = facilities.split(',');
-
-//     // Filter pencarian berdasarkan fasilitas
-//     const response = await Kost.findAll({
-//       attributes: ['uuid', 'nama', 'harga'],
-//       where: {
-//         f_kamar: {
-//           [Op.contains]: facilitiesArray
-//         }
-//       },
-//       include: [
-//         {
-//           model: Users,
-//           attributes: ['name', 'email'],
-//         },
-//       ],
-//     });
-
-//     res.status(200).json(response);
+//     await Kost.create({image: fileName, url: url});
+//     res.status(201).json({msg: "foto kost berhasil di upload"});
 //   } catch (error) {
-//     res.status(500).json({ msg: error.message });
+//     console.log(error.message);
 //   }
-// };
+// }
