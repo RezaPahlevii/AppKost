@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { Form } from "react-bootstrap";
+import { MapContainer, TileLayer, Marker, Popup, Tooltip } from "react-leaflet";
+import { Icon, divIcon } from "leaflet";
+// import "../css/maps.css";
+import "leaflet/dist/leaflet.css";
+import MarkerClusterGroup from "react-leaflet-cluster";
 
 const FormEditKost = () => {
   const [nama, setNama] = useState("");
@@ -20,6 +25,9 @@ const FormEditKost = () => {
   const [previews, setPreviews] = useState([]);
   const navigate = useNavigate();
   const { id } = useParams();
+  const [markerPosition, setMarkerPosition] = useState([
+    1.4585110731407618, 102.15337262025002,
+  ]);
 
   // tampilkan data form edit sesuai record database
   useEffect(() => {
@@ -118,7 +126,19 @@ const FormEditKost = () => {
     });
   };
 
-  
+  const position = [1.4583828821304539, 102.15096143773447];
+
+  const customIcon = new Icon({
+    iconUrl: require("../image/pinLokasi.png"),
+    iconSize: [40, 40],
+  });
+
+  const createCustomClusterIcon = (cluster) => {
+    return new divIcon({
+      html: `<div class="cluster-icon">${cluster.getChildCount()}</div>`,
+    });
+  };
+
   return (
     <div>
       <h1 className="title">Rumah Kost</h1>
@@ -154,6 +174,7 @@ const FormEditKost = () => {
                   />
                 </div>
               </div>
+
               <div className="field mb-4">
                 <label className="label">Nomor Whatsapp</label>
                 <div className="control">
@@ -169,9 +190,12 @@ const FormEditKost = () => {
 
               <div className="field mb-4">
                 <label className="label">Desa</label>
-                <Form.Select onChange={(e) => setDesa(e.target.value)} value={desa}>
+                <Form.Select
+                  onChange={(e) => setDesa(e.target.value)}
+                  value={desa}
+                >
                   <option hidden>Pilih desa</option>
-                  <option >Sungai Alam</option>
+                  <option>Sungai Alam</option>
                   <option>Air Putih</option>
                 </Form.Select>
               </div>
@@ -422,7 +446,7 @@ const FormEditKost = () => {
                 </div>
               </div>
 
-              <div className="field mb-4">
+              {/* <div className="field mb-4">
                 <label className="label">Longitude</label>
                 <div className="control">
                   <input
@@ -433,11 +457,13 @@ const FormEditKost = () => {
                     placeholder="Longitude"
                   />
                 </div>
-              </div>
-              <div className="field mb-4">
-                <label className="label">Latitude</label>
+              </div> */}
+
+              <div className="field mt-5">
+                <label className="label">Alamat Kordinat</label>
                 <div className="control">
                   <input
+                    readOnly
                     type="text"
                     className="input"
                     value={latitude}
@@ -445,10 +471,45 @@ const FormEditKost = () => {
                     placeholder="Latitude"
                   />
                 </div>
+               
+              </div>
+
+              <div>
+              <p className="text-danger">(Cek kembali alamat rumah kost anda di peta, jika sudah benar maka anda bisa save)</p>
+                <MapContainer
+                  style={{ height: "500px", width: "100%" }}
+                  s
+                  center={position}
+                  zoom={15}
+                  scrollWheelZoom={false}
+                >
+                  <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  />
+
+                  <MarkerClusterGroup
+                    chunkedLoading
+                    iconCreateFunction={createCustomClusterIcon}
+                  >
+                    <Marker
+                      position={markerPosition}
+                      icon={customIcon}
+                      draggable
+                      eventHandlers={{
+                        dragend: (e) => {
+                          const { lat, lng } = e.target.getLatLng();
+                          setMarkerPosition([lat, lng]);
+                          setLatitude(`${lat}, ${lng}`); // Memperbarui nilai input alamat koordinat
+                        },
+                      }}
+                    ></Marker>
+                  </MarkerClusterGroup>
+                </MapContainer>
               </div>
 
               <form>
-                <div className="field mb-4">
+                <div className="field mt-4">
                   <div className="control">
                     <button
                       type="submit"

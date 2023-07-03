@@ -3,6 +3,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import "../css/checkboxFormAddKost.css";
+import { MapContainer, TileLayer, Marker, Popup, Tooltip } from "react-leaflet";
+import { Icon, divIcon } from "leaflet";
+// import "../css/maps.css";
+import "leaflet/dist/leaflet.css";
+import MarkerClusterGroup from "react-leaflet-cluster";
 
 const FormAddKost = () => {
   const [nama, setNama] = useState("");
@@ -21,6 +26,9 @@ const FormAddKost = () => {
   const [foto_kost, setFoto_kost] = useState("");
   const [previews, setPreviews] = useState([]);
   // const [images, setImages] = useState([]);
+  const [markerPosition, setMarkerPosition] = useState([
+    1.4585110731407618, 102.15337262025002,
+  ]);
 
   const saveKost = async (e) => {
     e.preventDefault();
@@ -43,18 +51,18 @@ const FormAddKost = () => {
       // formData.append("latitude", latitude || "");
 
       await axios.post("http://localhost:5000/rumah-kost", {
-          nama: nama,
-          harga: harga,
-          no_hp: no_hp,
-          desa: desa,
-          alamat: alamat,
-          jk: jk,
-          f_kamar: f_kamar,
-          peraturan_kost: peraturan_kost,
-          catatan_tambahan: catatan_tambahan,
-          foto_kost: foto_kost,
-          longitude: longitude,
-          latitude: latitude
+        nama: nama,
+        harga: harga,
+        no_hp: no_hp,
+        desa: desa,
+        alamat: alamat,
+        jk: jk,
+        f_kamar: f_kamar,
+        peraturan_kost: peraturan_kost,
+        catatan_tambahan: catatan_tambahan,
+        foto_kost: foto_kost,
+        longitude: longitude,
+        latitude: latitude,
       });
       navigate("/rumah-kost");
     } catch (error) {
@@ -112,6 +120,19 @@ const FormAddKost = () => {
   //   e.preventDefault();
   //   // Lakukan tindakan pengiriman formulir
   // };
+
+  const position = [1.4583828821304539, 102.15096143773447];
+
+  const customIcon = new Icon({
+    iconUrl: require("../image/pinLokasi.png"),
+    iconSize: [40, 40],
+  });
+
+  const createCustomClusterIcon = (cluster) => {
+    return new divIcon({
+      html: `<div class="cluster-icon">${cluster.getChildCount()}</div>`,
+    });
+  };
 
   return (
     <div>
@@ -407,7 +428,7 @@ const FormAddKost = () => {
                 </div>
               </div>
 
-              {/* Longitude */}
+              {/* Longitude
               <div className="field mb-4">
                 <label className="label">Longitude</label>
                 <div className="control">
@@ -419,12 +440,13 @@ const FormAddKost = () => {
                     placeholder="Longitude"
                   />
                 </div>
-              </div>
+              </div> */}
               {/* Latitude */}
               <div className="field mb-4">
-                <label className="label">Latitude</label>
+                <label className="label">Alamat Kordinat</label>
                 <div className="control">
                   <input
+                    readOnly
                     type="text"
                     className="input"
                     value={latitude}
@@ -434,8 +456,41 @@ const FormAddKost = () => {
                 </div>
               </div>
 
+              <div className="pt-3">
+                <MapContainer
+                  style={{ height: "500px", width: "100%" }}
+                  s
+                  center={position}
+                  zoom={15}
+                  scrollWheelZoom={false}
+                >
+                  <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  />
+
+                  <MarkerClusterGroup
+                    chunkedLoading
+                    iconCreateFunction={createCustomClusterIcon}
+                  >
+                    <Marker
+                      position={markerPosition}
+                      icon={customIcon}
+                      draggable
+                      eventHandlers={{
+                        dragend: (e) => {
+                          const { lat, lng } = e.target.getLatLng();
+                          setMarkerPosition([lat, lng]);
+                          setLatitude(`${lat}, ${lng}`); // Memperbarui nilai input alamat koordinat
+                        },
+                      }}
+                    ></Marker>
+                  </MarkerClusterGroup>
+                </MapContainer>
+              </div>
+
               <form>
-                <div className="field mb-4">
+                <div className="field mb-4 mt-3">
                   <div className="control">
                     <button
                       type="submit"
