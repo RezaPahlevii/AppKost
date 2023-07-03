@@ -19,6 +19,7 @@ import EditBanner from './pages/EditBanner';
 import EditProfilPemilik from './pages/EditProfilPemilik';
 import LoginRegister from './pages/LoginRegister';
 import Maps from './pages/Maps';
+import TestMap from './components/TestMap';
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
       </Routes>
       <Routes>
         <Route path="/" element={<HomePage/>}/>
+        <Route path="/test" element={<TestMap/>}/>
         <Route path="/maps" element={<Maps/>}/>
         <Route path="/detail-kost" element={<DetailKost/>}/>
         <Route path="/kost-list" element={<ListKost/>}/>
