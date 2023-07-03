@@ -36,6 +36,20 @@ const Footer2 = () => {
             Tentang Kami
             </NavLink>
             </li>
+            <li className='list-unstyled mb-2'>
+            <NavLink
+            style={{ textDecoration: "none", paddingRight: 15, color: "green" }}
+            to={"/maps"}>
+            Maps Rumah Kost
+            </NavLink>
+            </li>
+            <li className='list-unstyled mb-2'>
+            <NavLink
+            style={{ textDecoration: "none", paddingRight: 15, color: "green" }}
+            to={"/kost-list"}>
+           List Rumah Kost
+            </NavLink>
+            </li>
           </ul>
         </Col>
         <Col className='col col-lg-3 col-md-6 col-12'>
