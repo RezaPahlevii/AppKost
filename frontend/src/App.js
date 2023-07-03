@@ -18,6 +18,7 @@ import EditFooter from './pages/EditFooter';
 import EditBanner from './pages/EditBanner';
 import EditProfilPemilik from './pages/EditProfilPemilik';
 import LoginRegister from './pages/LoginRegister';
+import Maps from './pages/Maps';
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
       </Routes>
       <Routes>
         <Route path="/" element={<HomePage/>}/>
+        <Route path="/maps" element={<Maps/>}/>
         <Route path="/detail-kost" element={<DetailKost/>}/>
         <Route path="/kost-list" element={<ListKost/>}/>
         <Route path="/pusat-bantuan" element={<PusatBantuan/>}/>

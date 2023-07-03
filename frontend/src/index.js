@@ -9,6 +9,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import axios from "axios";
 
+
 axios.defaults.withCredentials = true;
 
 const container = document.getElementById('root');
