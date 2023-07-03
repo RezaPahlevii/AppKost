@@ -40,7 +40,7 @@ const Footer2 = () => {
             <NavLink
             style={{ textDecoration: "none", paddingRight: 15, color: "green" }}
             to={"/maps"}>
-            Maps Rumah Kost
+            Maps
             </NavLink>
             </li>
             <li className='list-unstyled mb-2'>
