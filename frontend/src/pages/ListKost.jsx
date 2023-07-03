@@ -16,6 +16,7 @@ import axios from "axios";
 import Footer2 from "../components/Footer2";
 import rumah from "./../image/rumah.jpg";
 import "../css/ListKost.css";
+import { useNavigate } from "react-router-dom";
 // import Rumah2 from "./../image/rumah2.jpg";
 // import Rumah3 from "./../image/rumah3.jpg";
 // import Rumah4 from "./../image/rumah4.jpg";
@@ -23,6 +24,7 @@ import "../css/ListKost.css";
 const ListKost = () => {
   const [kosts, setKosts] = useState([]);
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
   console.log(search);
 
   const getRekomendasiKosts = async () => {
@@ -39,6 +41,10 @@ const ListKost = () => {
   useEffect(() => {
     getRekomendasiKosts();
   }, []);
+
+  const buttonFullMaps =()=>{
+    navigate("/maps");
+  }
 
   return (
     <div>
@@ -131,6 +137,7 @@ const ListKost = () => {
           </Col>
           <Col className="" xs={12} lg={5}>
             <Maps />
+            <Button onClick={buttonFullMaps} className="mt-3">Full Maps</Button>
           </Col>
         </Row>
       </Container>

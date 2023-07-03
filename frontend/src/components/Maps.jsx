@@ -37,7 +37,7 @@ const createCustomClusterIcon = (cluster)=>{
 
 const Maps = () => {
   return (
-    <div>
+    <div className="full-maps">
       <div className="pt-3">
         <MapContainer center={position} zoom={15} scrollWheelZoom={true}>
           <TileLayer
