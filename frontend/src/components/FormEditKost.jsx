@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { Form } from "react-bootstrap";
-import { MapContainer, TileLayer, Marker, Popup, Tooltip } from "react-leaflet";
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import { Icon, divIcon } from "leaflet";
 // import "../css/maps.css";
 import "leaflet/dist/leaflet.css";
@@ -18,8 +18,7 @@ const FormEditKost = () => {
   const [f_kamar, setF_kamar] = useState([]);
   const [peraturan_kost, setPeraturan_kost] = useState([]);
   const [catatan_tambahan, setCatatan_tambahan] = useState("");
-  const [longitude, setLongitude] = useState("");
-  const [latitude, setLatitude] = useState("");
+  const [kordinat, setKordinat] = useState("");
   const [msg, setMsg] = useState("");
   const [foto_kost, setFoto_kost] = useState("");
   const [previews, setPreviews] = useState([]);
@@ -46,8 +45,7 @@ const FormEditKost = () => {
         setPeraturan_kost(response.data.peraturan_kost);
         setCatatan_tambahan(response.data.catatan_tambahan);
         setFoto_kost(response.data.foto_kost);
-        setLongitude(response.data.longitude);
-        setLatitude(response.data.latitude);
+        setKordinat(response.data.kordinat);
       } catch (error) {
         if (error.response) {
           setMsg(error.response.data.msg);
@@ -71,8 +69,7 @@ const FormEditKost = () => {
         peraturan_kost: peraturan_kost,
         catatan_tambahan: catatan_tambahan,
         foto_kost: foto_kost,
-        longitude: longitude,
-        latitude: latitude,
+        kordinat: kordinat,
       });
       navigate("/rumah-kost");
     } catch (error) {
@@ -446,19 +443,6 @@ const FormEditKost = () => {
                 </div>
               </div>
 
-              {/* <div className="field mb-4">
-                <label className="label">Longitude</label>
-                <div className="control">
-                  <input
-                    type="text"
-                    className="input"
-                    value={longitude}
-                    onChange={(e) => setLongitude(e.target.value)}
-                    placeholder="Longitude"
-                  />
-                </div>
-              </div> */}
-
               <div className="field mt-5">
                 <label className="label">Alamat Kordinat</label>
                 <div className="control">
@@ -466,9 +450,9 @@ const FormEditKost = () => {
                     readOnly
                     type="text"
                     className="input"
-                    value={latitude}
-                    onChange={(e) => setLatitude(e.target.value)}
-                    placeholder="Latitude"
+                    value={kordinat}
+                    onChange={(e) => setKordinat(e.target.value)}
+                    placeholder="Titik Kordinat"
                   />
                 </div>
                
@@ -500,7 +484,7 @@ const FormEditKost = () => {
                         dragend: (e) => {
                           const { lat, lng } = e.target.getLatLng();
                           setMarkerPosition([lat, lng]);
-                          setLatitude(`${lat}, ${lng}`); // Memperbarui nilai input alamat koordinat
+                          setKordinat(`${lat}, ${lng}`); // Memperbarui nilai input alamat koordinat
                         },
                       }}
                     ></Marker>
