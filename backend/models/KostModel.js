@@ -102,11 +102,7 @@ const Kost = db.define('kost',{
         this.setDataValue('foto_kost', JSON.stringify(value));
       },
    },
-   longitude:{
-       type: DataTypes.STRING,
-       allowNull: false
-   },
-   latitude:{
+   kordinat:{
        type: DataTypes.STRING,
        allowNull: false
    },

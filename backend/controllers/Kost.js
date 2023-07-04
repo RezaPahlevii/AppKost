@@ -2,7 +2,7 @@ import Kost from "../models/KostModel.js";
 import Users from "../models/UserModel.js";
 // import Fasilitas from "../models/FasilitasModel.js";
 import { Op } from "sequelize";
-import path from "path";
+// import path from "path";
 
 export const getKost = async (req, res) => {
   try {
@@ -21,8 +21,7 @@ export const getKost = async (req, res) => {
           "peraturan_kost",
           "catatan_tambahan",
           "foto_kost",
-          "longitude",
-          "latitude",
+          "kordinat"
         ],
         include: [
           {
@@ -45,8 +44,7 @@ export const getKost = async (req, res) => {
           "peraturan_kost",
           "catatan_tambahan",
           "foto_kost",
-          "longitude",
-          "latitude",
+          "kordinat"
         ],
         where: {
           userId: req.userId,
@@ -88,8 +86,7 @@ export const getKostById = async (req, res) => {
           "peraturan_kost",
           "catatan_tambahan",
           "foto_kost",
-          "longitude",
-          "latitude",
+          "kordinat"
         ],
         where: {
           id: kost.id,
@@ -115,8 +112,7 @@ export const getKostById = async (req, res) => {
           "peraturan_kost",
           "catatan_tambahan",
           "foto_kost",
-          "longitude",
-          "latitude",
+          "kordinat"
         ],
         where: {
           [Op.and]: [{ id: kost.id }, { userId: req.userId }],
@@ -214,8 +210,7 @@ export const createKost = async (req, res) => {
     peraturan_kost,
     catatan_tambahan,
     foto_kost,
-    longitude,
-    latitude,
+    kordinat
   } = req.body;
   try {
     await Kost.create({
@@ -229,8 +224,7 @@ export const createKost = async (req, res) => {
       peraturan_kost: peraturan_kost,
       catatan_tambahan: catatan_tambahan,
       foto_kost: foto_kost,
-      longitude: longitude,
-      latitude: latitude,
+      kordinat: kordinat,
       userId: req.userId,
     });
     res.status(201).json({ msg: "Berhasil menambahkan kamar kost" });
@@ -258,8 +252,7 @@ export const updateKost = async (req, res) => {
       peraturan_kost,
       catatan_tambahan,
       foto_kost,
-      longitude,
-      latitude,
+      kordinat
     } = req.body;
     if (req.role === "admin") {
       await Kost.update(
@@ -274,8 +267,7 @@ export const updateKost = async (req, res) => {
           peraturan_kost,
           catatan_tambahan,
           foto_kost,
-          longitude,
-          latitude,
+          kordinat
         },
         {
           where: {
@@ -298,8 +290,7 @@ export const updateKost = async (req, res) => {
           peraturan_kost,
           catatan_tambahan,
           foto_kost,
-          longitude,
-          latitude,
+          kordinat
         },
         {
           where: {
@@ -333,8 +324,7 @@ export const deleteKost = async (req, res) => {
       peraturan_kost,
       catatan_tambahan,
       foto_kost,
-      longitude,
-      latitude,
+      kordinat
     } = req.body;
     if (req.role === "admin") {
       await Kost.destroy({
@@ -374,8 +364,7 @@ export const getRekomendasiKost = async (req, res) => {
         "peraturan_kost",
         "catatan_tambahan",
         "foto_kost",
-        "longitude",
-        "latitude",
+        "kordinat"
       ],
       include: {
         model: Users,
