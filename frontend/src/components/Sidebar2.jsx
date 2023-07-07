@@ -3,6 +3,8 @@ import "../css/sidebar.css";
 // import logo from "../../Asset/logo.png";
 import { IoIosHome, IoIosLogOut, IoIosPeople, IoMdSpeedometer } from "react-icons/io";
 import { ImPlay } from "react-icons/im";
+import { AiOutlineSetting } from "react-icons/ai";
+import { VscDashboard } from "react-icons/vsc";
 import { BsQuestion } from "react-icons/bs";
 import { BiCarousel } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,18 +43,42 @@ const Sidebar = () => {
         <h3 className="divTitle">MENU USER</h3>
 
         <ul className="menuLists grid">
+        {user && (user.role === "pemilik kost" || user.role === "admin" ) &&(
           <li className="listItem">
             <a href="/dashboard" className="menuLink flex">
               <IoMdSpeedometer className="icon" />
               <span className="smallText">Dashboard</span>
             </a>
           </li>
+        )}
+
+          {user && (user.role === "pemilik kost" || user.role === "admin" ) &&(
           <li className="listItem ">
             <a href="/rumah-kost" className="menuLink flex">
               <IoIosHome className="icon" />
               <span className="smallText">Rumah Kost</span>
             </a>
           </li>
+          )}
+
+          {user && user.role === "pencari kost" &&(
+          <li className="listItem ">
+            <a href="/dashboard" className="menuLink flex">
+              <VscDashboard className="icon" />
+              <span className="smallText">Dashboard</span>
+            </a>
+          </li>
+          )}
+
+          {user && user.role === "pencari kost" &&(
+          <li className="listItem ">
+            <a href="/pengaturan-akun" className="menuLink flex">
+              <AiOutlineSetting className="icon" />
+              <span className="smallText">Pengaturan Akun</span>
+            </a>
+          </li>
+          )}
+
           {user && user.role === "admin" && (
             <>
           <li className="listItem">
@@ -61,7 +87,7 @@ const Sidebar = () => {
               <span className="smallText">Users</span>
             </a>
           </li>
-          <li className="listItem">
+          {/* <li className="listItem">
             <a href="/dashboard" className="menuLink flex">
               <ImPlay className="icon" />
               <span className="smallText">Sosmed</span>
@@ -78,7 +104,7 @@ const Sidebar = () => {
               <IoIosPeople className="icon" />
               <span className="smallText">Footer</span>
             </a>
-          </li>
+          </li> */}
             </>
           )}
         </ul>
