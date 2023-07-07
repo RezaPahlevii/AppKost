@@ -21,7 +21,7 @@ import { useNavigate } from "react-router-dom";
 // import Rumah3 from "./../image/rumah3.jpg";
 // import Rumah4 from "./../image/rumah4.jpg";
 
-const ListKost = () => {
+const ListKost = (props) => {
   const [kosts, setKosts] = useState([]);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
@@ -44,6 +44,10 @@ const ListKost = () => {
 
   const buttonFullMaps =()=>{
     navigate("/maps");
+  }
+
+  const handleDetailKost =(id)=>{
+    navigate(`/detail-kost/${id}`);
   }
 
   return (
@@ -104,7 +108,7 @@ const ListKost = () => {
                   );
                 })
                 .map((kost, index) => (
-                  <Card key={kost.uuid} className="mb-3">
+                  <Card onClick={handleDetailKost} key={kost.uuid} className="mb-3">
                     <Row>
                       <Col xs={5}>
                         <CardImg variant="top" src={rumah} />

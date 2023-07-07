@@ -46,10 +46,10 @@ function App() {
         <Route path="/" element={<HomePage/>}/>
         <Route path="/test" element={<TestMap/>}/>
         <Route path="/maps" element={<Maps/>}/>
-        <Route path="/detail-kost" element={<DetailKost/>}/>
         <Route path="/kost-list" element={<ListKost/>}/>
         <Route path="/pusat-bantuan" element={<PusatBantuan/>}/>
         <Route path="/tentang-kami" element={<TentangKami/>}/>
+        <Route path="/detail-kost/:id" element={<DetailKost/>}/>
       </Routes>
       </BrowserRouter>
     </div>
