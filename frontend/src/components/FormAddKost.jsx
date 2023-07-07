@@ -442,7 +442,6 @@ const FormAddKost = () => {
               <div className="pt-3">
                 <MapContainer
                   style={{ height: "500px", width: "100%" }}
-                  s
                   center={position}
                   zoom={15}
                   scrollWheelZoom={false}
