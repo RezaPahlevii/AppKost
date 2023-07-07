@@ -20,6 +20,7 @@ import EditProfilPemilik from './pages/EditProfilPemilik';
 import LoginRegister from './pages/LoginRegister';
 import Maps from './pages/Maps';
 import TestMap from './components/TestMap';
+import PengaturanAkunPencari from './components/PengaturanAkunPencari';
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
         <Route path="/banner-edit" element={<EditBanner/>}/>
         <Route path="/pencari-kost" element={<PencariKost/>}/>
         <Route path="/edit-profil-pemilik" element={<EditProfilPemilik/>}/>
+        <Route path="/pengaturan-akun" element={<PengaturanAkunPencari/>}/>
       </Routes>
       <Routes>
         <Route path="/" element={<HomePage/>}/>
