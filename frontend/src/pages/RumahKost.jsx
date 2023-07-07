@@ -9,6 +9,7 @@ const RumahKost = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {isError} = useSelector((state => state.auth));
+  const {user} = useSelector((state) => state.auth)
 
   useEffect(()=>{
     dispatch(getMe());
@@ -22,7 +23,9 @@ const RumahKost = () => {
 
   return (
   <Layout>
+     {user && (user.role === "pemilik kost" || user.role === "admin" ) &&(
     <RumahKostlist/>
+     )}
   </Layout>
   )
 }
