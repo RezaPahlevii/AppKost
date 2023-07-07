@@ -7,9 +7,11 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { Icon, divIcon, map } from "leaflet";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const DetailKost = () => {
 
+  const { id } = useParams();
   const [DetailKost, setDetailKost] = useState([]);
   const position = [1.4583828821304539, 102.15096143773447];
   const markers = [
@@ -45,6 +47,7 @@ const DetailKost = () => {
   useEffect(() => {
     getDetailKost();
   }, []);
+
 
   return (
     <div>
