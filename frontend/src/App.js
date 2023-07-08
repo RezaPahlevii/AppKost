@@ -21,6 +21,7 @@ import LoginRegister from './pages/LoginRegister';
 import Maps from './pages/Maps';
 import TestMap from './components/TestMap';
 import PengaturanAkunPencari from './components/PengaturanAkunPencari';
+import FormBiodataPenyewa from './pages/FormBiodataPenyewa';
 
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
         <Route path="/tentang-kami" element={<TentangKami/>}/>
         <Route exact path="/kost-list" element={<ListKost/>}/>
         <Route exact path="/rumah-kost/:id" element={<DetailKost/>}/>
+        <Route path="/form-biodata-penyewa" element={<FormBiodataPenyewa/>}/>
       </Routes>
       </BrowserRouter>
     </div>
