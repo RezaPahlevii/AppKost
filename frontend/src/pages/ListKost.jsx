@@ -16,39 +16,34 @@ import axios from "axios";
 import Footer2 from "../components/Footer2";
 import rumah from "./../image/rumah.jpg";
 import "../css/ListKost.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 // import Rumah2 from "./../image/rumah2.jpg";
 // import Rumah3 from "./../image/rumah3.jpg";
 // import Rumah4 from "./../image/rumah4.jpg";
 
-const ListKost = (props) => {
+const ListKost = () => {
   const [kosts, setKosts] = useState([]);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
   console.log(search);
-
-  const getRekomendasiKosts = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:5000/rekomendasi-kost"
-      );
-      setKosts(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { id } = useParams();
 
   useEffect(() => {
-    getRekomendasiKosts();
+    getKosts();
   }, []);
+
+  const getKosts = async () => {
+    const response = await axios.get("http://localhost:5000/rumah-kost");
+    setKosts(response.data);
+  };
 
   const buttonFullMaps =()=>{
     navigate("/maps");
   }
 
-  const handleDetailKost =(id)=>{
-    navigate(`/detail-kost/${id}`);
-  }
+  // const handleDetailKost =()=>{
+  //   navigate(`/rumah-kost/${id}`);
+  // }
 
   return (
     <div>
@@ -108,7 +103,7 @@ const ListKost = (props) => {
                   );
                 })
                 .map((kost, index) => (
-                  <Card onClick={handleDetailKost} key={kost.uuid} className="mb-3">
+                  <Card key={kost.uuid} className="mb-3">
                     <Row>
                       <Col xs={5}>
                         <CardImg variant="top" src={rumah} />
@@ -134,6 +129,11 @@ const ListKost = (props) => {
                           </Row>
                         </Card.Body>
                       </Col>
+                      <Link
+                    to={`/rumah-kost/${kost.uuid}`} 
+                  >
+                    View
+                  </Link>
                     </Row>
                   </Card>
                 ))}

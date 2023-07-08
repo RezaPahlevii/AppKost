@@ -11,8 +11,11 @@ import { useParams } from "react-router-dom";
 
 const DetailKost = () => {
 
+  const [detailKost, setDetailKost] = useState([]);
+  const [nama, setNama] = useState("");
+  const [harga, setHarga] = useState("");
+  const [msg, setMsg] = useState("");
   const { id } = useParams();
-  const [DetailKost, setDetailKost] = useState([]);
   const position = [1.4583828821304539, 102.15096143773447];
   const markers = [
     {
@@ -33,27 +36,30 @@ const DetailKost = () => {
     })
   }
 
-  const getDetailKost = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:5000/rekomendasi-kost"
-      );
-      setDetailKost(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+  // tampilkan data form edit sesuai record database
   useEffect(() => {
-    getDetailKost();
-  }, []);
+    const getKostById = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/rumah-kost/${id}`
+        );
+        setNama(response.data.nama);
+        setHarga(response.data.harga);
+      } catch (error) {
+        if (error.response) {
+          setMsg(error.response.data.msg);
+        }
+      }
+    };
+    getKostById();
+  }, [id]);
 
 
   return (
     <div>
       <Nav2 />
-      <Container>
-        {DetailKost.map((kost, index) => (
+      <Container className="pt-3">
+       
         <>
         <Row>
           <Col>
@@ -93,7 +99,8 @@ const DetailKost = () => {
             <div>
               <h3>
                 <strong>
-                {kost.nama}
+                {nama} <br/>
+                {harga}
                 </strong>
               </h3>
               <p>
@@ -217,7 +224,7 @@ const DetailKost = () => {
           </Col>
         </Row>
           </>
-          ))}
+         
       </Container>
       <Footer2/>
     </div>
