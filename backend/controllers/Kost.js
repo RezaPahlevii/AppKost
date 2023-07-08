@@ -131,73 +131,6 @@ export const getKostById = async (req, res) => {
   }
 };
 
-// export const createKost = async (req, res) => {
-//   const {
-//     nama,
-//     no_hp,
-//     harga,
-//     desa,
-//     alamat,
-//     jk,
-//     f_kamar,
-//     peraturan_kost,
-//     catatan_tambahan,
-//     longitude,
-//     latitude,
-//   } = req.body;
-  
-//   try {
-//     if (req.file === null) {
-//       return res.status(400).json({ msg: "No File Uploaded" });
-//     }
-    
-//     const file = req.file;
-//     const fileSize = file.size;
-//     const ext = path.extname(file.originalname);
-//     const allowedTypes = ['.png', '.jpg', '.jpeg'];
-    
-//     if (!allowedTypes.includes(ext.toLowerCase())) {
-//       return res.status(422).json({ msg: "Foto harus dalam format PNG, JPG, atau JPEG" });
-//     }
-    
-//     if (fileSize > 5 * 1024 * 1024) {
-//       return res.status(422).json({ msg: "Ukuran foto harus kurang dari 5 MB" });
-//     }
-    
-//     const fileName = `${Date.now()}${ext}`;
-//     const url = `${req.protocol}://${req.get("host")}/image/${fileName}`;
-    
-//     file.mv(`public/images/${fileName}`, async (err) => {
-//       if (err) {
-//         return res.status(500).json({ msg: err.message });
-//       }
-      
-//       try {
-//         await Kost.create({
-//           nama,
-//           no_hp,
-//           harga,
-//           desa,
-//           alamat,
-//           jk,
-//           f_kamar,
-//           peraturan_kost,
-//           catatan_tambahan,
-//           foto_kost: fileName,
-//           longitude,
-//           latitude,
-//           userId: req.userId,
-//         });
-//         res.status(201).json({ msg: "Berhasil menambahkan kamar kost" });
-//       } catch (error) {
-//         res.status(500).json({ msg: error.message });
-//       }
-//     });
-//   } catch (error) {
-//     res.status(500).json({ msg: error.message });
-//   }
-// };
-
 export const createKost = async (req, res) => {
   const {
     nama,
@@ -402,6 +335,76 @@ export const filterKostByFacilities = async (req, res) => {
       ],
     });
 
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
+export const getKostView = async (req, res) => {
+  try {
+    let response;
+    // Implementasi logika untuk mengambil data rekomendasi kost
+    response = await Kost.findAll({
+      attributes: [
+        "uuid",
+        "nama",
+        "harga",
+        "no_hp",
+        "desa",
+        "alamat",
+        "jk",
+        "f_kamar",
+        "peraturan_kost",
+        "catatan_tambahan",
+        "foto_kost",
+        "kordinat"
+      ],
+      include: {
+        model: Users,
+        attributes: ["name"],
+      },
+    });
+    res.json(response);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const getKostViewById = async (req, res) => {
+  try {
+    const kost = await Kost.findOne({
+      where: {
+        uuid: req.params.id,
+      },
+    });
+    if (!kost) return res.status(404).json({ msg: "Data tidak ditemukan" });
+    let response;
+      response = await Kost.findOne({
+        attributes: [
+          "uuid",
+          "nama",
+          "harga",
+          "no_hp",
+          "desa",
+          "alamat",
+          "jk",
+          "f_kamar",
+          "peraturan_kost",
+          "catatan_tambahan",
+          "foto_kost",
+          "kordinat"
+        ],
+        where: {
+          id: kost.id,
+        },
+        include: [
+          {
+            model: Users,
+            attributes: ["name", "email"],
+          },
+        ],
+      });
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json({ msg: error.message });
