@@ -33,7 +33,7 @@ const ListKost = () => {
   }, []);
 
   const getKosts = async () => {
-    const response = await axios.get("http://localhost:5000/rumah-kost");
+    const response = await axios.get("http://localhost:5000/rumah-kost-view");
     setKosts(response.data);
   };
 

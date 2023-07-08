@@ -16,7 +16,9 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { Icon, divIcon, map } from "leaflet";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { reset, getMe } from "../features/authSlice";
 
 const DetailKost = () => {
   const [detailKost, setDetailKost] = useState([]);
@@ -35,7 +37,10 @@ const DetailKost = () => {
   const [kordinat, setKordinat] = useState("");
   let [latitude, longitude] = kordinat ? kordinat.split(",") : [0, 0];
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
+  const {user} = useSelector((state) => state.auth)
   const petaPosition = [1.4583828821304539, 102.15096143773447];
   const markers = [
     {
@@ -61,7 +66,7 @@ const DetailKost = () => {
     const getKostById = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/rumah-kost/${id}`
+          `http://localhost:5000/rumah-kost-view/${id}`
         );
         setNama(response.data.nama);
         setHarga(response.data.harga);
@@ -84,7 +89,17 @@ const DetailKost = () => {
     getKostById();
   }, [id]);
 
- 
+
+const loginDulu = () => {
+  dispatch(getMe());
+  dispatch(reset());
+  navigate("/login");
+};
+
+const ajukanSewa =()=>{
+  navigate("/form-biodata-penyewa");
+}
+
   return (
     <div>
       <Nav2 />
@@ -267,7 +282,11 @@ const DetailKost = () => {
                 <h4 className="mb-3">
                   <strong>{harga}</strong> / bulan
                 </h4>
-                <Button variant="success">Ajukan Sewa</Button>
+                {user == null?(
+                  <Button onClick={loginDulu} variant="success">Ajukan Sewa</Button>
+                  ):(
+                  <Button onClick={ajukanSewa} variant="success">Ajukan Sewa</Button>
+                )}
               </Card>
             </Col>
           </Row>
