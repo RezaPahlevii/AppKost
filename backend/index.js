@@ -7,6 +7,7 @@ import SequelizeStore from "connect-session-sequelize";
 import UserRoute from "./routes/UserRoute.js";
 import KostRoute from "./routes/KostRoute.js";
 import AuthRoute from "./routes/AuthRoute.js";
+import BioUserRoute from "./routes/BioUserRoute.js";
 // import Fasilitas from "./routes/FasilitasRoute.js";
 dotenv.config();
 
@@ -41,6 +42,7 @@ app.use(express.json());
 app.use(UserRoute);
 app.use(KostRoute);
 app.use(AuthRoute);
+app.use(BioUserRoute);
 // app.use(Fasilitas);
 
 // store.sync();
