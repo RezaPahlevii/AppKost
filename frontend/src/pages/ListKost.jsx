@@ -33,7 +33,7 @@ const ListKost = () => {
   }, []);
 
   const getKosts = async () => {
-    const response = await axios.get("http://localhost:5000/rumah-kost-view");
+    const response = await axios.get("http://localhost:5000/rekomendasi-kost");
     setKosts(response.data);
   };
 
@@ -130,7 +130,7 @@ const ListKost = () => {
                         </Card.Body>
                       </Col>
                       <Link
-                    to={`/rumah-kost/${kost.uuid}`} 
+                    to={`/rumah-kost/detail/${kost.uuid}`} 
                   >
                     View
                   </Link>

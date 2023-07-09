@@ -66,7 +66,7 @@ const DetailKost = () => {
     const getKostById = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/rumah-kost-view/${id}`
+          `http://localhost:5000/rumah-kost/detail/${id}`
         );
         setNama(response.data.nama);
         setHarga(response.data.harga);

@@ -11,7 +11,7 @@ router.patch('/rumah-kost/:id', verifyUser, updateKost);
 router.delete('/rumah-kost/:id', verifyUser, deleteKost);
 router.get('/rekomendasi-kost', getRekomendasiKost);
 router.get('/filter-kost', filterKostByFacilities);
-router.get('/rumah-kost-view', getKostView);
-router.get('/rumah-kost-view/:id', getKostViewById);
+router.get('/rumah-kost/detail', getKostView);
+router.get('/rumah-kost/detail/:id', getKostViewById);
 
 export default router;

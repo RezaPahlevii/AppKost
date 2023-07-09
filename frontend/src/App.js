@@ -51,7 +51,7 @@ function App() {
         <Route path="/pusat-bantuan" element={<PusatBantuan/>}/>
         <Route path="/tentang-kami" element={<TentangKami/>}/>
         <Route exact path="/kost-list" element={<ListKost/>}/>
-        <Route exact path="/rumah-kost/:id" element={<DetailKost/>}/>
+        <Route exact path="/rumah-kost/detail/:id" element={<DetailKost/>}/>
         <Route path="/form-biodata-penyewa" element={<FormBiodataPenyewa/>}/>
         <Route path="/biodata-penyewa" element={<BiodataPenyewa/>}/>
       </Routes>
