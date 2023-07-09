@@ -93,11 +93,11 @@ const DetailKost = () => {
 const loginDulu = () => {
   dispatch(getMe());
   dispatch(reset());
-  navigate("/login");
+  window.open("/login", "_blank");
 };
 
 const ajukanSewa =()=>{
-  navigate("/form-biodata-penyewa");
+  window.open('/form-biodata-penyewa', '_blank');
 }
 
   return (
