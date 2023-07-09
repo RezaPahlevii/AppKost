@@ -1,9 +1,37 @@
-import React from 'react'
-import { Container } from 'react-bootstrap'
-import Nav2 from '../components/Nav2'
-import Footer2 from '../components/Footer2'
+import React, { useState } from 'react';
+import { Container } from 'react-bootstrap';
+import Nav2 from '../components/Nav2';
+import Footer2 from '../components/Footer2';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const FormBiodataPenyewa = () => {
+  const [nama, setNama] = useState("");
+  const [jk, setJK] = useState("");
+  const [umur, setUmur] = useState("");
+  const [NoWA, setNoWA] = useState("");
+  const [asal, setAsal] = useState("");
+  const [msg, setMsg] = useState("");
+  const navigate = useNavigate();
+
+  const saveBio = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:5000/biodata-penyewa", {
+        nama: nama,
+        jk: jk,
+        umur: umur,
+        NoWA: NoWA,
+        asal: asal
+      });
+      navigate("/biodata-penyewa");
+    } catch (error) {
+      if (error.response) {
+        setMsg(error.response.data.msg);
+      }
+    }
+  };
+  
   return (
     <div>
       <Nav2 />
@@ -16,14 +44,17 @@ const FormBiodataPenyewa = () => {
               <div className="card is-shadowless">
                 <div className="card-content">
                   <div className="content">
-                    <form>
+                    <form onSubmit={saveBio}>
+                      <p className="has-text-centered">{msg}</p>
                       <div className="field">
-                        <label className="label">Name</label>
+                        <label className="label">Nama</label>
                         <div className="control">
                           <input
                             type="text"
                             className="input"
-                            placeholder="Name"
+                            value={nama}
+                            onChange={(e) => setNama(e.target.value)}
+                            placeholder="Nama"
                           />
                         </div>
                       </div>
@@ -31,9 +62,9 @@ const FormBiodataPenyewa = () => {
                         <label className="label">Jenis Kelamin</label>
                         <div className="control">
                           <div className="select is-fullwidth">
-                            <select
-                              defaultValue="Laki-laki"
+                            <select value={jk} onChange={(e) => setJK(e.target.value)}
                             >
+                              <option hidden>Jenis Kelamin</option>
                               <option value="Laki-laki">Laki-laki</option>
                               <option value="Perempuan">Perempuan</option>
                             </select>
@@ -46,17 +77,9 @@ const FormBiodataPenyewa = () => {
                           <input
                             type="text"
                             className="input"
+                            value={umur}
+                            onChange={(e) => setUmur(e.target.value)}
                             placeholder="25 Tahun"
-                          />
-                        </div>
-                      </div>
-                      <div className="field">
-                        <label className="label">No HP</label>
-                        <div className="control">
-                          <input
-                            type="text"
-                            className="input"
-                            placeholder="Nomor Handphone"
                           />
                         </div>
                       </div>
@@ -66,6 +89,8 @@ const FormBiodataPenyewa = () => {
                           <input
                             type="text"
                             className="input"
+                            value={NoWA}
+                            onChange={(e) => setNoWA(e.target.value)}
                             placeholder="Nomor Whatsapp"
                           />
                         </div>
@@ -78,6 +103,8 @@ const FormBiodataPenyewa = () => {
                           <input
                             type="text"
                             className="input"
+                            value={asal}
+                            onChange={(e) => setAsal(e.target.value)}
                             placeholder="nama daerah anda berasal "
                           />
                         </div>
@@ -86,6 +113,7 @@ const FormBiodataPenyewa = () => {
                         <div className="control">
                               <button
                                 type="submit"
+                                onClick={saveBio}
                                 className="button is-success"
                               >
                                 Simpan
