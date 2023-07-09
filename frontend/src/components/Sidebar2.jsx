@@ -107,6 +107,12 @@ const Sidebar = () => {
           </li> */}
             </>
           )}
+          <li className="listItem">
+            <a href="/biodata-penyewa" className="menuLink flex">
+              <IoIosPeople className="icon" />
+              <span className="smallText">Biodata Penyewa</span>
+            </a>
+          </li>
         </ul>
       </div>
         </Row>
