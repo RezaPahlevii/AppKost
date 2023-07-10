@@ -56,7 +56,7 @@ console.log(getKosts)
                 <td>{kost.desa}</td>
                 <td>{kost.alamat}</td>
                 <td>{kost.jk}</td>
-                <td>{kost.f_kamar.join(", ")}</td>
+                <td>{kost.f_kamar}</td>
                 <td>{kost.peraturan_kost}</td>
                 <td>{kost.catatan_tambahan}</td>
                 {/* <td>{kost.foto_kost}</td> */}

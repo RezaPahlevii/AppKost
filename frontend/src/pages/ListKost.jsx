@@ -90,9 +90,8 @@ const ListKost = () => {
                   const nameLower = kost.nama.toLowerCase();
                   const priceLower = kost.harga.toString().toLowerCase();
                   const ownerNameLower = kost.user.name.toLowerCase();
-                  const filterFasilitas = kost.f_kamar.find((fasilitas) =>
-                    fasilitas.toLowerCase().includes(searchLower)
-                  );
+                  // const filterFasilitas = kost.f_kamar.find((fasilitas) =>
+                  //   fasilitas.toLowerCase().includes(searchLower));
 
                   return (
                     search.toLowerCase() === "" ||
@@ -116,7 +115,7 @@ const ListKost = () => {
                           <Row>
                           <Card.Text>Desa {kost.desa}<br/>{kost.alamat}</Card.Text> 
                           <Row>
-                          <Card.Text>{kost.f_kamar.slice(0, 5).join(", ")}</Card.Text>
+                          <Card.Text>{kost.f_kamar}</Card.Text>
                           </Row>
                           </Row>
                           <Row>

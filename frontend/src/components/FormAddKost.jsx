@@ -5,7 +5,6 @@ import { Form } from "react-bootstrap";
 import "../css/checkboxFormAddKost.css";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import { Icon, divIcon } from "leaflet";
-// import "../css/maps.css";
 import "leaflet/dist/leaflet.css";
 import MarkerClusterGroup from "react-leaflet-cluster";
 
@@ -20,45 +19,33 @@ const FormAddKost = () => {
   const [peraturan_kost, setPeraturan_kost] = useState([]);
   const [catatan_tambahan, setCatatan_tambahan] = useState("");
   const [kordinat, setKordinat] = useState("");
+  const [foto_kost, setFoto_kost] = useState("");
+  const [previews, setPreviews] = useState("");
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
-  const [foto_kost, setFoto_kost] = useState("");
-  const [previews, setPreviews] = useState([]);
-  // const [images, setImages] = useState([]);
   const [markerPosition, setMarkerPosition] = useState([
     1.4585110731407618, 102.15337262025002,
   ]);
 
   const saveKost = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("nama", nama);
+    formData.append("harga", harga);
+    formData.append("no_hp", no_hp);
+    formData.append("desa", desa);
+    formData.append("alamat", alamat);
+    formData.append("jk", jk);
+    formData.append("f_kamar", f_kamar);
+    formData.append("peraturan_kost", peraturan_kost);
+    formData.append("catatan_tambahan", catatan_tambahan);
+    formData.append("foto_kost", foto_kost);
+    formData.append("kordinat", kordinat);
     try {
-      // const formData = new FormData();
-      // for (let i = 0; i < foto_kost.length; i++) {
-      //   formData.append("foto_kost", foto_kost[i]);
-      // }
-
-      // formData.append("nama", nama || "");
-      // formData.append("harga", harga || "");
-      // formData.append("no_hp", no_hp || "");
-      // formData.append("desa", desa || "");
-      // formData.append("alamat", alamat || "");
-      // formData.append("jk", jk || "");
-      // formData.append("f_kamar", f_kamar || []);
-      // formData.append("peraturan_kost", peraturan_kost || []);
-      // formData.append("catatan_tambahan", catatan_tambahan || "");
-
-      await axios.post("http://localhost:5000/rumah-kost", {
-        nama: nama,
-        harga: harga,
-        no_hp: no_hp,
-        desa: desa,
-        alamat: alamat,
-        jk: jk,
-        f_kamar: f_kamar,
-        peraturan_kost: peraturan_kost,
-        catatan_tambahan: catatan_tambahan,
-        foto_kost: foto_kost,
-        kordinat: kordinat,
+      await axios.post("http://localhost:5000/rumah-kost", formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
       navigate("/rumah-kost");
     } catch (error) {
@@ -86,30 +73,10 @@ const FormAddKost = () => {
     }
   };
 
-  // const handleImageChange = (e) => {
-  //   const file = e.target.files[0];
-  //   setFoto_kost(file);
-  //   setPreview(URL.createObjectURL(file));
-  // };
-
-  const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
-
-    const foto_kost = [];
-    const previews = [];
-
-    files.forEach((file) => {
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        foto_kost.push(file);
-        previews.push(reader.result);
-        setFoto_kost(foto_kost);
-        setPreviews(previews);
-      };
-
-      reader.readAsDataURL(file);
-    });
+  const loadImage = (e) => {
+    const image = e.target.files[0];
+    setFoto_kost(image);
+    setPreviews(URL.createObjectURL(image));
   };
 
   // const handleSubmit = (e) => {
@@ -394,35 +361,36 @@ const FormAddKost = () => {
               </div>
 
               {/* Foto Kost */}
-              <div className="field">
+              {/* <div className="field">
                 <label className="label">Foto Kost</label>
                 <div className="control">
                   <input
                     type="file"
                     accept="image/*"
                     multiple
-                    onChange={handleImageChange}
+                    onChange={loadImage}
+                   
                   />
                 </div>
-              </div>
+              </div> */}
 
-              {/* Preview Foto Kost */}
               <div className="field">
-                <label className="label">Preview Foto</label>
+                <label className="label">Image</label>
                 <div className="control">
-                  <div className="columns is-multiline">
-                    {previews.map((preview, index) => (
-                      <div key={index} className="column is-one-third">
-                        <img
-                          src={preview}
-                          alt={`Preview ${index + 1}`}
-                          className="preview"
-                        />
-                      </div>
-                    ))}
-                  </div>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={loadImage}
+                      />
                 </div>
               </div>
+              {previews ? (
+                <figure className="image is-128x128">
+                  <img src={previews} alt="Preview Image" />
+                </figure>
+              ) : (
+                ""
+              )}
 
               {/* Kordinat */}
               <div className="field mb-4">
@@ -443,7 +411,7 @@ const FormAddKost = () => {
                 <MapContainer
                   style={{ height: "500px", width: "100%" }}
                   center={position}
-                  zoom={15}
+                  zoom={17}
                   scrollWheelZoom={false}
                 >
                   <TileLayer

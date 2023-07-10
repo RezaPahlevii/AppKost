@@ -72,9 +72,8 @@ const HomePage = () => {
                 const nameLower = kost.nama.toLowerCase();
                 const priceLower = kost.harga.toString().toLowerCase();
                 const ownerNameLower = kost.user.name.toLowerCase();
-                const filterFasilitas = kost.f_kamar.find((fasilitas) =>
-                fasilitas.toLowerCase().includes(searchLower)
-              );
+                // const filterFasilitas = kost.f_kamar((fasilitas) =>
+                // fasilitas.toLowerCase().includes(searchLower));
 
                 return search.toLowerCase() === "" ||
                 nameLower.includes(searchLower) ||
@@ -91,7 +90,7 @@ const HomePage = () => {
                       <Card.Title>{kost.nama}</Card.Title>
                       <Card.Text>{kost.harga}</Card.Text>
                       <Card.Text>{kost.user.name}</Card.Text>
-                      <Card.Text>{kost.f_kamar.slice(0, 4).join(", ")}</Card.Text>
+                      <Card.Text>{kost.f_kamar}</Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>

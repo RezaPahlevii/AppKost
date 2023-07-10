@@ -20,7 +20,7 @@ const FormEditKost = () => {
   const [catatan_tambahan, setCatatan_tambahan] = useState("");
   const [kordinat, setKordinat] = useState("");
   const [msg, setMsg] = useState("");
-  const [foto_kost, setFoto_kost] = useState("");
+  const [foto_kost, setFoto_kost] = useState([]);
   const [previews, setPreviews] = useState([]);
   const navigate = useNavigate();
   const { id } = useParams();
@@ -71,6 +71,7 @@ const FormEditKost = () => {
         foto_kost: foto_kost,
         kordinat: kordinat,
       });
+      console.log(nama)
       navigate("/rumah-kost");
     } catch (error) {
       if (error.response) {
@@ -464,7 +465,7 @@ const FormEditKost = () => {
                   style={{ height: "500px", width: "100%" }}
                   s
                   center={position}
-                  zoom={15}
+                  zoom={17}
                   scrollWheelZoom={false}
                 >
                   <TileLayer
