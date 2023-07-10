@@ -8,7 +8,7 @@ import UserRoute from "./routes/UserRoute.js";
 import KostRoute from "./routes/KostRoute.js";
 import AuthRoute from "./routes/AuthRoute.js";
 import BioUserRoute from "./routes/BioUserRoute.js";
-// import Fasilitas from "./routes/FasilitasRoute.js";
+import fileUpload from "express-fileupload";
 dotenv.config();
 
 const app = express();
@@ -39,6 +39,8 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use(fileUpload());
+app.use(express.static("public"));
 app.use(UserRoute);
 app.use(KostRoute);
 app.use(AuthRoute);

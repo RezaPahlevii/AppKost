@@ -56,51 +56,20 @@ const Kost = db.define('kost',{
            notEmpty: true
        }
    },
-   f_kamar:{
-       type: DataTypes.TEXT,
-       allowNull: false,
-       validate:{
-           notEmpty: true
-       },
-       get() {
-        const value = this.getDataValue('f_kamar');
-        return value ? JSON.parse(value) : [];
-      },
-      set(value) {
-        this.setDataValue('f_kamar', JSON.stringify(value));
-      },
-   },
-   peraturan_kost:{
-       type: DataTypes.STRING,
-       allowNull: false,
-       validate:{
-           notEmpty: true
-       },
-       get() {
-        const value = this.getDataValue('peraturan_kost');
-        return value ? JSON.parse(value) : [];
-      },
-      set(value) {
-        this.setDataValue('peraturan_kost', JSON.stringify(value));
-      },
-   },
    catatan_tambahan:{
        type: DataTypes.TEXT,
        allowNull: false
    },
    foto_kost:{
-       type: DataTypes.BLOB,
+       type: DataTypes.STRING,
        allowNull: false,
        validate:{
            notEmpty: true
-       },
-       get() {
-        const value = this.getDataValue('foto_kost');
-        return value ? JSON.parse(value) : [];
-      },
-      set(value) {
-        this.setDataValue('foto_kost', JSON.stringify(value));
-      },
+       }
+   },
+   url:{
+       type: DataTypes.STRING,
+       allowNull: false
    },
    kordinat:{
        type: DataTypes.STRING,

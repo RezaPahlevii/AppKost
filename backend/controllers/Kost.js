@@ -1,8 +1,8 @@
 import Kost from "../models/KostModel.js";
 import Users from "../models/UserModel.js";
-// import Fasilitas from "../models/FasilitasModel.js";
 import { Op } from "sequelize";
-// import path from "path";
+import path from "path";
+// import fs from "fs";
 
 export const getKost = async (req, res) => {
   try {
@@ -17,11 +17,10 @@ export const getKost = async (req, res) => {
           "desa",
           "alamat",
           "jk",
-          "f_kamar",
-          "peraturan_kost",
           "catatan_tambahan",
           "foto_kost",
-          "kordinat"
+          "url",
+          "kordinat",
         ],
         include: [
           {
@@ -40,11 +39,10 @@ export const getKost = async (req, res) => {
           "desa",
           "alamat",
           "jk",
-          "f_kamar",
-          "peraturan_kost",
           "catatan_tambahan",
           "foto_kost",
-          "kordinat"
+          "url",
+          "kordinat",
         ],
         where: {
           userId: req.userId,
@@ -82,11 +80,10 @@ export const getKostById = async (req, res) => {
           "desa",
           "alamat",
           "jk",
-          "f_kamar",
-          "peraturan_kost",
           "catatan_tambahan",
           "foto_kost",
-          "kordinat"
+          "url",
+          "kordinat",
         ],
         where: {
           id: kost.id,
@@ -108,11 +105,10 @@ export const getKostById = async (req, res) => {
           "desa",
           "alamat",
           "jk",
-          "f_kamar",
-          "peraturan_kost",
           "catatan_tambahan",
           "foto_kost",
-          "kordinat"
+          "url",
+          "kordinat",
         ],
         where: {
           [Op.and]: [{ id: kost.id }, { userId: req.userId }],
@@ -132,38 +128,47 @@ export const getKostById = async (req, res) => {
 };
 
 export const createKost = async (req, res) => {
-  const {
-    nama,
-    no_hp,
-    harga,
-    desa,
-    alamat,
-    jk,
-    f_kamar,
-    peraturan_kost,
-    catatan_tambahan,
-    foto_kost,
-    kordinat
-  } = req.body;
-  try {
-    await Kost.create({
-      nama: nama,
-      no_hp: no_hp,
-      harga: harga,
-      desa: desa,
-      alamat: alamat,
-      jk: jk,
-      f_kamar: f_kamar,
-      peraturan_kost: peraturan_kost,
-      catatan_tambahan: catatan_tambahan,
-      foto_kost: foto_kost,
-      kordinat: kordinat,
-      userId: req.userId,
-    });
-    res.status(201).json({ msg: "Berhasil menambahkan kamar kost" });
-  } catch (error) {
-    res.status(500).json({ msg: error.message });
-  }
+  if (req.files === null)
+    return res.status(400).json({ msg: "No File Uploaded" });
+    const file = req.files.foto_kost;
+    if (!file)
+    return res.status(400).json({ msg: "Invalid File" });
+    const fileSize = file.data.length;
+    const ext = path.extname(file.name);
+    const fileName = file.md5 + ext;
+    const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
+    const allowedType = ['.png','.jpg','.jpeg'];
+
+  if (!allowedType.includes(ext.toLowerCase()))
+    return res.status(422).json({ msg: "Invalid Images" });
+  if (fileSize > 5000000)
+    return res.status(422).json({ msg: "Image must be less than 5 MB" });
+
+  const { nama, no_hp, harga, desa, alamat, jk, catatan_tambahan, kordinat } =
+    req.body;
+
+  file.mv(`./public/images/${fileName}`, async (err) => {
+    if (err) return res.status(500).json({ msg: err.message });
+    try {
+      await Kost.create({
+        nama: nama,
+        no_hp: no_hp,
+        harga: harga,
+        desa: desa,
+        alamat: alamat,
+        jk: jk,
+        catatan_tambahan: catatan_tambahan,
+        foto_kost: fileName,
+        url: url,
+        kordinat: kordinat,
+        userId: req.userId,
+      });
+      res.status(201).json({ msg: "Berhasil menambahkan kamar kost" });
+    } catch (error) {
+      res.status(500).json({ msg: error.message });
+      console.log(error.message);
+    }
+  });
 };
 
 export const updateKost = async (req, res) => {
@@ -185,7 +190,7 @@ export const updateKost = async (req, res) => {
       peraturan_kost,
       catatan_tambahan,
       foto_kost,
-      kordinat
+      kordinat,
     } = req.body;
     if (req.role === "admin") {
       await Kost.update(
@@ -200,7 +205,7 @@ export const updateKost = async (req, res) => {
           peraturan_kost,
           catatan_tambahan,
           foto_kost,
-          kordinat
+          kordinat,
         },
         {
           where: {
@@ -223,7 +228,7 @@ export const updateKost = async (req, res) => {
           peraturan_kost,
           catatan_tambahan,
           foto_kost,
-          kordinat
+          kordinat,
         },
         {
           where: {
@@ -257,7 +262,7 @@ export const deleteKost = async (req, res) => {
       peraturan_kost,
       catatan_tambahan,
       foto_kost,
-      kordinat
+      kordinat,
     } = req.body;
     if (req.role === "admin") {
       await Kost.destroy({
@@ -297,7 +302,7 @@ export const getRekomendasiKost = async (req, res) => {
         "peraturan_kost",
         "catatan_tambahan",
         "foto_kost",
-        "kordinat"
+        "kordinat",
       ],
       include: {
         model: Users,
@@ -358,7 +363,7 @@ export const getKostView = async (req, res) => {
         "peraturan_kost",
         "catatan_tambahan",
         "foto_kost",
-        "kordinat"
+        "kordinat",
       ],
       include: {
         model: Users,
@@ -380,31 +385,31 @@ export const getKostViewById = async (req, res) => {
     });
     if (!kost) return res.status(404).json({ msg: "Data tidak ditemukan" });
     let response;
-      response = await Kost.findOne({
-        attributes: [
-          "uuid",
-          "nama",
-          "harga",
-          "no_hp",
-          "desa",
-          "alamat",
-          "jk",
-          "f_kamar",
-          "peraturan_kost",
-          "catatan_tambahan",
-          "foto_kost",
-          "kordinat"
-        ],
-        where: {
-          id: kost.id,
+    response = await Kost.findOne({
+      attributes: [
+        "uuid",
+        "nama",
+        "harga",
+        "no_hp",
+        "desa",
+        "alamat",
+        "jk",
+        "f_kamar",
+        "peraturan_kost",
+        "catatan_tambahan",
+        "foto_kost",
+        "kordinat",
+      ],
+      where: {
+        id: kost.id,
+      },
+      include: [
+        {
+          model: Users,
+          attributes: ["name", "email"],
         },
-        include: [
-          {
-            model: Users,
-            attributes: ["name", "email"],
-          },
-        ],
-      });
+      ],
+    });
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json({ msg: error.message });

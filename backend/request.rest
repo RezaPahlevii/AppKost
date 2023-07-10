@@ -93,12 +93,9 @@ Content-Type: application/json
     "desa": "Sungai aja",
     "alamat": "Jl. Bathin aja",
     "jk": "Putri",
-    "f_kamar": ["AC","Kulkas","Kasur"],
-    "peraturan_kost": "tidak untuk pasutri",
     "catatan_tambahan": "kost lantai 7",
     "foto_kost": "kost.jpg",
-    "longitude": "124569384",
-    "latitude": "07492649595"
+    "kordinat": "1.4586430868793208, 102.15335083123841"
 }
 // Apakah bisa 1 field f_kamar di isi dengan 
 // banyak fasilitas? pakai enum gitu? atau pakai text array?
