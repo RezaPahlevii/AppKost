@@ -8,7 +8,10 @@ import UserRoute from "./routes/UserRoute.js";
 import KostRoute from "./routes/KostRoute.js";
 import AuthRoute from "./routes/AuthRoute.js";
 import BioUserRoute from "./routes/BioUserRoute.js";
+import FotoKost from "./models/FotoKostModel.js";
 import fileUpload from "express-fileupload";
+import Fasilitas from "./models/FasilitasModel.js";
+import Peraturan from "./models/PeraturanModel.js";
 dotenv.config();
 
 const app = express();
@@ -19,9 +22,9 @@ const store = new sessionStore({
 });
 
 /**Genarate table otomatis di database kost_db */
-// (async()=>{
-//     await db.sync();
-// }) ();
+(async()=>{
+    await db.sync();
+}) ();
 
 app.use(session({
     secret: process.env.SESS_SECRET,
@@ -45,7 +48,9 @@ app.use(UserRoute);
 app.use(KostRoute);
 app.use(AuthRoute);
 app.use(BioUserRoute);
-// app.use(Fasilitas);
+app.use(FotoKost);
+app.use(Peraturan);
+app.use(Fasilitas);
 
 // store.sync();
 
