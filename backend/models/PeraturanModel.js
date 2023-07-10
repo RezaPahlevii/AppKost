@@ -4,8 +4,8 @@ import Kost from "./KostModel.js";
 
 const { DataTypes } = Sequelize;
 
-const Fasilitas = db.define(
-  "fasilitas_kost",
+const Peraturan = db.define(
+  "peraturan_kost",
   {
     nama_f: {
       type: DataTypes.STRING,
@@ -19,7 +19,7 @@ const Fasilitas = db.define(
     freezeTableName: true,
   }
 );
-Kost.hasMany(Fasilitas);
-Fasilitas.belongsTo(Kost);
+Kost.hasMany(Peraturan);
+Peraturan.belongsTo(Kost);
 
-export default Fasilitas;
+export default Peraturan;

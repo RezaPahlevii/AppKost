@@ -3,7 +3,7 @@ import db from "../config/Database.js";
 import Users from "./UserModel.js";
 
 const {DataTypes} = Sequelize;
-const Bio = db.define('biodata',{
+const Bio = db.define('biodata_users',{
     uuid:{
         type: DataTypes.STRING,
         defaultValue: DataTypes.UUIDV4,

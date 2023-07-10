@@ -60,17 +60,6 @@ const Kost = db.define('kost',{
        type: DataTypes.TEXT,
        allowNull: false
    },
-   foto_kost:{
-       type: DataTypes.STRING,
-       allowNull: false,
-       validate:{
-           notEmpty: true
-       }
-   },
-   url:{
-       type: DataTypes.STRING,
-       allowNull: false
-   },
    kordinat:{
        type: DataTypes.STRING,
        allowNull: false
