@@ -2,6 +2,7 @@ import Kost from "../models/KostModel.js";
 import Users from "../models/UserModel.js";
 import { Op } from "sequelize";
 import path from "path";
+import Foto from "../models/FotoKostModel.js";
 // import fs from "fs";
 
 export const getKost = async (req, res) => {
@@ -18,8 +19,6 @@ export const getKost = async (req, res) => {
           "alamat",
           "jk",
           "catatan_tambahan",
-          "foto_kost",
-          "url",
           "kordinat",
         ],
         include: [
@@ -40,8 +39,6 @@ export const getKost = async (req, res) => {
           "alamat",
           "jk",
           "catatan_tambahan",
-          "foto_kost",
-          "url",
           "kordinat",
         ],
         where: {
@@ -130,14 +127,13 @@ export const getKostById = async (req, res) => {
 export const createKost = async (req, res) => {
   if (req.files === null)
     return res.status(400).json({ msg: "No File Uploaded" });
-    const file = req.files.foto_kost;
-    if (!file)
-    return res.status(400).json({ msg: "Invalid File" });
-    const fileSize = file.data.length;
-    const ext = path.extname(file.name);
-    const fileName = file.md5 + ext;
-    const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
-    const allowedType = ['.png','.jpg','.jpeg'];
+  const file = req.files.foto_kost;
+  if (!file) return res.status(400).json({ msg: "Invalid File" });
+  const fileSize = file.data.length;
+  const ext = path.extname(file.name);
+  const fileName = file.md5 + ext;
+  const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
+  const allowedType = [".png", ".jpg", ".jpeg"];
 
   if (!allowedType.includes(ext.toLowerCase()))
     return res.status(422).json({ msg: "Invalid Images" });
@@ -150,7 +146,7 @@ export const createKost = async (req, res) => {
   file.mv(`./public/images/${fileName}`, async (err) => {
     if (err) return res.status(500).json({ msg: err.message });
     try {
-      await Kost.create({
+      const newKost = await Kost.create({
         nama: nama,
         no_hp: no_hp,
         harga: harga,
@@ -162,6 +158,12 @@ export const createKost = async (req, res) => {
         url: url,
         kordinat: kordinat,
         userId: req.userId,
+      });
+      // Simpan informasi foto ke tabel Foto
+      await Foto.create({
+        foto_kost: fileName,
+        url: url,
+        kostId: newKost.id, // Gunakan ID kost yang baru dibuat
       });
       res.status(201).json({ msg: "Berhasil menambahkan kamar kost" });
     } catch (error) {
