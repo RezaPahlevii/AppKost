@@ -15,8 +15,8 @@ const FormAddKost = () => {
   const [desa, setDesa] = useState("");
   const [alamat, setAlamat] = useState("");
   const [jk, setJk] = useState("");
-  const [f_kamar, setF_kamar] = useState([]);
-  const [peraturan_kost, setPeraturan_kost] = useState([]);
+  const [nama_f, setNama_f] = useState("");
+  const [peraturan, setPeraturan] = useState([]);
   const [catatan_tambahan, setCatatan_tambahan] = useState("");
   const [kordinat, setKordinat] = useState("");
   const [foto_kost, setFoto_kost] = useState("");
@@ -36,15 +36,15 @@ const FormAddKost = () => {
     formData.append("desa", desa);
     formData.append("alamat", alamat);
     formData.append("jk", jk);
-    formData.append("f_kamar", f_kamar);
-    formData.append("peraturan_kost", peraturan_kost);
+    formData.append("nama_f", nama_f);
+    formData.append("peraturan", peraturan);
     formData.append("catatan_tambahan", catatan_tambahan);
     formData.append("foto_kost", foto_kost);
     formData.append("kordinat", kordinat);
     try {
       await axios.post("http://localhost:5000/rumah-kost", formData, {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
       });
       navigate("/rumah-kost");
@@ -58,18 +58,18 @@ const FormAddKost = () => {
   const handleCheckboxChangeFasilitas = (e) => {
     const { value, checked } = e.target;
     if (checked) {
-      setF_kamar([...f_kamar, value]);
+      setNama_f([...nama_f, value]);
     } else {
-      setF_kamar(f_kamar.filter((item) => item !== value));
+      setNama_f(nama_f.filter((item) => item !== value));
     }
   };
 
   const handleCheckboxChangePeraturan = (e) => {
     const { value, checked } = e.target;
     if (checked) {
-      setPeraturan_kost([...peraturan_kost, value]);
+      setPeraturan([...peraturan, value]);
     } else {
-      setPeraturan_kost(peraturan_kost.filter((item) => item !== value));
+      setPeraturan(peraturan.filter((item) => item !== value));
     }
   };
 
@@ -196,7 +196,7 @@ const FormAddKost = () => {
                     label="Lemari"
                     value="Lemari"
                     className="checkbox-item"
-                    checked={f_kamar.includes("Lemari")}
+                    checked={nama_f.includes("Lemari")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                   <Form.Check
@@ -204,7 +204,7 @@ const FormAddKost = () => {
                     label="Kasur"
                     value="Kasur"
                     className="checkbox-item"
-                    checked={f_kamar.includes("Kasur")}
+                    checked={nama_f.includes("Kasur")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                   <Form.Check
@@ -212,7 +212,7 @@ const FormAddKost = () => {
                     label="Bantal"
                     value="Bantal"
                     className="checkbox-item"
-                    checked={f_kamar.includes("Bantal")}
+                    checked={nama_f.includes("Bantal")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                   <Form.Check
@@ -220,7 +220,7 @@ const FormAddKost = () => {
                     label="Kamar Mandi di Dalam"
                     value="Kamar Mandi di Dalam"
                     className="checkbox-item"
-                    checked={f_kamar.includes("Kamar Mandi di Dalam")}
+                    checked={nama_f.includes("Kamar Mandi di Dalam")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                   <Form.Check
@@ -228,7 +228,7 @@ const FormAddKost = () => {
                     label="Meja"
                     value="Meja"
                     className="checkbox-item"
-                    checked={f_kamar.includes("Meja")}
+                    checked={nama_f.includes("Meja")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                   <Form.Check
@@ -236,7 +236,7 @@ const FormAddKost = () => {
                     label="Kipas Angin"
                     value="Kipas Angin"
                     className="checkbox-item"
-                    checked={f_kamar.includes("Kipas Angin")}
+                    checked={nama_f.includes("Kipas Angin")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                 </div>
@@ -251,7 +251,7 @@ const FormAddKost = () => {
                     label="CCTV"
                     value="CCTV"
                     className="checkbox-item"
-                    checked={f_kamar.includes("CCTV")}
+                    checked={nama_f.includes("CCTV")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                   <Form.Check
@@ -259,14 +259,14 @@ const FormAddKost = () => {
                     label="Jendela Bertrali"
                     value="Jendela Bertrali"
                     className="checkbox-item"
-                    checked={f_kamar.includes("Jendela Bertrali")}
+                    checked={nama_f.includes("Jendela Bertrali")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                   <Form.Check
                     inline
                     label="Pagar"
                     value="Pagar"
-                    checked={f_kamar.includes("Pagar")}
+                    checked={nama_f.includes("Pagar")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                 </div>
@@ -281,7 +281,7 @@ const FormAddKost = () => {
                     label="Pengurus Kost"
                     value="Pengurus Kost"
                     className="checkbox-item"
-                    checked={f_kamar.includes("Pengurus Kost")}
+                    checked={nama_f.includes("Pengurus Kost")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                   <Form.Check
@@ -289,28 +289,28 @@ const FormAddKost = () => {
                     label="Wifi"
                     value="Wifi"
                     className="checkbox-item"
-                    checked={f_kamar.includes("Wifi")}
+                    checked={nama_f.includes("Wifi")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                   <Form.Check
                     inline
                     label="Jemuran"
                     value="Jemuran"
-                    checked={f_kamar.includes("Jemuran")}
+                    checked={nama_f.includes("Jemuran")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                   <Form.Check
                     inline
                     label="Parkir Motor"
                     value="Parkir Motor"
-                    checked={f_kamar.includes("Parkir Motor")}
+                    checked={nama_f.includes("Parkir Motor")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                   <Form.Check
                     inline
                     label="Dapur"
                     value="Dapur"
-                    checked={f_kamar.includes("Dapur")}
+                    checked={nama_f.includes("Dapur")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                 </div>
@@ -325,7 +325,7 @@ const FormAddKost = () => {
                     label="Khusus Mahasiswa"
                     value="Khusus Mahasiswa"
                     className="checkbox-item"
-                    checked={peraturan_kost.includes("Khusus Mahasiswa")}
+                    checked={peraturan.includes("Khusus Mahasiswa")}
                     onChange={handleCheckboxChangePeraturan}
                   />
                   <Form.Check
@@ -333,7 +333,7 @@ const FormAddKost = () => {
                     label="Pasutri"
                     value="Pasutri"
                     className="checkbox-item"
-                    checked={peraturan_kost.includes("Pasutri")}
+                    checked={peraturan.includes("Pasutri")}
                     onChange={handleCheckboxChangePeraturan}
                   />
                   <Form.Check
@@ -341,7 +341,7 @@ const FormAddKost = () => {
                     label="Jam Malam"
                     value="Jam Malam"
                     className="checkbox-item"
-                    checked={peraturan_kost.includes("Jam Malam")}
+                    checked={peraturan.includes("Jam Malam")}
                     onChange={handleCheckboxChangePeraturan}
                   />
                 </div>

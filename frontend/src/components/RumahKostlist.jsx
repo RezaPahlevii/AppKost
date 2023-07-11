@@ -18,7 +18,7 @@ const RumahKostlist = () => {
     await axios.delete(`http://localhost:5000/rumah-kost/${kostId}`);
     getKosts();
   };
-console.log(getKosts)
+  console.log(getKosts);
   return (
     <div>
       <h1 className="title">Rumah Kost</h1>
@@ -48,7 +48,7 @@ console.log(getKosts)
           <tbody>
             {kosts.map((kost, index) => (
               <tr key={kosts.uuid}>
-                <td >{index + 1}</td>
+                <td>{index + 1}</td>
                 <td>{kost.nama}</td>
                 <td>{kost.harga}</td>
                 <td>{kost.user.name}</td>
@@ -56,8 +56,12 @@ console.log(getKosts)
                 <td>{kost.desa}</td>
                 <td>{kost.alamat}</td>
                 <td>{kost.jk}</td>
-                <td>{kost.f_kamar}</td>
-                <td>{kost.peraturan_kost}</td>
+                <td>{kost.nama_f}</td>
+                <td>
+                  {kost.peraturan_kosts.map((peraturan, index) => (
+                    <span key={index}>{Object.values(peraturan)}</span>
+                  ))}
+                </td>
                 <td>{kost.catatan_tambahan}</td>
                 {/* <td>{kost.foto_kost}</td> */}
                 <td>
