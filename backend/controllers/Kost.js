@@ -3,6 +3,8 @@ import Users from "../models/UserModel.js";
 import { Op } from "sequelize";
 import path from "path";
 import Foto from "../models/FotoKostModel.js";
+import Peraturan from "../models/PeraturanModel.js";
+import Fasilitas from "../models/FasilitasModel.js";
 // import fs from "fs";
 
 export const getKost = async (req, res) => {
@@ -26,6 +28,10 @@ export const getKost = async (req, res) => {
             model: Users,
             attributes: ["name", "email"],
           },
+          {
+            model: Peraturan,
+            attributes: ["peraturan"],
+          }
         ],
       });
     } else {
@@ -48,6 +54,10 @@ export const getKost = async (req, res) => {
           {
             model: Users,
             attributes: ["name", "email"],
+          },
+          {
+            model: Peraturan,
+            attributes: ["peraturan"],
           },
         ],
       });
@@ -140,7 +150,7 @@ export const createKost = async (req, res) => {
   if (fileSize > 5000000)
     return res.status(422).json({ msg: "Image must be less than 5 MB" });
 
-  const { nama, no_hp, harga, desa, alamat, jk, catatan_tambahan, kordinat } =
+  const { nama, no_hp, harga, desa, alamat, jk, peraturan, nama_f, catatan_tambahan, kordinat } =
     req.body;
 
   file.mv(`./public/images/${fileName}`, async (err) => {
@@ -154,8 +164,6 @@ export const createKost = async (req, res) => {
         alamat: alamat,
         jk: jk,
         catatan_tambahan: catatan_tambahan,
-        foto_kost: fileName,
-        url: url,
         kordinat: kordinat,
         userId: req.userId,
       });
@@ -164,6 +172,14 @@ export const createKost = async (req, res) => {
         foto_kost: fileName,
         url: url,
         kostId: newKost.id, // Gunakan ID kost yang baru dibuat
+      });
+      await Peraturan.create({
+        peraturan: peraturan,
+        kostId: newKost.id
+      });
+      await Fasilitas.create({
+        nama_f: nama_f,
+        kostId: newKost.id
       });
       res.status(201).json({ msg: "Berhasil menambahkan kamar kost" });
     } catch (error) {

@@ -94,6 +94,8 @@ Content-Type: application/json
     "alamat": "Jl. Bathin aja",
     "jk": "Putri",
     "catatan_tambahan": "kost lantai 7",
+    "peraturan": "Khusus Mahasiswa",
+    "nama_f": "AC",
     "foto_kost": "kost.jpg",
     "kordinat": "1.4586430868793208, 102.15335083123841"
 }

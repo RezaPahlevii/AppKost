@@ -7,7 +7,7 @@ const { DataTypes } = Sequelize;
 const Peraturan = db.define(
   "peraturan_kost",
   {
-    nama_f: {
+    peraturan: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
