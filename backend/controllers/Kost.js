@@ -5,6 +5,7 @@ import path from "path";
 import Foto from "../models/FotoKostModel.js";
 import Peraturan from "../models/PeraturanModel.js";
 import Fasilitas from "../models/FasilitasModel.js";
+import KostFasilitas from "../models/KostFasilitasModel.js";
 // import fs from "fs";
 
 export const getKost = async (req, res) => {
@@ -177,9 +178,13 @@ export const createKost = async (req, res) => {
         peraturan: peraturan,
         kostId: newKost.id
       });
-      await Fasilitas.create({
+      const newFasilitas = await Fasilitas.create({
         nama_f: nama_f,
         kostId: newKost.id
+      });
+      await KostFasilitas.create({
+        kostId: newKost.id,
+        fasilitaId: newFasilitas.id
       });
       res.status(201).json({ msg: "Berhasil menambahkan kamar kost" });
     } catch (error) {

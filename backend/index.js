@@ -12,6 +12,7 @@ import FotoKost from "./models/FotoKostModel.js";
 import fileUpload from "express-fileupload";
 import Fasilitas from "./models/FasilitasModel.js";
 import Peraturan from "./models/PeraturanModel.js";
+import KostFasilitas from "./models/KostFasilitasModel.js";
 dotenv.config();
 
 const app = express();
@@ -51,6 +52,7 @@ app.use(BioUserRoute);
 app.use(FotoKost);
 app.use(Peraturan);
 app.use(Fasilitas);
+app.use(KostFasilitas);
 
 // store.sync();
 
