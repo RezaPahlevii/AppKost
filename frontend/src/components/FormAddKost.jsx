@@ -16,7 +16,7 @@ const FormAddKost = () => {
   const [alamat, setAlamat] = useState("");
   const [jk, setJk] = useState("");
   const [nama_f, setNama_f] = useState("");
-  const [peraturan, setPeraturan] = useState([]);
+  const [peraturan, setPeraturan] = useState("");
   const [catatan_tambahan, setCatatan_tambahan] = useState("");
   const [kordinat, setKordinat] = useState("");
   const [foto_kost, setFoto_kost] = useState("");
@@ -361,18 +361,7 @@ const FormAddKost = () => {
               </div>
 
               {/* Foto Kost */}
-              {/* <div className="field">
-                <label className="label">Foto Kost</label>
-                <div className="control">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    multiple
-                    onChange={loadImage}
-                   
-                  />
-                </div>
-              </div> */}
+
 
               <div className="field">
                 <label className="label">Image</label>
