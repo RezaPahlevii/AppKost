@@ -32,6 +32,10 @@ export const getKost = async (req, res) => {
           {
             model: Peraturan,
             attributes: ["peraturan"],
+          },
+          {
+            model: Fasilitas,
+            attributes: ["nama_f"],
           }
         ],
       });
