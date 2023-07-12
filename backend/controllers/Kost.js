@@ -36,7 +36,7 @@ export const getKost = async (req, res) => {
           {
             model: Fasilitas,
             attributes: ["nama_f"],
-          }
+          },
         ],
       });
     } else {
@@ -155,8 +155,18 @@ export const createKost = async (req, res) => {
   if (fileSize > 5000000)
     return res.status(422).json({ msg: "Image must be less than 5 MB" });
 
-  const { nama, no_hp, harga, desa, alamat, jk, peraturan, nama_f, catatan_tambahan, kordinat } =
-    req.body;
+  const {
+    nama,
+    no_hp,
+    harga,
+    desa,
+    alamat,
+    jk,
+    peraturan,
+    nama_f,
+    catatan_tambahan,
+    kordinat,
+  } = req.body;
 
   file.mv(`./public/images/${fileName}`, async (err) => {
     if (err) return res.status(500).json({ msg: err.message });
@@ -180,16 +190,38 @@ export const createKost = async (req, res) => {
       });
       await Peraturan.create({
         peraturan: peraturan,
-        kostId: newKost.id
-      });
-      const newFasilitas = await Fasilitas.create({
-        nama_f: nama_f,
-        kostId: newKost.id
-      });
-      await KostFasilitas.create({
         kostId: newKost.id,
-        fasilitaId: newFasilitas.id
       });
+      //==================================================================
+      // Menyimpan fasilitas kost
+      const existingFasilitas = [];
+      for (let i = 0; i < nama_f.length; i++) {
+        const fasilitasName = nama_f[i];
+
+        // Mencari fasilitas berdasarkan nama
+        let fasilitas = await Fasilitas.findOne({
+          where: { nama_f: fasilitasName },
+        });
+
+        if (!fasilitas) {
+          // Jika fasilitas belum ada, buat fasilitas baru
+          fasilitas = await Fasilitas.create({
+            nama_f: fasilitasName,
+          });
+        }
+
+        // Menyimpan relasi antara kost dan fasilitas
+        if (fasilitas) {
+          existingFasilitas.push(fasilitas.id); // Simpan ID fasilitas yang ada atau yang baru dibuat
+          await KostFasilitas.create({
+            kostId: newKost.id,
+            fasilitaId: fasilitas.id, // Gunakan ID fasilitas yang ada atau yang baru dibuat
+          });
+        }
+      }
+
+      console.log(existingFasilitas);
+
       res.status(201).json({ msg: "Berhasil menambahkan kamar kost" });
     } catch (error) {
       res.status(500).json({ msg: error.message });
