@@ -7,9 +7,7 @@ const { DataTypes } = Sequelize;
 
 const KostFasilitas = db.define(
   "kost_fasilitas",
-  {
-    
-  },
+  {},
   {
     freezeTableName: true,
   }
