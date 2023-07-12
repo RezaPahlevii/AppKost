@@ -195,8 +195,9 @@ export const createKost = async (req, res) => {
       //==================================================================
       // Menyimpan fasilitas kost
       const existingFasilitas = [];
-      for (let i = 0; i < nama_f.length; i++) {
-        const fasilitasName = nama_f[i];
+      const fasilitasArray = nama_f.split(","); // Ubah string menjadi array
+      for (let i = 0; i < fasilitasArray.length; i++) {
+        const fasilitasName = fasilitasArray[i];
 
         // Mencari fasilitas berdasarkan nama
         let fasilitas = await Fasilitas.findOne({
