@@ -56,7 +56,11 @@ const RumahKostlist = () => {
                 <td>{kost.desa}</td>
                 <td>{kost.alamat}</td>
                 <td>{kost.jk}</td>
-                <td>{kost.nama_f}</td>
+                <td>
+                  {kost.fasilitas.map((fasilitas, index) => (
+                    <span key={index}>{fasilitas.nama_f}</span>
+                  ))}
+                </td>
                 <td>
                   {kost.peraturan_kosts.map((peraturan, index) => (
                     <span key={index}>{Object.values(peraturan)}</span>
