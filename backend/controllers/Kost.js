@@ -64,6 +64,10 @@ export const getKost = async (req, res) => {
             model: Peraturan,
             attributes: ["peraturan"],
           },
+          {
+            model: Fasilitas,
+            attributes: ["nama_f"],
+          }
         ],
       });
     }
@@ -311,19 +315,21 @@ export const deleteKost = async (req, res) => {
       },
     });
     if (!kost) return res.status(404).json({ msg: "Data tidak ditemukan" });
-    const {
-      nama,
-      no_hp,
-      harga,
-      desa,
-      alamat,
-      jk,
-      f_kamar,
-      peraturan_kost,
-      catatan_tambahan,
-      foto_kost,
-      kordinat,
-    } = req.body;
+    await KostFasilitas.destroy({
+      where: {
+        kostId: kost.id,
+      },
+    });
+    await Peraturan.destroy({
+      where: {
+        kostId: kost.id,
+      },
+    });
+    await Foto.destroy({
+      where: {
+        kostId: kost.id,
+      },
+    });
     if (req.role === "admin") {
       await Kost.destroy({
         where: {
