@@ -202,24 +202,19 @@ export const createKost = async (req, res) => {
         kostId: newKost.id, // Gunakan ID kost yang baru dibuat
       });
 
-      //=================================================================
-      await Peraturan.create({
-        peraturan: peraturan,
-        kostId: newKost.id,
-      });
-
+      //================================================================
       // Menyimpan Peraturan kost
       const existingPeraturan = [];
       const peraturanArray = peraturan.split(","); // Ubah string menjadi array
       for (let i = 0; i < peraturanArray.length; i++) {
         const peraturanName = peraturanArray[i];
         let peraturan = await Peraturan.findOne({
-          where: { nama_f: peraturanName },
+          where: { peraturan: peraturanName },
         });
 
         if (!peraturan) {
           peraturan = await Peraturan.create({
-            nama_f: peraturanName,
+            peraturan: peraturanName,
           });
         }
         if (peraturan) {
@@ -239,19 +234,16 @@ export const createKost = async (req, res) => {
       for (let i = 0; i < fasilitasArray.length; i++) {
         const fasilitasName = fasilitasArray[i];
 
-        // Mencari fasilitas berdasarkan nama
         let fasilitas = await Fasilitas.findOne({
           where: { nama_f: fasilitasName },
         });
 
         if (!fasilitas) {
-          // Jika fasilitas belum ada, buat fasilitas baru
           fasilitas = await Fasilitas.create({
             nama_f: fasilitasName,
           });
         }
 
-        // Menyimpan relasi antara kost dan fasilitas
         if (fasilitas) {
           existingFasilitas.push(fasilitas.id); // Simpan ID fasilitas yang ada atau yang baru dibuat
           await KostFasilitas.create({

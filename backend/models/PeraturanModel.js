@@ -19,7 +19,5 @@ const Peraturan = db.define(
     freezeTableName: true,
   }
 );
-Kost.hasMany(Peraturan);
-Peraturan.belongsTo(Kost);
 
 export default Peraturan;
