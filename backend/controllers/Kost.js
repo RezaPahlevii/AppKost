@@ -38,10 +38,6 @@ export const getKost = async (req, res) => {
             model: Fasilitas,
             attributes: ["nama_f"],
           },
-          {
-            model: Foto,
-            attributes: ["foto_kost", "url"],
-          },
         ],
       });
     } else {
@@ -68,14 +64,6 @@ export const getKost = async (req, res) => {
           {
             model: Peraturan,
             attributes: ["peraturan"],
-          },
-          {
-            model: Fasilitas,
-            attributes: ["nama_f"],
-          },
-          {
-            model: Foto,
-            attributes: ["foto_kost", "url"],
           },
         ],
       });
@@ -262,7 +250,6 @@ export const createKost = async (req, res) => {
     }
   });
 };
-
 export const updateKost = async (req, res) => {
   try {
     const kost = await Kost.findOne({
@@ -348,7 +335,7 @@ export const deleteKost = async (req, res) => {
         kostId: kost.id,
       },
     });
-    await Peraturan.destroy({
+    await KostPeraturan.destroy({
       where: {
         kostId: kost.id,
       },
