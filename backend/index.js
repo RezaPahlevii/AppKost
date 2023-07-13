@@ -8,10 +8,11 @@ import UserRoute from "./routes/UserRoute.js";
 import KostRoute from "./routes/KostRoute.js";
 import AuthRoute from "./routes/AuthRoute.js";
 import BioUserRoute from "./routes/BioUserRoute.js";
-import FotoKost from "./models/FotoKostModel.js";
 import fileUpload from "express-fileupload";
-import Fasilitas from "./models/FasilitasModel.js";
+import Foto from "./models/FotoModel.js";
 import Peraturan from "./models/PeraturanModel.js";
+import KostPeraturan from "./models/KostPeraturanModel.js";
+import Fasilitas from "./models/FasilitasModel.js";
 import KostFasilitas from "./models/KostFasilitasModel.js";
 dotenv.config();
 
@@ -49,8 +50,9 @@ app.use(UserRoute);
 app.use(KostRoute);
 app.use(AuthRoute);
 app.use(BioUserRoute);
-app.use(FotoKost);
+app.use(Foto);
 app.use(Peraturan);
+app.use(KostPeraturan);
 app.use(Fasilitas);
 app.use(KostFasilitas);
 

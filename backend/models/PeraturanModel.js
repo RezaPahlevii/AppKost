@@ -5,7 +5,7 @@ import Kost from "./KostModel.js";
 const { DataTypes } = Sequelize;
 
 const Peraturan = db.define(
-  "peraturan_kost",
+  "peraturan",
   {
     peraturan: {
       type: DataTypes.STRING,

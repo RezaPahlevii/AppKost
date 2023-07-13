@@ -2,8 +2,9 @@ import Kost from "../models/KostModel.js";
 import Users from "../models/UserModel.js";
 import { Op } from "sequelize";
 import path from "path";
-import Foto from "../models/FotoKostModel.js";
+import Foto from "../models/FotoModel.js";
 import Peraturan from "../models/PeraturanModel.js";
+import KostPeraturan from "../models/KostPeraturanModel.js";
 import Fasilitas from "../models/FasilitasModel.js";
 import KostFasilitas from "../models/KostFasilitasModel.js";
 // import fs from "fs";
@@ -37,6 +38,10 @@ export const getKost = async (req, res) => {
             model: Fasilitas,
             attributes: ["nama_f"],
           },
+          {
+            model: Foto,
+            attributes: ["foto_kost", "url"],
+          },
         ],
       });
     } else {
@@ -67,7 +72,11 @@ export const getKost = async (req, res) => {
           {
             model: Fasilitas,
             attributes: ["nama_f"],
-          }
+          },
+          {
+            model: Foto,
+            attributes: ["foto_kost", "url"],
+          },
         ],
       });
     }
@@ -192,10 +201,37 @@ export const createKost = async (req, res) => {
         url: url,
         kostId: newKost.id, // Gunakan ID kost yang baru dibuat
       });
+
+      //=================================================================
       await Peraturan.create({
         peraturan: peraturan,
         kostId: newKost.id,
       });
+
+      // Menyimpan Peraturan kost
+      const existingPeraturan = [];
+      const peraturanArray = peraturan.split(","); // Ubah string menjadi array
+      for (let i = 0; i < peraturanArray.length; i++) {
+        const peraturanName = peraturanArray[i];
+        let peraturan = await Peraturan.findOne({
+          where: { nama_f: peraturanName },
+        });
+
+        if (!peraturan) {
+          peraturan = await Peraturan.create({
+            nama_f: peraturanName,
+          });
+        }
+        if (peraturan) {
+          existingPeraturan.push(peraturan.id); // Simpan ID fasilitas yang ada atau yang baru dibuat
+          await KostPeraturan.create({
+            kostId: newKost.id,
+            peraturanId: peraturan.id, // Gunakan ID fasilitas yang ada atau yang baru dibuat
+          });
+        }
+      }
+      console.log(existingPeraturan);
+
       //==================================================================
       // Menyimpan fasilitas kost
       const existingFasilitas = [];
