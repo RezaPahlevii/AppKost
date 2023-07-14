@@ -38,6 +38,10 @@ export const getKost = async (req, res) => {
             model: Fasilitas,
             attributes: ["nama_f"],
           },
+          {
+            model: Foto,
+            attributes: ["foto1", "foto2", "foto3", "foto4"],
+          },
         ],
       });
     } else {
@@ -64,6 +68,14 @@ export const getKost = async (req, res) => {
           {
             model: Peraturan,
             attributes: ["peraturan"],
+          },
+          {
+            model: Fasilitas,
+            attributes: ["nama_f"],
+          },
+          {
+            model: Foto,
+            attributes: ["foto1", "foto2", "foto3", "foto4"],
           },
         ],
       });
@@ -94,8 +106,6 @@ export const getKostById = async (req, res) => {
           "alamat",
           "jk",
           "catatan_tambahan",
-          "foto_kost",
-          "url",
           "kordinat",
         ],
         where: {
@@ -105,6 +115,18 @@ export const getKostById = async (req, res) => {
           {
             model: Users,
             attributes: ["name", "email"],
+          },
+          {
+            model: Peraturan,
+            attributes: ["peraturan"],
+          },
+          {
+            model: Fasilitas,
+            attributes: ["nama_f"],
+          },
+          {
+            model: Foto,
+            attributes: ["foto1", "foto2", "foto3", "foto4"],
           },
         ],
       });
@@ -119,7 +141,6 @@ export const getKostById = async (req, res) => {
           "alamat",
           "jk",
           "catatan_tambahan",
-          "foto_kost",
           "url",
           "kordinat",
         ],
@@ -130,6 +151,18 @@ export const getKostById = async (req, res) => {
           {
             model: Users,
             attributes: ["name", "email"],
+          },
+          {
+            model: Peraturan,
+            attributes: ["peraturan"],
+          },
+          {
+            model: Fasilitas,
+            attributes: ["nama_f"],
+          },
+          {
+            model: Foto,
+            attributes: ["foto1", "foto2", "foto3", "foto4"],
           },
         ],
       });
@@ -293,7 +326,7 @@ export const updateKost = async (req, res) => {
       peraturan_kost,
       catatan_tambahan,
       foto_kost,
-      kordinat,
+      kordinat
     } = req.body;
     if (req.role === "admin") {
       await Kost.update(
@@ -308,7 +341,7 @@ export const updateKost = async (req, res) => {
           peraturan_kost,
           catatan_tambahan,
           foto_kost,
-          kordinat,
+          kordinat
         },
         {
           where: {
@@ -331,7 +364,7 @@ export const updateKost = async (req, res) => {
           peraturan_kost,
           catatan_tambahan,
           foto_kost,
-          kordinat,
+          kordinat
         },
         {
           where: {
@@ -406,7 +439,6 @@ export const getRekomendasiKost = async (req, res) => {
         "f_kamar",
         "peraturan_kost",
         "catatan_tambahan",
-        "foto_kost",
         "kordinat",
       ],
       include: {
@@ -467,7 +499,6 @@ export const getKostView = async (req, res) => {
         "f_kamar",
         "peraturan_kost",
         "catatan_tambahan",
-        "foto_kost",
         "kordinat",
       ],
       include: {
@@ -502,7 +533,6 @@ export const getKostViewById = async (req, res) => {
         "f_kamar",
         "peraturan_kost",
         "catatan_tambahan",
-        "foto_kost",
         "kordinat",
       ],
       where: {

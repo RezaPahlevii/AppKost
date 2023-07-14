@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { Form } from "react-bootstrap";
+import { Col, Form, Row } from "react-bootstrap";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import { Icon, divIcon } from "leaflet";
 // import "../css/maps.css";
@@ -15,13 +15,19 @@ const FormEditKost = () => {
   const [desa, setDesa] = useState("");
   const [alamat, setAlamat] = useState("");
   const [jk, setJk] = useState("");
-  const [f_kamar, setF_kamar] = useState([]);
-  const [peraturan_kost, setPeraturan_kost] = useState([]);
+  const [nama_f, setNama_f] = useState([]);
+  const [peraturan, setPeraturan] = useState("");
   const [catatan_tambahan, setCatatan_tambahan] = useState("");
   const [kordinat, setKordinat] = useState("");
+  const [foto1, setFoto1] = useState("");
+  const [foto2, setFoto2] = useState("");
+  const [foto3, setFoto3] = useState("");
+  const [foto4, setFoto4] = useState("");
+  const [preview1, setPreview1] = useState("");
+  const [preview2, setPreview2] = useState("");
+  const [preview3, setPreview3] = useState("");
+  const [preview4, setPreview4] = useState("");
   const [msg, setMsg] = useState("");
-  const [foto_kost, setFoto_kost] = useState([]);
-  const [previews, setPreviews] = useState([]);
   const navigate = useNavigate();
   const { id } = useParams();
   const [markerPosition, setMarkerPosition] = useState([
@@ -41,10 +47,13 @@ const FormEditKost = () => {
         setDesa(response.data.desa);
         setAlamat(response.data.alamat);
         setJk(response.data.jk);
-        setF_kamar(response.data.f_kamar);
-        setPeraturan_kost(response.data.peraturan_kost);
+        setNama_f(response.data.fasilitas.map((item) => item.nama_f));
+        setPeraturan(response.data.peraturans.map((item) => item.peraturan));
         setCatatan_tambahan(response.data.catatan_tambahan);
-        setFoto_kost(response.data.foto_kost);
+        setFoto1(response.data.foto1);
+        setFoto2(response.data.foto2);
+        setFoto3(response.data.foto3);
+        setFoto4(response.data.foto4);
         setKordinat(response.data.kordinat);
       } catch (error) {
         if (error.response) {
@@ -65,13 +74,16 @@ const FormEditKost = () => {
         desa: desa,
         alamat: alamat,
         jk: jk,
-        f_kamar: f_kamar,
-        peraturan_kost: peraturan_kost,
+        nama_f: nama_f,
+        peraturan: peraturan,
         catatan_tambahan: catatan_tambahan,
-        foto_kost: foto_kost,
+        foto1: foto1,
+        foto2: foto2,
+        foto3: foto3,
+        foto4: foto4,
         kordinat: kordinat,
       });
-      console.log(nama)
+      console.log(nama);
       navigate("/rumah-kost");
     } catch (error) {
       if (error.response) {
@@ -83,18 +95,18 @@ const FormEditKost = () => {
   const handleCheckboxChangeFasilitas = (e) => {
     const { value, checked } = e.target;
     if (checked) {
-      setF_kamar([...f_kamar, value]);
+      setNama_f([...nama_f, value]);
     } else {
-      setF_kamar(f_kamar.filter((item) => item !== value));
+      setNama_f(nama_f.filter((item) => item !== value));
     }
   };
 
   const handleCheckboxChangePeraturan = (e) => {
     const { value, checked } = e.target;
     if (checked) {
-      setPeraturan_kost([...peraturan_kost, value]);
+      setPeraturan([...peraturan, value]);
     } else {
-      setPeraturan_kost(peraturan_kost.filter((item) => item !== value));
+      setPeraturan(peraturan.filter((item) => item !== value));
     }
   };
 
@@ -104,22 +116,63 @@ const FormEditKost = () => {
   //   setPreview(URL.createObjectURL(file));
   // };
 
-  const handleImageChange = (e) => {
+  const changeFoto1 = (e) => {
     const files = Array.from(e.target.files);
-
-    const foto_kost = [];
-    const previews = [];
-
+    const foto1 = [];
+    const preview1 = [];
     files.forEach((file) => {
       const reader = new FileReader();
-
       reader.onloadend = () => {
-        foto_kost.push(file);
-        previews.push(reader.result);
-        setFoto_kost(foto_kost);
-        setPreviews(previews);
+        foto1.push(file);
+        preview1.push(reader.result);
+        setFoto1(foto1);
+        setPreview1(preview1);
       };
-
+      reader.readAsDataURL(file);
+    });
+  };
+  const changeFoto2 = (e) => {
+    const files = Array.from(e.target.files);
+    const foto2 = [];
+    const preview2 = [];
+    files.forEach((file) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        foto2.push(file);
+        preview2.push(reader.result);
+        setFoto2(foto2);
+        setPreview2(preview2);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+  const changeFoto3 = (e) => {
+    const files = Array.from(e.target.files);
+    const foto3 = [];
+    const preview3 = [];
+    files.forEach((file) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        foto3.push(file);
+        preview3.push(reader.result);
+        setFoto3(foto1);
+        setPreview3(preview1);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+  const changeFoto4 = (e) => {
+    const files = Array.from(e.target.files);
+    const foto4 = [];
+    const preview4 = [];
+    files.forEach((file) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        foto4.push(file);
+        preview4.push(reader.result);
+        setFoto4(foto4);
+        setPreview4(preview4);
+      };
       reader.readAsDataURL(file);
     });
   };
@@ -220,20 +273,6 @@ const FormEditKost = () => {
                   <option>Campur</option>
                 </Form.Select>
               </div>
-
-              {/* <div className="field mb-4">
-                <label className="label">Jenis Kost</label>
-                <div className="control">
-                  <input
-                    type="text"
-                    className="input"
-                    value={jk}
-                    onChange={(e) => setJk(e.target.value)}
-                    placeholder="Putra/Putri/Campur"
-                  />
-                </div>
-              </div> */}
-
               <div className="field mb-4">
                 <label className="label">Fasilitas Kamar</label>
                 <div className="control ml-5 checkbox-container">
@@ -242,7 +281,7 @@ const FormEditKost = () => {
                     label="Lemari"
                     value="Lemari"
                     className="checkbox-item"
-                    checked={f_kamar.includes("Lemari")}
+                    checked={nama_f.includes("Lemari")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                   <Form.Check
@@ -250,7 +289,7 @@ const FormEditKost = () => {
                     label="Kasur"
                     value="Kasur"
                     className="checkbox-item"
-                    checked={f_kamar.includes("Kasur")}
+                    checked={nama_f.includes("Kasur")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                   <Form.Check
@@ -258,7 +297,7 @@ const FormEditKost = () => {
                     label="Bantal"
                     value="Bantal"
                     className="checkbox-item"
-                    checked={f_kamar.includes("Bantal")}
+                    checked={nama_f.includes("Bantal")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                   <Form.Check
@@ -266,7 +305,7 @@ const FormEditKost = () => {
                     label="Kamar Mandi di Dalam"
                     value="Kamar Mandi di Dalam"
                     className="checkbox-item"
-                    checked={f_kamar.includes("Kamar Mandi di Dalam")}
+                    checked={nama_f.includes("Kamar Mandi di Dalam")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                   <Form.Check
@@ -274,7 +313,7 @@ const FormEditKost = () => {
                     label="Meja"
                     value="Meja"
                     className="checkbox-item"
-                    checked={f_kamar.includes("Meja")}
+                    checked={nama_f.includes("Meja")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                   <Form.Check
@@ -282,7 +321,7 @@ const FormEditKost = () => {
                     label="Kipas Angin"
                     value="Kipas Angin"
                     className="checkbox-item"
-                    checked={f_kamar.includes("Kipas Angin")}
+                    checked={nama_f.includes("Kipas Angin")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                 </div>
@@ -296,7 +335,7 @@ const FormEditKost = () => {
                     label="CCTV"
                     value="CCTV"
                     className="checkbox-item"
-                    checked={f_kamar.includes("CCTV")}
+                    checked={nama_f.includes("CCTV")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                   <Form.Check
@@ -304,14 +343,14 @@ const FormEditKost = () => {
                     label="Jendela Bertrali"
                     value="Jendela Bertrali"
                     className="checkbox-item"
-                    checked={f_kamar.includes("Jendela Bertrali")}
+                    checked={nama_f.includes("Jendela Bertrali")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                   <Form.Check
                     inline
                     label="Pagar"
                     value="Pagar"
-                    checked={f_kamar.includes("Pagar")}
+                    checked={nama_f.includes("Pagar")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                 </div>
@@ -325,7 +364,7 @@ const FormEditKost = () => {
                     label="Pengurus Kost"
                     value="Pengurus Kost"
                     className="checkbox-item"
-                    checked={f_kamar.includes("Pengurus Kost")}
+                    checked={nama_f.includes("Pengurus Kost")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                   <Form.Check
@@ -333,28 +372,28 @@ const FormEditKost = () => {
                     label="Wifi"
                     value="Wifi"
                     className="checkbox-item"
-                    checked={f_kamar.includes("Wifi")}
+                    checked={nama_f.includes("Wifi")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                   <Form.Check
                     inline
                     label="Jemuran"
                     value="Jemuran"
-                    checked={f_kamar.includes("Jemuran")}
+                    checked={nama_f.includes("Jemuran")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                   <Form.Check
                     inline
                     label="Parkir Motor"
                     value="Parkir Motor"
-                    checked={f_kamar.includes("Parkir Motor")}
+                    checked={nama_f.includes("Parkir Motor")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                   <Form.Check
                     inline
                     label="Dapur"
                     value="Dapur"
-                    checked={f_kamar.includes("Dapur")}
+                    checked={nama_f.includes("Dapur")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                 </div>
@@ -368,7 +407,7 @@ const FormEditKost = () => {
                     label="Khusus Mahasiswa"
                     value="Khusus Mahasiswa"
                     className="checkbox-item"
-                    checked={peraturan_kost.includes("Khusus Mahasiswa")}
+                    checked={peraturan.includes("Khusus Mahasiswa")}
                     onChange={handleCheckboxChangePeraturan}
                   />
                   <Form.Check
@@ -376,7 +415,7 @@ const FormEditKost = () => {
                     label="Pasutri"
                     value="Pasutri"
                     className="checkbox-item"
-                    checked={peraturan_kost.includes("Pasutri")}
+                    checked={peraturan.includes("Pasutri")}
                     onChange={handleCheckboxChangePeraturan}
                   />
                   <Form.Check
@@ -384,7 +423,7 @@ const FormEditKost = () => {
                     label="Jam Malam"
                     value="Jam Malam"
                     className="checkbox-item"
-                    checked={peraturan_kost.includes("Jam Malam")}
+                    checked={peraturan.includes("Jam Malam")}
                     onChange={handleCheckboxChangePeraturan}
                   />
                 </div>
@@ -402,47 +441,139 @@ const FormEditKost = () => {
                 </div>
               </div>
 
-              {/* <div className="field mb-4">
-                <label className="label">Catatan Tambahan</label>
-                <div className="control">
-                  <input
-                    type="text"
-                    className="input"
-                    value={catatan_tambahan}
-                    onChange={(e) => setCatatan_tambahan(e.target.value)}
-                    placeholder="Catatan tambahan"
-                  />
-                </div>
-              </div> */}
-
-              <div className="field">
-                <label className="label">Foto Kost</label>
-                <div className="control">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    multiple
-                    onChange={handleImageChange}
-                  />
-                </div>
-              </div>
-
-              <div className="field">
-                <label className="label">Preview Foto</label>
-                <div className="control">
-                  <div className="columns is-multiline">
-                    {previews.map((preview, index) => (
-                      <div key={index} className="column is-one-third">
-                        <img
-                          src={preview}
-                          alt={`Preview ${index + 1}`}
-                          className="preview"
+              <Row className="mb-3">
+                <label className="label">Image</label>
+                <Col>
+                  {/* Foto Kost1 */}
+                  <div className="field">
+                    <div className="control">
+                      <label htmlFor="fileInput1" className="file-label">
+                        {" "}
+                        {/* Gunakan id yang unik untuk setiap input */}
+                        <input
+                          id="fileInput1"
+                          className="file-input"
+                          type="file"
+                          accept="image/*"
+                          capture="user"
+                          onChange={changeFoto1}
+                          style={{ display: "none" }}
                         />
-                      </div>
-                    ))}
+                        <span className="file-cta">
+                          <span className="file-label">Pilih Foto 1</span>
+                        </span>
+                      </label>
+                      {preview1 && (
+                        <figure>
+                          <img
+                            src={preview1}
+                            alt="Preview Image"
+                            style={{ maxWidth: "500px", maxHeight: "500px" }}
+                          />
+                        </figure>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </div>
+                </Col>
+                <Col>
+                  {/* Foto Kost2 */}
+                  <div className="field">
+                    <div className="control">
+                      <label htmlFor="fileInput2" className="file-label">
+                        {" "}
+                        {/* Gunakan id yang unik untuk setiap input */}
+                        <input
+                          id="fileInput2"
+                          className="file-input"
+                          type="file"
+                          accept="image/*"
+                          capture="user"
+                          onChange={changeFoto2}
+                          style={{ display: "none" }}
+                        />
+                        <span className="file-cta">
+                          <span className="file-label">Pilih Foto 2</span>
+                        </span>
+                      </label>
+                      {preview2 && (
+                        <figure>
+                          <img
+                            src={preview2}
+                            alt="Preview Image"
+                            style={{ maxWidth: "500px", maxHeight: "500px" }}
+                          />
+                        </figure>
+                      )}
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="mb-3">
+                <Col>
+                  {/* Foto Kost3 */}
+                  <div className="field">
+                    <div className="control">
+                      <label htmlFor="fileInput3" className="file-label">
+                        {" "}
+                        {/* Gunakan id yang unik untuk setiap input */}
+                        <input
+                          id="fileInput3"
+                          className="file-input"
+                          type="file"
+                          accept="image/*"
+                          capture="user"
+                          onChange={changeFoto3}
+                          style={{ display: "none" }}
+                        />
+                        <span className="file-cta">
+                          <span className="file-label">Pilih Foto 3</span>
+                        </span>
+                      </label>
+                      {preview3 && (
+                        <figure>
+                          <img
+                            src={preview3}
+                            alt="Preview Image"
+                            style={{ maxWidth: "500px", maxHeight: "500px" }}
+                          />
+                        </figure>
+                      )}
+                    </div>
+                  </div>
+                </Col>
+                <Col>
+                  {/* Foto Kost4 */}
+                  <div className="field">
+                    <div className="control">
+                      <label htmlFor="fileInput4" className="file-label">
+                        {" "}
+                        {/* Gunakan id yang unik untuk setiap input */}
+                        <input
+                          id="fileInput4"
+                          className="file-input"
+                          type="file"
+                          accept="image/*"
+                          capture="user"
+                          onChange={changeFoto4}
+                          style={{ display: "none" }}
+                        />
+                        <span className="file-cta">
+                          <span className="file-label">Pilih Foto 4</span>
+                        </span>
+                      </label>
+                      {preview4 && (
+                        <figure>
+                          <img
+                            src={preview4}
+                            alt="Preview Image"
+                            style={{ maxWidth: "500px", maxHeight: "500px" }}
+                          />
+                        </figure>
+                      )}
+                    </div>
+                  </div>
+                </Col>
+              </Row>
 
               <div className="field mt-5">
                 <label className="label">Alamat Kordinat</label>
@@ -456,11 +587,13 @@ const FormEditKost = () => {
                     placeholder="Titik Kordinat"
                   />
                 </div>
-               
               </div>
 
               <div>
-              <p className="text-danger">(Cek kembali alamat rumah kost anda di peta, jika sudah benar maka anda bisa save)</p>
+                <p className="text-danger">
+                  (Cek kembali alamat rumah kost anda di peta, jika sudah benar
+                  maka anda bisa save)
+                </p>
                 <MapContainer
                   style={{ height: "500px", width: "100%" }}
                   s
