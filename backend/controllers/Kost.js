@@ -432,16 +432,28 @@ export const getRekomendasiKost = async (req, res) => {
         "desa",
         "alamat",
         "jk",
-        "f_kamar",
-        "peraturan_kost",
         "catatan_tambahan",
         "kordinat",
       ],
-      include: {
-        model: Users,
-        attributes: ["name"],
-      },
-    });
+      include: [
+        {
+          model: Users,
+          attributes: ["name", "email"],
+        },
+        {
+          model: Peraturan,
+          attributes: ["peraturan"],
+        },
+        {
+          model: Fasilitas,
+          attributes: ["nama_f"],
+        },
+        {
+          model: Foto,
+          attributes: ["url1", "url2", "url3", "url4"]
+        },
+      ],
+  });
     res.json(response);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
