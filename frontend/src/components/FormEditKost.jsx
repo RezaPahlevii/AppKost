@@ -19,6 +19,7 @@ const FormEditKost = () => {
   const [peraturan, setPeraturan] = useState("");
   const [catatan_tambahan, setCatatan_tambahan] = useState("");
   const [kordinat, setKordinat] = useState("");
+  let [latitude, longitude] = kordinat ? kordinat.split(",") : [0, 0];
   const [foto1, setFoto1] = useState("");
   const [foto2, setFoto2] = useState("");
   const [foto3, setFoto3] = useState("");
@@ -33,6 +34,11 @@ const FormEditKost = () => {
   const [markerPosition, setMarkerPosition] = useState([
     1.4585110731407618, 102.15337262025002,
   ]);
+  const markers = [
+    {
+      geocode: [latitude, longitude],
+    },
+  ];
 
   // tampilkan data form edit sesuai record database
   useEffect(() => {
@@ -177,7 +183,7 @@ const FormEditKost = () => {
     });
   };
 
-  const position = [1.4583828821304539, 102.15096143773447];
+  const petaPosition = [1.4583828821304539, 102.15096143773447];
 
   const customIcon = new Icon({
     iconUrl: require("../image/pinLokasi.png"),
@@ -597,7 +603,7 @@ const FormEditKost = () => {
                 <MapContainer
                   style={{ height: "500px", width: "100%" }}
                   s
-                  center={position}
+                  center={petaPosition}
                   zoom={17}
                   scrollWheelZoom={false}
                 >
@@ -610,8 +616,9 @@ const FormEditKost = () => {
                     chunkedLoading
                     iconCreateFunction={createCustomClusterIcon}
                   >
+                    {markers.map((marker) => (
                     <Marker
-                      position={markerPosition}
+                      position={marker.geocode}
                       icon={customIcon}
                       draggable
                       eventHandlers={{
@@ -622,6 +629,7 @@ const FormEditKost = () => {
                         },
                       }}
                     ></Marker>
+                    ))}
                   </MarkerClusterGroup>
                 </MapContainer>
               </div>
