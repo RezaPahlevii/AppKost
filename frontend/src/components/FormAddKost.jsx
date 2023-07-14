@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Form } from "react-bootstrap";
+import { Col, Form, Row } from "react-bootstrap";
 import "../css/checkboxFormAddKost.css";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import { Icon, divIcon } from "leaflet";
@@ -19,8 +19,14 @@ const FormAddKost = () => {
   const [peraturan, setPeraturan] = useState("");
   const [catatan_tambahan, setCatatan_tambahan] = useState("");
   const [kordinat, setKordinat] = useState("");
-  const [foto_kost, setFoto_kost] = useState("");
-  const [previews, setPreviews] = useState("");
+  const [foto1, setFoto1] = useState("");
+  const [foto2, setFoto2] = useState("");
+  const [foto3, setFoto3] = useState("");
+  const [foto4, setFoto4] = useState("");
+  const [preview1, setPreview1] = useState("");
+  const [preview2, setPreview2] = useState("");
+  const [preview3, setPreview3] = useState("");
+  const [preview4, setPreview4] = useState("");
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
   const [markerPosition, setMarkerPosition] = useState([
@@ -39,7 +45,10 @@ const FormAddKost = () => {
     formData.append("nama_f", nama_f);
     formData.append("peraturan", peraturan);
     formData.append("catatan_tambahan", catatan_tambahan);
-    formData.append("foto_kost", foto_kost);
+    formData.append("foto1", foto1);
+    formData.append("foto2", foto2);
+    formData.append("foto3", foto3);
+    formData.append("foto4", foto4);
     formData.append("kordinat", kordinat);
     try {
       await axios.post("http://localhost:5000/rumah-kost", formData, {
@@ -73,10 +82,25 @@ const FormAddKost = () => {
     }
   };
 
-  const loadImage = (e) => {
-    const image = e.target.files[0];
-    setFoto_kost(image);
-    setPreviews(URL.createObjectURL(image));
+  const loadImage1 = (e) => {
+    const image1 = e.target.files[0];
+    setFoto1(image1);
+    setPreview1(URL.createObjectURL(image1));
+  };
+  const loadImage2 = (e) => {
+    const image2 = e.target.files[0];
+    setFoto2(image2);
+    setPreview2(URL.createObjectURL(image2));
+  };
+  const loadImage3 = (e) => {
+    const image3 = e.target.files[0];
+    setFoto3(image3);
+    setPreview3(URL.createObjectURL(image3));
+  };
+  const loadImage4 = (e) => {
+    const image4 = e.target.files[0];
+    setFoto4(image4);
+    setPreview4(URL.createObjectURL(image4));
   };
 
   // const handleSubmit = (e) => {
@@ -360,26 +384,139 @@ const FormAddKost = () => {
                 </div>
               </div>
 
-              {/* Foto Kost */}
-
-
-              <div className="field">
+              <Row className="mb-3">
                 <label className="label">Image</label>
-                <div className="control">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={loadImage}
-                      />
-                </div>
-              </div>
-              {previews ? (
-                <figure className="image is-128x128">
-                  <img src={previews} alt="Preview Image" />
-                </figure>
-              ) : (
-                ""
-              )}
+                <Col>
+                  {/* Foto Kost1 */}
+                  <div className="field">
+                    <div className="control">
+                      <label htmlFor="fileInput1" className="file-label">
+                        {" "}
+                        {/* Gunakan id yang unik untuk setiap input */}
+                        <input
+                          id="fileInput1"
+                          className="file-input"
+                          type="file"
+                          accept="image/*"
+                          capture="user"
+                          onChange={loadImage1}
+                          style={{ display: "none" }}
+                        />
+                        <span className="file-cta">
+                          <span className="file-label">Pilih Foto 1</span>
+                        </span>
+                      </label>
+                      {preview1 && (
+                        <figure>
+                          <img
+                            src={preview1}
+                            alt="Preview Image"
+                            style={{ maxWidth: "500px", maxHeight: "500px" }}
+                          />
+                        </figure>
+                      )}
+                    </div>
+                  </div>
+                </Col>
+                <Col>
+                  {/* Foto Kost2 */}
+                  <div className="field">
+                    <div className="control">
+                      <label htmlFor="fileInput2" className="file-label">
+                        {" "}
+                        {/* Gunakan id yang unik untuk setiap input */}
+                        <input
+                          id="fileInput2"
+                          className="file-input"
+                          type="file"
+                          accept="image/*"
+                          capture="user"
+                          onChange={loadImage2}
+                          style={{ display: "none" }}
+                        />
+                        <span className="file-cta">
+                          <span className="file-label">Pilih Foto 2</span>
+                        </span>
+                      </label>
+                      {preview2 && (
+                        <figure>
+                          <img
+                            src={preview2}
+                            alt="Preview Image"
+                            style={{ maxWidth: "500px", maxHeight: "500px" }}
+                          />
+                        </figure>
+                      )}
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="mb-3">
+                <Col>
+                  {/* Foto Kost3 */}
+                  <div className="field">
+                    <div className="control">
+                      <label htmlFor="fileInput3" className="file-label">
+                        {" "}
+                        {/* Gunakan id yang unik untuk setiap input */}
+                        <input
+                          id="fileInput3"
+                          className="file-input"
+                          type="file"
+                          accept="image/*"
+                          capture="user"
+                          onChange={loadImage3}
+                          style={{ display: "none" }}
+                        />
+                        <span className="file-cta">
+                          <span className="file-label">Pilih Foto 3</span>
+                        </span>
+                      </label>
+                      {preview3 && (
+                        <figure>
+                          <img
+                            src={preview3}
+                            alt="Preview Image"
+                            style={{ maxWidth: "500px", maxHeight: "500px" }}
+                          />
+                        </figure>
+                      )}
+                    </div>
+                  </div>
+                </Col>
+                <Col>
+                  {/* Foto Kost4 */}
+                  <div className="field">
+                    <div className="control">
+                      <label htmlFor="fileInput4" className="file-label">
+                        {" "}
+                        {/* Gunakan id yang unik untuk setiap input */}
+                        <input
+                          id="fileInput4"
+                          className="file-input"
+                          type="file"
+                          accept="image/*"
+                          capture="user"
+                          onChange={loadImage4}
+                          style={{ display: "none" }}
+                        />
+                        <span className="file-cta">
+                          <span className="file-label">Pilih Foto 4</span>
+                        </span>
+                      </label>
+                      {preview4 && (
+                        <figure>
+                          <img
+                            src={preview4}
+                            alt="Preview Image"
+                            style={{ maxWidth: "500px", maxHeight: "500px" }}
+                          />
+                        </figure>
+                      )}
+                    </div>
+                  </div>
+                </Col>
+              </Row>
 
               {/* Kordinat */}
               <div className="field mb-4">
