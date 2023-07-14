@@ -19,10 +19,10 @@ const FormAddKost = () => {
   const [peraturan, setPeraturan] = useState("");
   const [catatan_tambahan, setCatatan_tambahan] = useState("");
   const [kordinat, setKordinat] = useState("");
-  const [foto1, setFoto1] = useState("");
-  const [foto2, setFoto2] = useState("");
-  const [foto3, setFoto3] = useState("");
-  const [foto4, setFoto4] = useState("");
+  const [url1, setUrl1] = useState("");
+  const [url2, setUrl2] = useState("");
+  const [url3, setUrl3] = useState("");
+  const [url4, setUrl4] = useState("");
   const [preview1, setPreview1] = useState("");
   const [preview2, setPreview2] = useState("");
   const [preview3, setPreview3] = useState("");
@@ -45,10 +45,10 @@ const FormAddKost = () => {
     formData.append("nama_f", nama_f);
     formData.append("peraturan", peraturan);
     formData.append("catatan_tambahan", catatan_tambahan);
-    formData.append("foto1", foto1);
-    formData.append("foto2", foto2);
-    formData.append("foto3", foto3);
-    formData.append("foto4", foto4);
+    formData.append("url1", url1);
+    formData.append("url2", url2);
+    formData.append("url3", url3);
+    formData.append("url4", url4);
     formData.append("kordinat", kordinat);
     try {
       await axios.post("http://localhost:5000/rumah-kost", formData, {
@@ -84,22 +84,22 @@ const FormAddKost = () => {
 
   const loadImage1 = (e) => {
     const image1 = e.target.files[0];
-    setFoto1(image1);
+    setUrl1(image1);
     setPreview1(URL.createObjectURL(image1));
   };
   const loadImage2 = (e) => {
     const image2 = e.target.files[0];
-    setFoto2(image2);
+    setUrl2(image2);
     setPreview2(URL.createObjectURL(image2));
   };
   const loadImage3 = (e) => {
     const image3 = e.target.files[0];
-    setFoto3(image3);
+    setUrl3(image3);
     setPreview3(URL.createObjectURL(image3));
   };
   const loadImage4 = (e) => {
     const image4 = e.target.files[0];
-    setFoto4(image4);
+    setUrl4(image4);
     setPreview4(URL.createObjectURL(image4));
   };
 
