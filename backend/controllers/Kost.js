@@ -40,7 +40,7 @@ export const getKost = async (req, res) => {
           },
           {
             model: Foto,
-            attributes: ["foto1", "foto2", "foto3", "foto4"],
+            attributes: ["url1", "url2", "url3", "url4"]
           },
         ],
       });
@@ -75,7 +75,7 @@ export const getKost = async (req, res) => {
           },
           {
             model: Foto,
-            attributes: ["foto1", "foto2", "foto3", "foto4"],
+            attributes: ["url1", "url2", "url3", "url4"]
           },
         ],
       });
@@ -126,7 +126,7 @@ export const getKostById = async (req, res) => {
           },
           {
             model: Foto,
-            attributes: ["foto1", "foto2", "foto3", "foto4"],
+            attributes: ["url1", "url2", "url3", "url4"]
           },
         ],
       });
@@ -162,7 +162,7 @@ export const getKostById = async (req, res) => {
           },
           {
             model: Foto,
-            attributes: ["foto1", "foto2", "foto3", "foto4"],
+            attributes: ["url1", "url2", "url3", "url4"]
           },
         ],
       });
@@ -211,10 +211,10 @@ export const createKost = async (req, res) => {
 
     // Mengunggah dan menyimpan setiap file foto
     for (let i = 1; i <= 4; i++) {
-      const file = fotoFiles[`foto${i}`];
+      const file = fotoFiles[`url${i}`];
 
       if (!file)
-        return res.status(400).json({ msg: `Invalid File for foto${i}` });
+        return res.status(400).json({ msg: `Invalid File for url${i}` });
 
       const fileSize = file.data.length;
       const ext = path.extname(file.name);
@@ -237,10 +237,6 @@ export const createKost = async (req, res) => {
 
     // Menyimpan informasi foto ke dalam tabel "Foto"
     await Foto.create({
-      foto1: fotoUrls[0],
-      foto2: fotoUrls[1],
-      foto3: fotoUrls[2],
-      foto4: fotoUrls[3],
       url1: fotoUrls[0],
       url2: fotoUrls[1],
       url3: fotoUrls[2],
