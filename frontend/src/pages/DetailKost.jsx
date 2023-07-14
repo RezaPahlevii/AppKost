@@ -21,18 +21,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { reset, getMe } from "../features/authSlice";
 
 const DetailKost = () => {
-  const [detailKost, setDetailKost] = useState([]);
+  const [kosts, setKosts] = useState([]);
   const [nama, setNama] = useState("");
   const [harga, setHarga] = useState("");
   const [no_hp, setNo_hp] = useState("");
   const [desa, setDesa] = useState("");
   const [alamat, setAlamat] = useState("");
   const [jk, setJk] = useState("");
-  const [f_kamar, setF_kamar] = useState([]);
-  const [peraturan_kost, setPeraturan_kost] = useState([]);
+  const [nama_f, setNama_f] = useState([]);
+  const [peraturan, setPeraturan] = useState("");
   const [catatan_tambahan, setCatatan_tambahan] = useState("");
-  const [foto_kost, setFoto_kost] = useState("");
-  const [previews, setPreviews] = useState([]);
+  const [foto1, setFoto1] = useState("");
+  const [foto2, setFoto2] = useState("");
+  const [foto3, setFoto3] = useState("");
+  const [foto4, setFoto4] = useState("");
+  const [preview1, setPreview1] = useState("");
+  const [preview2, setPreview2] = useState("");
+  const [preview3, setPreview3] = useState("");
+  const [preview4, setPreview4] = useState("");
   const [msg, setMsg] = useState("");
   const [kordinat, setKordinat] = useState("");
   let [latitude, longitude] = kordinat ? kordinat.split(",") : [0, 0];
@@ -40,7 +46,7 @@ const DetailKost = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  const {user} = useSelector((state) => state.auth)
+  const { user } = useSelector((state) => state.auth);
   const petaPosition = [1.4583828821304539, 102.15096143773447];
   const markers = [
     {
@@ -74,12 +80,14 @@ const DetailKost = () => {
         setDesa(response.data.desa);
         setAlamat(response.data.alamat);
         setJk(response.data.jk);
-        setF_kamar(response.data.f_kamar);
-        setPeraturan_kost(response.data.peraturan_kost);
+        setNama_f(response.data.fasilitas.map((item) => item.nama_f));
+        setPeraturan(response.data.peraturans.map((item) => item.peraturan));
         setCatatan_tambahan(response.data.catatan_tambahan);
-        setFoto_kost(response.data.foto_kost);
+        setFoto1(response.data.foto1);
+        setFoto2(response.data.foto2);
+        setFoto3(response.data.foto3);
+        setFoto4(response.data.foto4);
         setKordinat(response.data.kordinat);
-        console.log(kordinat)
       } catch (error) {
         if (error.response) {
           setMsg(error.response.data.msg);
@@ -89,21 +97,21 @@ const DetailKost = () => {
     getKostById();
   }, [id]);
 
+  const loginDulu = () => {
+    dispatch(getMe());
+    dispatch(reset());
+    window.open("/login", "_blank");
+  };
 
-const loginDulu = () => {
-  dispatch(getMe());
-  dispatch(reset());
-  window.open("/login", "_blank");
-};
-
-const ajukanSewa =()=>{
-  window.open('/form-biodata-penyewa', '_blank');
-}
+  const ajukanSewa = () => {
+    window.open("/form-biodata-penyewa", "_blank");
+  };
 
   return (
     <div>
       <Nav2 />
       <Container className="pt-3">
+      
         <>
           <Row>
             <Col>
@@ -168,18 +176,14 @@ const ajukanSewa =()=>{
                     <Col>
                       <Row>
                         <Col xs={6}>
-                          {f_kamar
-                            .slice(0, Math.ceil(f_kamar.length / 2))
-                            .map((item, index) => (
-                              <div key={index}>{item}</div>
-                            ))}
+                          {/* {kost.fasilitas.map((fasilitas, index) => (
+                            <span key={index}>{fasilitas.nama_f}</span>
+                          ))} */}
                         </Col>
                         <Col xs={6}>
-                          {f_kamar
-                            .slice(Math.ceil(f_kamar.length / 2))
-                            .map((item, index) => (
-                              <div key={index}>{item}</div>
-                            ))}
+                          {/* {kost.fasilitas.map((fasilitas, index) => (
+                            <span key={index}>{fasilitas.nama_f}</span>
+                          ))} */}
                         </Col>
                       </Row>
                     </Col>
@@ -194,22 +198,10 @@ const ajukanSewa =()=>{
                     <strong>Peraturan khusus tipe kamar ini</strong>
                   </h3>
                   <p>
-                  <Row>
-                        <Col xs={3}>
-                          {peraturan_kost
-                            .slice(0, Math.ceil(peraturan_kost.length / 2))
-                            .map((item, index) => (
-                              <div key={index}>{item}</div>
-                            ))}
-                        </Col>
-                        <Col xs={3}>
-                          {peraturan_kost
-                            .slice(Math.ceil(peraturan_kost.length / 2))
-                            .map((item, index) => (
-                              <div key={index}>{item}</div>
-                            ))}
-                        </Col>
-                      </Row>
+                    <Row>
+                      <Col xs={3}>{peraturan}</Col>
+                      <Col xs={3}>{peraturan}</Col>
+                    </Row>
                   </p>
                   <hr />
                 </div>
@@ -217,9 +209,7 @@ const ajukanSewa =()=>{
                   <h3>
                     <strong>Catatan Tambahan</strong>
                   </h3>
-                  <p>
-                    {catatan_tambahan}
-                  </p>
+                  <p>{catatan_tambahan}</p>
                   <hr />
                 </div>
                 <div className="mt-5 mt-5">
@@ -282,15 +272,20 @@ const ajukanSewa =()=>{
                 <h4 className="mb-3">
                   <strong>{harga}</strong> / bulan
                 </h4>
-                {user == null?(
-                  <Button onClick={loginDulu} variant="success">Ajukan Sewa</Button>
-                  ):(
-                  <Button onClick={ajukanSewa} variant="success">Ajukan Sewa</Button>
+                {user == null ? (
+                  <Button onClick={loginDulu} variant="success">
+                    Ajukan Sewa
+                  </Button>
+                ) : (
+                  <Button onClick={ajukanSewa} variant="success">
+                    Ajukan Sewa
+                  </Button>
                 )}
               </Card>
             </Col>
           </Row>
         </>
+      
       </Container>
       <Footer2 />
     </div>
