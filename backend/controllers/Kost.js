@@ -143,112 +143,136 @@ export const getKostById = async (req, res) => {
 export const createKost = async (req, res) => {
   if (req.files === null)
     return res.status(400).json({ msg: "No File Uploaded" });
-  const file = req.files.foto_kost;
-  if (!file) return res.status(400).json({ msg: "Invalid File" });
-  const fileSize = file.data.length;
-  const ext = path.extname(file.name);
-  const fileName = file.md5 + ext;
-  const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
-  const allowedType = [".png", ".jpg", ".jpeg"];
+  const fotoFiles = req.files; // Mengambil semua file foto yang diupload
 
-  if (!allowedType.includes(ext.toLowerCase()))
-    return res.status(422).json({ msg: "Invalid Images" });
-  if (fileSize > 5000000)
-    return res.status(422).json({ msg: "Image must be less than 5 MB" });
+  // Mengatur ukuran maksimal dan jenis file yang diizinkan
+  const allowedTypes = [".png", ".jpg", ".jpeg"];
+  const maxSize = 5000000; // 5MB
+  try {
+    const {
+      nama,
+      no_hp,
+      harga,
+      desa,
+      alamat,
+      jk,
+      peraturan,
+      nama_f,
+      catatan_tambahan,
+      kordinat,
+    } = req.body;
 
-  const {
-    nama,
-    no_hp,
-    harga,
-    desa,
-    alamat,
-    jk,
-    peraturan,
-    nama_f,
-    catatan_tambahan,
-    kordinat,
-  } = req.body;
+    const newKost = await Kost.create({
+      nama: nama,
+      no_hp: no_hp,
+      harga: harga,
+      desa: desa,
+      alamat: alamat,
+      jk: jk,
+      catatan_tambahan: catatan_tambahan,
+      kordinat: kordinat,
+      userId: req.userId,
+    });
+    // Menyimpan informasi foto ke dalam tabel "Foto"
+    const fotoUrls = []; // Menampung URL foto
 
-  file.mv(`./public/images/${fileName}`, async (err) => {
-    if (err) return res.status(500).json({ msg: err.message });
-    try {
-      const newKost = await Kost.create({
-        nama: nama,
-        no_hp: no_hp,
-        harga: harga,
-        desa: desa,
-        alamat: alamat,
-        jk: jk,
-        catatan_tambahan: catatan_tambahan,
-        kordinat: kordinat,
-        userId: req.userId,
-      });
-      // Simpan informasi foto ke tabel Foto
-      await Foto.create({
-        foto_kost: fileName,
-        url: url,
-        kostId: newKost.id, // Gunakan ID kost yang baru dibuat
-      });
+    // Mengunggah dan menyimpan setiap file foto
+    for (let i = 1; i <= 4; i++) {
+      const file = fotoFiles[`foto${i}`];
 
-      //================================================================
-      // Menyimpan Peraturan kost
-      const existingPeraturan = [];
-      const peraturanArray = peraturan.split(","); // Ubah string menjadi array
-      for (let i = 0; i < peraturanArray.length; i++) {
-        const peraturanName = peraturanArray[i];
-        let peraturan = await Peraturan.findOne({
-          where: { peraturan: peraturanName },
-        });
+      if (!file)
+        return res.status(400).json({ msg: `Invalid File for foto${i}` });
 
-        if (!peraturan) {
-          peraturan = await Peraturan.create({
-            peraturan: peraturanName,
-          });
-        }
-        if (peraturan) {
-          existingPeraturan.push(peraturan.id); // Simpan ID fasilitas yang ada atau yang baru dibuat
-          await KostPeraturan.create({
-            kostId: newKost.id,
-            peraturanId: peraturan.id, // Gunakan ID fasilitas yang ada atau yang baru dibuat
-          });
-        }
-      }
-      console.log(existingPeraturan);
+      const fileSize = file.data.length;
+      const ext = path.extname(file.name);
+      const fileName = file.md5 + ext;
+      const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
 
-      //==================================================================
-      // Menyimpan fasilitas kost
-      const existingFasilitas = [];
-      const fasilitasArray = nama_f.split(","); // Ubah string menjadi array
-      for (let i = 0; i < fasilitasArray.length; i++) {
-        const fasilitasName = fasilitasArray[i];
+      if (!allowedTypes.includes(ext.toLowerCase()))
+        return res.status(422).json({ msg: `Invalid Image Type for foto${i}` });
 
-        let fasilitas = await Fasilitas.findOne({
-          where: { nama_f: fasilitasName },
-        });
+      if (fileSize > maxSize)
+        return res
+          .status(422)
+          .json({ msg: `Image for foto${i} must be less than 5 MB` });
 
-        if (!fasilitas) {
-          fasilitas = await Fasilitas.create({
-            nama_f: fasilitasName,
-          });
-        }
+      await file.mv(`./public/images/${fileName}`);
 
-        if (fasilitas) {
-          existingFasilitas.push(fasilitas.id); // Simpan ID fasilitas yang ada atau yang baru dibuat
-          await KostFasilitas.create({
-            kostId: newKost.id,
-            fasilitaId: fasilitas.id, // Gunakan ID fasilitas yang ada atau yang baru dibuat
-          });
-        }
-      }
-
-      console.log(existingFasilitas);
-
-      res.status(201).json({ msg: "Berhasil menambahkan kamar kost" });
-    } catch (error) {
-      res.status(500).json({ msg: error.message });
-      console.log(error.message);
+      // Menyimpan URL foto ke dalam array
+      fotoUrls.push(url);
     }
-  });
+
+    // Menyimpan informasi foto ke dalam tabel "Foto"
+    await Foto.create({
+      foto1: fotoUrls[0],
+      foto2: fotoUrls[1],
+      foto3: fotoUrls[2],
+      foto4: fotoUrls[3],
+      url1: fotoUrls[0],
+      url2: fotoUrls[1],
+      url3: fotoUrls[2],
+      url4: fotoUrls[3],
+      kostId: newKost.id,
+    });
+
+    //================================================================
+    // Menyimpan Peraturan kost
+    const existingPeraturan = [];
+    const peraturanArray = peraturan.split(","); // Ubah string menjadi array
+    for (let i = 0; i < peraturanArray.length; i++) {
+      const peraturanName = peraturanArray[i];
+      let peraturan = await Peraturan.findOne({
+        where: { peraturan: peraturanName },
+      });
+
+      if (!peraturan) {
+        peraturan = await Peraturan.create({
+          peraturan: peraturanName,
+        });
+      }
+      if (peraturan) {
+        existingPeraturan.push(peraturan.id); // Simpan ID fasilitas yang ada atau yang baru dibuat
+        await KostPeraturan.create({
+          kostId: newKost.id,
+          peraturanId: peraturan.id, // Gunakan ID fasilitas yang ada atau yang baru dibuat
+        });
+      }
+    }
+    console.log(existingPeraturan);
+
+    //==================================================================
+    // Menyimpan fasilitas kost
+    const existingFasilitas = [];
+    const fasilitasArray = nama_f.split(","); // Ubah string menjadi array
+    for (let i = 0; i < fasilitasArray.length; i++) {
+      const fasilitasName = fasilitasArray[i];
+
+      let fasilitas = await Fasilitas.findOne({
+        where: { nama_f: fasilitasName },
+      });
+
+      if (!fasilitas) {
+        fasilitas = await Fasilitas.create({
+          nama_f: fasilitasName,
+        });
+      }
+
+      if (fasilitas) {
+        existingFasilitas.push(fasilitas.id); // Simpan ID fasilitas yang ada atau yang baru dibuat
+        await KostFasilitas.create({
+          kostId: newKost.id,
+          fasilitaId: fasilitas.id, // Gunakan ID fasilitas yang ada atau yang baru dibuat
+        });
+      }
+    }
+
+    console.log(existingFasilitas);
+
+    res.status(201).json({ msg: "Berhasil menambahkan kamar kost" });
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+    console.log(error.message);
+  }
 };
 export const updateKost = async (req, res) => {
   try {

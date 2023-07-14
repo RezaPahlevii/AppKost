@@ -4,17 +4,47 @@ import Kost from "./KostModel.js";
 
 const {DataTypes} = Sequelize;
 const Foto = db.define('foto',{
-   foto_kost:{
+   foto1:{
        type: DataTypes.STRING,
        allowNull: false,
        validate:{
            notEmpty: true
        }
    },
-   url:{
+   foto2:{
+       type: DataTypes.STRING,
+       allowNull: false,
+       validate:{
+           notEmpty: true
+       }
+   },
+   foto3:{
+       type: DataTypes.STRING,
+       allowNull: false,
+       validate:{
+           notEmpty: true
+       }
+   },
+   foto4:{
+       type: DataTypes.STRING,
+       allowNull: false,
+   },
+   url1:{
        type: DataTypes.STRING,
        allowNull: false
-   }
+   },
+   url2:{
+       type: DataTypes.STRING,
+       allowNull: false
+   },
+   url3:{
+       type: DataTypes.STRING,
+       allowNull: false
+   },
+   url4:{
+       type: DataTypes.STRING,
+       allowNull: false
+   },
 },
 {
 freezeTableName: true
