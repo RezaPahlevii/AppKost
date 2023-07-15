@@ -5,20 +5,16 @@ import Kost from "./KostModel.js";
 const {DataTypes} = Sequelize;
 const Foto = db.define('foto',{
    url1:{
-       type: DataTypes.STRING,
-       allowNull: false
+       type: DataTypes.STRING
    },
    url2:{
-       type: DataTypes.STRING,
-       allowNull: false
+       type: DataTypes.STRING
    },
    url3:{
-       type: DataTypes.STRING,
-       allowNull: false
+       type: DataTypes.STRING
    },
    url4:{
-       type: DataTypes.STRING,
-       allowNull: false
+       type: DataTypes.STRING
    },
 },
 {
