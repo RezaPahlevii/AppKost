@@ -385,7 +385,7 @@ const FormAddKost = () => {
               </div>
 
               <Row className="mb-3">
-                <label className="label">Image</label>
+                <label className="label">Foto Kost</label>
                 <Col>
                   {/* Foto Kost1 */}
                   <div className="field">
