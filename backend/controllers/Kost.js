@@ -40,7 +40,7 @@ export const getKost = async (req, res) => {
           },
           {
             model: Foto,
-            attributes: ["url1", "url2", "url3", "url4"]
+            attributes: ["url1", "url2", "url3", "url4"],
           },
         ],
       });
@@ -75,7 +75,7 @@ export const getKost = async (req, res) => {
           },
           {
             model: Foto,
-            attributes: ["url1", "url2", "url3", "url4"]
+            attributes: ["url1", "url2", "url3", "url4"],
           },
         ],
       });
@@ -126,7 +126,7 @@ export const getKostById = async (req, res) => {
           },
           {
             model: Foto,
-            attributes: ["url1", "url2", "url3", "url4"]
+            attributes: ["url1", "url2", "url3", "url4"],
           },
         ],
       });
@@ -162,7 +162,7 @@ export const getKostById = async (req, res) => {
           },
           {
             model: Foto,
-            attributes: ["url1", "url2", "url3", "url4"]
+            attributes: ["url1", "url2", "url3", "url4"],
           },
         ],
       });
@@ -214,7 +214,8 @@ export const createKost = async (req, res) => {
       const file = fotoFiles[`url${i}`];
 
       if (!file)
-        return res.status(400).json({ msg: `Invalid File for url${i}` });
+        // Jika file tidak ada, lanjutkan ke iterasi berikutnya
+        continue;
 
       const fileSize = file.data.length;
       const ext = path.extname(file.name);
@@ -318,11 +319,10 @@ export const updateKost = async (req, res) => {
       desa,
       alamat,
       jk,
-      f_kamar,
-      peraturan_kost,
+      nama_f,
+      peraturan,
       catatan_tambahan,
-      foto_kost,
-      kordinat
+      kordinat,
     } = req.body;
     if (req.role === "admin") {
       await Kost.update(
@@ -333,11 +333,8 @@ export const updateKost = async (req, res) => {
           desa,
           alamat,
           jk,
-          f_kamar,
-          peraturan_kost,
           catatan_tambahan,
-          foto_kost,
-          kordinat
+          kordinat,
         },
         {
           where: {
@@ -356,11 +353,8 @@ export const updateKost = async (req, res) => {
           desa,
           alamat,
           jk,
-          f_kamar,
-          peraturan_kost,
           catatan_tambahan,
-          foto_kost,
-          kordinat
+          kordinat,
         },
         {
           where: {
@@ -450,10 +444,10 @@ export const getRekomendasiKost = async (req, res) => {
         },
         {
           model: Foto,
-          attributes: ["url1", "url2", "url3", "url4"]
+          attributes: ["url1", "url2", "url3", "url4"],
         },
       ],
-  });
+    });
     res.json(response);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
