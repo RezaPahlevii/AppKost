@@ -363,6 +363,104 @@ export const updateKost = async (req, res) => {
         }
       );
     }
+    // Menyimpan data peraturan
+    await KostPeraturan.destroy({ where: { kostId: kost.id } });
+    const existingPeraturan = [];
+    const peraturanArray = peraturan;
+    for (let i = 0; i < peraturanArray.length; i++) {
+      const peraturanName = peraturanArray[i];
+      let peraturan = await Peraturan.findOne({
+        where: { peraturan: peraturanName },
+      });
+
+      if (!peraturan) {
+        peraturan = await Peraturan.create({
+          peraturan: peraturanName,
+        });
+      }
+      if (peraturan) {
+        existingPeraturan.push(peraturan.id); // Simpan ID fasilitas yang ada atau yang baru dibuat
+        await KostPeraturan.create({
+          kostId: kost.id,
+          peraturanId: peraturan.id, // Gunakan ID fasilitas yang ada atau yang baru dibuat
+        });
+      }
+    }
+
+    // Menyimpan data fasilitas
+    await KostFasilitas.destroy({ where: { kostId: kost.id } });
+    const existingFasilitas = [];
+    const fasilitasArray = nama_f;
+    for (let i = 0; i < fasilitasArray.length; i++) {
+      const fasilitasName = fasilitasArray[i].trim();
+      let fasilitas = await Fasilitas.findOne({
+        where: { nama_f: fasilitasName },
+      });
+
+      if (!fasilitas) {
+        fasilitas = await Fasilitas.create({
+          nama_f: fasilitasName,
+        });
+      }
+
+      if (fasilitas) {
+        existingFasilitas.push(fasilitas.id); // Simpan ID fasilitas yang ada atau yang baru dibuat
+        await KostFasilitas.create({
+          kostId: kost.id,
+          fasilitaId: fasilitas.id, // Gunakan ID fasilitas yang ada atau yang baru dibuat
+        });
+      }
+    }
+
+    // Menyimpan informasi foto
+    if (req.files) {
+      const fotoFiles = req.files;
+
+      const fotoUrls = [];
+      const allowedTypes = [".png", ".jpg", ".jpeg"];
+      const maxSize = 5000000;
+
+      for (let i = 1; i <= 4; i++) {
+        const file = fotoFiles[`url${i}`];
+
+        if (file) {
+          const fileSize = file.data.length;
+          const ext = path.extname(file.name);
+          const fileName = file.md5 + ext;
+          const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
+
+          if (!allowedTypes.includes(ext.toLowerCase()))
+            return res
+              .status(422)
+              .json({ msg: `Invalid Image Type for foto${i}` });
+
+          if (fileSize > maxSize)
+            return res
+              .status(422)
+              .json({ msg: `Image for foto${i} must be less than 5 MB` });
+
+          await file.mv(`./public/images/${fileName}`);
+
+          fotoUrls.push(url);
+        } else {
+          fotoUrls.push(kost.Foto[`url${i}`]);
+        }
+      }
+
+      await Foto.update(
+        {
+          url1: fotoUrls[0],
+          url2: fotoUrls[1],
+          url3: fotoUrls[2],
+          url4: fotoUrls[3],
+        },
+        {
+          where: {
+            kostId: kost.id,
+          },
+        }
+      );
+    }
     res.status(200).json({ msg: "Berhasil update kost" });
   } catch (error) {
     res.status(500).json({ msg: error.message });
