@@ -20,10 +20,10 @@ const FormEditKost = () => {
   const [catatan_tambahan, setCatatan_tambahan] = useState("");
   const [kordinat, setKordinat] = useState("");
   let [latitude, longitude] = kordinat ? kordinat.split(",") : [0, 0];
-  const [foto1, setFoto1] = useState("");
-  const [foto2, setFoto2] = useState("");
-  const [foto3, setFoto3] = useState("");
-  const [foto4, setFoto4] = useState("");
+  const [url1, setUrl1] = useState("");
+  const [url2, setUrl2] = useState("");
+  const [url3, setUrl3] = useState("");
+  const [url4, setUrl4] = useState("");
   const [preview1, setPreview1] = useState("");
   const [preview2, setPreview2] = useState("");
   const [preview3, setPreview3] = useState("");
@@ -56,10 +56,10 @@ const FormEditKost = () => {
         setNama_f(response.data.fasilitas.map((item) => item.nama_f));
         setPeraturan(response.data.peraturans.map((item) => item.peraturan));
         setCatatan_tambahan(response.data.catatan_tambahan);
-        setFoto1(response.data.foto1);
-        setFoto2(response.data.foto2);
-        setFoto3(response.data.foto3);
-        setFoto4(response.data.foto4);
+        setUrl1(response.data.url1);
+        setUrl2(response.data.url2);
+        setUrl3(response.data.url3);
+        setUrl4(response.data.url4);
         setKordinat(response.data.kordinat);
       } catch (error) {
         if (error.response) {
@@ -72,28 +72,32 @@ const FormEditKost = () => {
 
   const updateKost = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("nama", nama);
+    formData.append("harga", harga);
+    formData.append("no_hp", no_hp);
+    formData.append("desa", desa);
+    formData.append("alamat", alamat);
+    formData.append("jk", jk);
+    formData.append("nama_f", nama_f);
+    formData.append("peraturan", peraturan);
+    formData.append("catatan_tambahan", catatan_tambahan);
+    formData.append("url1", url1);
+    formData.append("url2", url2);
+    formData.append("url3", url3);
+    formData.append("url4", url4);
+    formData.append("kordinat", kordinat);
     try {
-      await axios.patch(`http://localhost:5000/rumah-kost/${id}`, {
-        nama: nama,
-        harga: harga,
-        no_hp: no_hp,
-        desa: desa,
-        alamat: alamat,
-        jk: jk,
-        nama_f: nama_f,
-        peraturan: peraturan,
-        catatan_tambahan: catatan_tambahan,
-        foto1: foto1,
-        foto2: foto2,
-        foto3: foto3,
-        foto4: foto4,
-        kordinat: kordinat,
+      await axios.patch(`http://localhost:5000/rumah-kost/${id}`, formData,{
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
       console.log(nama);
       navigate("/rumah-kost");
     } catch (error) {
       if (error.response) {
-        setMsg(error.response.data.msg);
+        setMsg("ada error");
       }
     }
   };
@@ -116,72 +120,147 @@ const FormEditKost = () => {
     }
   };
 
+  const loadImage1 = (e) => {
+    const image1 = e.target.files[0];
+    setUrl1(image1);
+    setPreview1(URL.createObjectURL(image1));
+  };
+  const loadImage2 = (e) => {
+    const image2 = e.target.files[0];
+    setUrl2(image2);
+    setPreview2(URL.createObjectURL(image2));
+  };
+  const loadImage3 = (e) => {
+    const image3 = e.target.files[0];
+    setUrl3(image3);
+    setPreview3(URL.createObjectURL(image3));
+  };
+  const loadImage4 = (e) => {
+    const image4 = e.target.files[0];
+    setUrl4(image4);
+    setPreview4(URL.createObjectURL(image4));
+  };
+
+  // const changeFoto1 = (e) => {
+  //   const files = Array.from(e.target.files);
+  //   const uploadedFoto1 = [];
+  //   const preview1 = [];
+
+  //   files.forEach((file) => {
+  //     const reader = new FileReader();
+
+  //     reader.onloadend = () => {
+  //       uploadedFoto1.push(file);
+  //       preview1.push(reader.result);
+
+  //       setUrl1(preview1[0]); // Perbarui nilai state url1 dengan preview1[0]
+  //       setPreview1(preview1[0]); // Perbarui nilai state preview1 dengan preview1[0]
+  //     };
+
+  //     reader.readAsDataURL(file);
+  //   });
+  // };
+  // const changeFoto2 = (e) => {
+  //   const files = Array.from(e.target.files);
+  //   const uploadedFoto2 = [];
+  //   const preview2 = [];
+    
+  //   files.forEach((file) => {
+  //     const reader = new FileReader();
+      
+  //     reader.onloadend = () => {
+  //       uploadedFoto2.push(file);
+  //       preview2.push(reader.result);
+        
+  //       setUrl2(preview2[0]); // Perbarui nilai state url1 dengan preview1[0]
+  //       setPreview2(preview2[0]); // Perbarui nilai state preview1 dengan preview1[0]
+  //     };
+      
+  //     reader.readAsDataURL(file);
+  //   });
+  // }; 
+  // const changeFoto3 = (e) => {
+  //   const files = Array.from(e.target.files);
+  //   const uploadedFoto3 = [];
+  //   const preview3 = [];
+    
+  //   files.forEach((file) => {
+  //     const reader = new FileReader();
+      
+  //     reader.onloadend = () => {
+  //       uploadedFoto3.push(file);
+  //       preview3.push(reader.result);
+        
+  //       setUrl3(preview3[0]); // Perbarui nilai state url1 dengan preview1[0]
+  //       setPreview3(preview3[0]); // Perbarui nilai state preview1 dengan preview1[0]
+  //     };
+      
+  //     reader.readAsDataURL(file);
+  //   });
+  // };
+  // const changeFoto4 = (e) => {
+  //   const files = Array.from(e.target.files);
+  //   const uploadedFoto4 = [];
+  //   const preview4 = [];
+    
+  //   files.forEach((file) => {
+  //     const reader = new FileReader();
+      
+  //     reader.onloadend = () => {
+  //       uploadedFoto4.push(file);
+  //       preview4.push(reader.result);
+        
+  //       setUrl4(preview4[0]); // Perbarui nilai state url1 dengan preview1[0]
+  //       setPreview4(preview4[0]); // Perbarui nilai state preview1 dengan preview1[0]
+  //     };
+      
+  //     reader.readAsDataURL(file);
+  //   });
+  // };
+  
+
   // const handleImageChange = (e) => {
   //   const file = e.target.files[0];
   //   setFoto_kost(file);
   //   setPreview(URL.createObjectURL(file));
   // };
 
-  const changeFoto1 = (e) => {
-    const files = Array.from(e.target.files);
-    const foto1 = [];
-    const preview1 = [];
-    files.forEach((file) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        foto1.push(file);
-        preview1.push(reader.result);
-        setFoto1(foto1);
-        setPreview1(preview1);
-      };
-      reader.readAsDataURL(file);
-    });
-  };
-  const changeFoto2 = (e) => {
-    const files = Array.from(e.target.files);
-    const foto2 = [];
-    const preview2 = [];
-    files.forEach((file) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        foto2.push(file);
-        preview2.push(reader.result);
-        setFoto2(foto2);
-        setPreview2(preview2);
-      };
-      reader.readAsDataURL(file);
-    });
-  };
-  const changeFoto3 = (e) => {
-    const files = Array.from(e.target.files);
-    const foto3 = [];
-    const preview3 = [];
-    files.forEach((file) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        foto3.push(file);
-        preview3.push(reader.result);
-        setFoto3(foto1);
-        setPreview3(preview1);
-      };
-      reader.readAsDataURL(file);
-    });
-  };
-  const changeFoto4 = (e) => {
-    const files = Array.from(e.target.files);
-    const foto4 = [];
-    const preview4 = [];
-    files.forEach((file) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        foto4.push(file);
-        preview4.push(reader.result);
-        setFoto4(foto4);
-        setPreview4(preview4);
-      };
-      reader.readAsDataURL(file);
-    });
-  };
+  // const changeFoto1 = (e) => {
+  //   const file = e.target.files[0];
+  //   const reader = new FileReader();
+  //   reader.onloadend = () => {
+  //     setUrl1(reader.result);
+  //     setPreview1(reader.result);
+  //   };
+  //   reader.readAsDataURL(file);
+  // };
+  // const changeFoto2 = (e) => {
+  //   const file = e.target.files[0];
+  //   const reader = new FileReader();
+  //   reader.onloadend = () => {
+  //     setUrl2(reader.result);
+  //     setPreview2(reader.result);
+  //   };
+  //   reader.readAsDataURL(file);
+  // };
+  // const changeFoto3 = (e) => {
+  //   const file = e.target.files[0];
+  //   const reader = new FileReader();
+  //   reader.onloadend = () => {
+  //     setUrl3(reader.result);
+  //     setPreview3(reader.result);
+  //   };
+  //   reader.readAsDataURL(file);
+  // };
+  // const changeFoto4 = (e) => {
+  //   const file = e.target.files[0];
+  //   const reader = new FileReader();
+  //   reader.onloadend = () => {
+  //     setUrl4(reader.result);
+  //     setPreview4(reader.result);
+  //   };
+  //   reader.readAsDataURL(file);
+  // };
 
   const petaPosition = [1.4583828821304539, 102.15096143773447];
 
@@ -462,7 +541,7 @@ const FormEditKost = () => {
                           type="file"
                           accept="image/*"
                           capture="user"
-                          onChange={changeFoto1}
+                          onChange={loadImage1}
                           style={{ display: "none" }}
                         />
                         <span className="file-cta">
@@ -494,7 +573,7 @@ const FormEditKost = () => {
                           type="file"
                           accept="image/*"
                           capture="user"
-                          onChange={changeFoto2}
+                          onChange={loadImage2}
                           style={{ display: "none" }}
                         />
                         <span className="file-cta">
@@ -528,7 +607,7 @@ const FormEditKost = () => {
                           type="file"
                           accept="image/*"
                           capture="user"
-                          onChange={changeFoto3}
+                          onChange={loadImage3}
                           style={{ display: "none" }}
                         />
                         <span className="file-cta">
@@ -560,7 +639,7 @@ const FormEditKost = () => {
                           type="file"
                           accept="image/*"
                           capture="user"
-                          onChange={changeFoto4}
+                          onChange={loadImage4}
                           style={{ display: "none" }}
                         />
                         <span className="file-cta">
@@ -617,18 +696,18 @@ const FormEditKost = () => {
                     iconCreateFunction={createCustomClusterIcon}
                   >
                     {markers.map((marker) => (
-                    <Marker
-                      position={marker.geocode}
-                      icon={customIcon}
-                      draggable
-                      eventHandlers={{
-                        dragend: (e) => {
-                          const { lat, lng } = e.target.getLatLng();
-                          setMarkerPosition([lat, lng]);
-                          setKordinat(`${lat}, ${lng}`); // Memperbarui nilai input alamat koordinat
-                        },
-                      }}
-                    ></Marker>
+                      <Marker
+                        position={marker.geocode}
+                        icon={customIcon}
+                        draggable
+                        eventHandlers={{
+                          dragend: (e) => {
+                            const { lat, lng } = e.target.getLatLng();
+                            setMarkerPosition([lat, lng]);
+                            setKordinat(`${lat}, ${lng}`); // Memperbarui nilai input alamat koordinat
+                          },
+                        }}
+                      ></Marker>
                     ))}
                   </MarkerClusterGroup>
                 </MapContainer>

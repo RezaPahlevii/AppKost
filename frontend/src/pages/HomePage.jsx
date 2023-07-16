@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, CardImg, Col, Container, Form, Row } from "react-bootstrap";
-// import RekomendasiKost from "../components/RekomendasiKost";
-// import rumah from "./../image/rumah.jpg";
-import rumah2 from "./../image/rumah2.jpg";
+import {
+  Button,
+  Card,
+  CardImg,
+  Col,
+  Container,
+  Form,
+  Row,
+} from "react-bootstrap";
 import Banner from "../components/Banner";
-// import rumah3 from "./../image/rumah3.jpg";s
 import Nav2 from "./../components/Nav2";
-// import SearchBar from "../components/SearchBar";
 import Footer2 from "../components/Footer2";
 import axios from "axios";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const [kosts, setKosts] = useState([]);
@@ -35,7 +38,7 @@ const HomePage = () => {
     <div>
       <Nav2 />
       <Container className="my-5 py-5">
-      <div className="pb-5 search-container">
+        <div className="pb-5 search-container">
           <h2>
             <strong>Temukan Kost Kebutuhan Anda</strong>
           </h2>
@@ -55,7 +58,7 @@ const HomePage = () => {
           </Col>
         </div>
         <div>
-          <Banner banner={rumah2} />
+          <Banner/>
         </div>
         <div className="row mt-5 pt-5">
           <div>
@@ -66,7 +69,7 @@ const HomePage = () => {
             </h3>
           </div>
           <Row>
-          {kosts
+            {kosts
               .filter((kost) => {
                 const searchLower = search.toLowerCase();
                 const nameLower = kost.nama.toLowerCase();
@@ -75,58 +78,53 @@ const HomePage = () => {
                 // const filterFasilitas = kost.f_kamar((fasilitas) =>
                 // fasilitas.toLowerCase().includes(searchLower));
 
-                return search.toLowerCase() === "" ||
-                nameLower.includes(searchLower) ||
-                priceLower.includes(searchLower) ||
-                ownerNameLower.includes(searchLower) ||
-                filterFasilitas;
-                
+                return (
+                  search.toLowerCase() === "" ||
+                  nameLower.includes(searchLower) ||
+                  priceLower.includes(searchLower) ||
+                  ownerNameLower.includes(searchLower) ||
+                  filterFasilitas
+                );
               })
               .map((kost, index) => (
                 <Col key={kost.uuid} xs={12} sm={6} md={4} lg={3}>
-                  <Card className="mb-3">
-                    <CardImg variant="top" src={kost.foto_kost} />
-                    <Card.Body>
-                      <Card.Title>{kost.nama}</Card.Title>
-                      <Card.Text>{kost.harga}</Card.Text>
-                      <Card.Text>{kost.user.name}</Card.Text>
-                      <Card.Text>{kost.f_kamar}</Card.Text>
-                    </Card.Body>
-                  </Card>
+                  <Link
+                    to={`/rumah-kost/detail/${kost.uuid}`}
+                    style={{ textDecoration: "none" }}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Card className="mb-3">
+                      <CardImg variant="top" src={kost.fotos[0].url1} />
+                      <Card.Body>
+                        <Card.Title>{kost.nama}</Card.Title>
+                        <Card.Text className="my-1">{kost.jk}</Card.Text>
+                        <Card.Text className="my-1">
+                          {kost.desa} <br />
+                          {kost.alamat}
+                        </Card.Text>
+                        <Card.Text>
+                          {kost.fasilitas.slice(0, 5).map((item, index) => (
+                            <span
+                              key={item.nama_f}
+                              className="mr-1 text-muted"
+                              style={{ fontSize: "13px" }}
+                            >
+                              {item.nama_f}
+                              {index !== 4 && ","}
+                            </span>
+                          ))}
+                        </Card.Text>
+                        <Card.Text>
+                          <strong>{kost.harga}</strong> /bulan
+                        </Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </Link>
                 </Col>
               ))}
           </Row>
-
-          {/* <div className="col-4">
-            <RekomendasiKost
-              image={rumah2}
-              kost="Kost Pink"
-              alamat="Jl. Bathin Alam GG. AMD"
-              desa="Desa Sungai Alam"
-              harga="Rp. 500.000 / bulan"
-            />
-          </div>
-          <div className="col-4">
-            <RekomendasiKost
-              image={rumah3}
-              kost="Kost Kuning"
-              alamat="Jl. Bathin Alam GG. AMD"
-              desa="Desa Sungai Alam"
-              harga="Rp. 300.000 / bulan"
-            />
-          </div>
-          <div className="col-4">
-            <RekomendasiKost
-              image={rumah4}
-              kost="Kost Biru"
-              alamat="Jl. Bathin Alam GG. AMD"
-              desa="Desa Sungai Alam"
-              harga="Rp. 700.000 / bulan"
-            />
-          </div> */}
         </div>
-
-        
       </Container>
       <Footer2 />
     </div>

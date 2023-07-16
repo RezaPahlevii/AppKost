@@ -1,66 +1,57 @@
-import React from "react";
-import { Card } from "react-bootstrap";
+import React, { Component } from "react";
 import Slider from "react-slick";
+import rumah1 from "./../image/carousel1.jpg";
+import rumah2 from "./../image/carousel2.svg";
+import rumah3 from "./../image/carousel3.jpg";
+import rumah4 from "./../image/carousel4.jpg";
+import { Card, CardImg } from "react-bootstrap";
 
-const Banner = (props) => {
-  const settings = {
-    className: "center",
-    centerMode: true,
-    infinite: false,
-    centerPadding: "60px",
-    slidesToShow: 1,
-    slidesToScroll: 3,
-    speed: 1000,
-    borderRadius: 55,
-  };
-  //   const styles = {
-  //     card: {
-  //       backgroundColor: "#B7E0F2",
-  //       borderRadius: 150,
-  //       padding: "3rem",
-  //     },
-  //     cardImage: {
-  //       objectFit: "cover",
-  //       borderRadius: 55,
-  //     },
-  //   };
-
-  return (
-    <div>
-      <Slider {...settings}>
-        <div className=" mr-5 px-5">
-          <Card>
-            <Card.Img
-              //   className="border-10"
-              variant="top"
-              style={{ height: "15rem", width: "20" }}
-              src={props.banner}
-            />
-          </Card>
-        </div>
-        <div className="mr-5 px-5">
-          <Card>
-            <Card.Img
-              //   className="border-10"
-              variant="top"
-              style={{ height: "15rem", width: "20" }}
-              src={props.banner}
-            />
-          </Card>
-        </div>
-        <div className="mx-5">
-          <Card>
-            <Card.Img
-              //   className="border-10"
-              variant="top"
-              style={{ height: "15rem", width: "20" }}
-              src={props.banner}
-            />
-          </Card>
-        </div>
-      </Slider>
-    </div>
-  );
-};
-
-export default Banner;
+export default class MultipleItems extends Component {
+  render() {
+    const settings = {
+      dots: true,
+      infinite: true,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 5000,
+      pauseOnHover: true,
+    };
+    return (
+      <div>
+        <Slider {...settings}>
+          <div>
+            <Card className="mb-3">
+              <CardImg style={{ width: "100%", height: "auto" }} variant="top" src={rumah1} />
+            </Card>
+          </div>
+          <div>
+            <Card className="mb-3">
+              <CardImg style={{ width: "100%", height: "auto" }} variant="top" src={rumah2} />
+            </Card>
+          </div>
+          <div>
+            <Card className="mb-3">
+              <CardImg style={{ width: "100%", height: "auto" }} variant="top" src={rumah3} />
+            </Card>
+          </div>
+          <div>
+            <Card className="mb-3">
+              <CardImg variant="top" src={rumah4} />
+            </Card>
+          </div>
+          <div>
+            <Card className="mb-3">
+              <CardImg variant="top" src={rumah2} />
+            </Card>
+          </div>
+          <div>
+            <Card className="mb-3">
+              <CardImg variant="top" src={rumah3} />
+            </Card>
+          </div>
+        </Slider>
+      </div>
+    );
+  }
+}
