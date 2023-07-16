@@ -7,57 +7,34 @@ import {
   Container,
   Form,
   Row,
-  Tooltip,
 } from "react-bootstrap";
 import Nav2 from "../components/Nav2";
 import axios from "axios";
 import Footer2 from "../components/Footer2";
 import "../css/ListKost.css";
 import { Icon, divIcon } from "leaflet";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 
 const ListKost = () => {
   const [kosts, setKosts] = useState([]);
   const [search, setSearch] = useState("");
-  const navigate = useNavigate();
   console.log(search);
 
   useEffect(() => {
     getKosts();
   }, []);
-
   const getKosts = async () => {
     const response = await axios.get("http://localhost:5000/rekomendasi-kost");
     setKosts(response.data);
   };
 
-  const buttonFullMaps = () => {
-    navigate("/maps");
-  };
   const petaPosition = [1.4583828821304539, 102.15096143773447];
   const customIcon = new Icon({
     iconUrl: require("../image/pinLokasi.png"),
-    iconSize: [40, 40],
+    iconSize: [36, 36],
   });
-  const markers = [
-    {
-      geocode: [1.4585110731407618, 102.15337262025002],
-      popUp: "Ini Detail Kost Hijau",
-      toolTip: "Kost Hijau, klik untuk detail kost",
-    },
-    {
-      geocode: [1.4566212064700033, 102.15186820403704],
-      popUp: "Ini Detail Kost Kuning",
-      toolTip: "Kost Kuning, klik untuk detail kost",
-    },
-    {
-      geocode: [1.4576274250341035, 102.1483645167577],
-      popUp: "Ini Detail Kost Biru",
-      toolTip: "Kost Biru, klik untuk detail kost",
-    },
-  ];
   const createCustomClusterIcon = (cluster) => {
     return new divIcon({
       html: `<div class="cluster-icon">${cluster.getChildCount()}</div>`,
@@ -209,19 +186,24 @@ const ListKost = () => {
                 chunkedLoading
                 iconCreateFunction={createCustomClusterIcon}
               >
-                {markers.map((marker) => (
-                  <Marker position={marker.geocode} icon={customIcon}>
-                    <Popup>{marker.popUp}</Popup>
-                    <Tooltip sticky>
-                      <h6>{marker.toolTip}</h6>
-                    </Tooltip>
+                {kosts.map((kost) => (
+                  <Marker
+                    key={kost.uuid}
+                    position={kost.kordinat.split(",").map(Number)}
+                    icon={customIcon}
+                  >
+                    <Popup>{kost.nama}</Popup>
                   </Marker>
                 ))}
               </MarkerClusterGroup>
             </MapContainer>
-            <Button onClick={buttonFullMaps} className="mt-3">
-              Full Maps
-            </Button>
+            <Link
+            className="btn btn-outline-success"
+              to={"/maps"}
+              style={{textDecoration: "none", marginTop: "10px"}}
+              target="_blank"
+              rel="noopener noreferrer"
+            >Full Maps</Link>
           </Col>
         </Row>
       </Container>

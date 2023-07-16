@@ -19,6 +19,8 @@ import { useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaBed, FaWifi, FaShower, FaTv, FaUtensils } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { reset, getMe } from "../features/authSlice";
 
 const DetailKost = () => {
   const [show, setShow] = useState(false);
@@ -30,6 +32,8 @@ const DetailKost = () => {
   const [foto4, setFoto4] = useState("");
   const [kost, setKost] = useState(null);
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const {user} = useSelector((state) => state.auth)
   const petaPosition = [1.4583828821304539, 102.15096143773447];
   const markers = [
     {
@@ -57,7 +61,7 @@ const DetailKost = () => {
         setFoto1(response.data.fotos[0]?.url1);
         setFoto2(response.data.fotos[0]?.url2);
         setFoto3(response.data.fotos[0]?.url3);
-        setFoto3(response.data.fotos[0]?.url4);
+        setFoto4(response.data.fotos[0]?.url4);
         setKost(response.data);
       } catch (error) {
         console.error(error);
@@ -124,6 +128,15 @@ const DetailKost = () => {
     }
   };
 
+  const loginDulu = () => {
+    dispatch(getMe());
+    dispatch(reset());
+    window.open("/login", "_blank");
+  };
+  
+  const ajukanSewa =()=>{
+    window.open('/form-biodata-penyewa', '_blank');
+  }
   return (
     <div>
       <Nav2 />
@@ -145,7 +158,12 @@ const DetailKost = () => {
         <Row>
           <Col>
             <Breadcrumb>
-              <Breadcrumb.Item style={{ textDecoration: "none" }} href="/kost-list">List Kost</Breadcrumb.Item>
+              <Breadcrumb.Item
+                style={{ textDecoration: "none" }}
+                href="/kost-list"
+              >
+                List Kost
+              </Breadcrumb.Item>
               <Breadcrumb.Item active>Detail Kost</Breadcrumb.Item>
             </Breadcrumb>
           </Col>
@@ -157,21 +175,21 @@ const DetailKost = () => {
             md={8}
           >
             <Figure>
-              <Figure.Image alt="171x180" src={foto1} />
+              <Figure.Image alt="Foto 1" src={foto1} />
             </Figure>
           </Col>
           <Col xs={12} md={4}>
             <Row style={{ marginRight: "-15px", marginBottom: "-15px" }}>
               <Figure>
-                <Figure.Image alt="Foto 3" src={foto2} />
+                <Figure.Image alt="Foto 2" src={foto2} />
               </Figure>
             </Row>
             <Row style={{ marginRight: "-15px", marginBottom: "-15px" }}>
               <Figure>
-                <Figure.Image alt="171x180" src={foto3} />
-                <Button variant="primary" onClick={handleShow}>
+                <Figure.Image alt="Foto 3" src={foto3} />
+                {/* <Button variant="primary" onClick={handleShow}>
                   Launch demo modal
-                </Button>
+                </Button> */}
               </Figure>
             </Row>
           </Col>
@@ -218,7 +236,8 @@ const DetailKost = () => {
                       .slice(Math.ceil(fasilitas.length / 2))
                       .map((item) => (
                         <div key={item.nama_f} className="fasilitas-item">
-                          {renderIcon(item.nama_f)}{item.nama_f}
+                          {renderIcon(item.nama_f)}
+                          {item.nama_f}
                         </div>
                       ))}
                   </Col>
@@ -240,7 +259,8 @@ const DetailKost = () => {
                 <Row>
                   {peraturans.map((item) => (
                     <div key={item.peraturan} className="fasilitas-item">
-                     {renderIcon(item.peraturan)}{item.peraturan}
+                      {renderIcon(item.peraturan)}
+                      {item.peraturan}
                     </div>
                   ))}
                 </Row>
@@ -273,7 +293,8 @@ const DetailKost = () => {
                       .slice(Math.ceil(fasilitas.length / 2))
                       .map((item) => (
                         <div key={item.nama_f} className="fasilitas-item">
-                          {renderIcon(item.nama_f)}{item.nama_f}
+                          {renderIcon(item.nama_f)}
+                          {item.nama_f}
                         </div>
                       ))}
                   </Col>
@@ -300,7 +321,8 @@ const DetailKost = () => {
                       .slice(Math.ceil(fasilitas.length / 2))
                       .map((item) => (
                         <div key={item.nama_f} className="fasilitas-item">
-                          {renderIcon(item.nama_f)}{item.nama_f}
+                          {renderIcon(item.nama_f)}
+                          {item.nama_f}
                         </div>
                       ))}
                   </Col>
@@ -331,8 +353,7 @@ const DetailKost = () => {
                         key={index}
                         position={marker.geocode}
                         icon={customIcon}
-                      >
-                      </Marker>
+                      ></Marker>
                     ))}
                   </MarkerClusterGroup>
                 </MapContainer>
@@ -346,7 +367,15 @@ const DetailKost = () => {
                 <strong>{harga}</strong> / bulan
               </h4>
               <p>No. HP: {no_hp}</p>
-              <Button variant="success">Ajukan Sewa</Button>
+              {user == null ? (
+                <Button onClick={loginDulu} variant="success">
+                  Ajukan Sewa
+                </Button>
+              ) : (
+                <Button onClick={ajukanSewa} variant="success">
+                  Ajukan Sewa
+                </Button>
+              )}
             </Card>
           </Col>
         </Row>
