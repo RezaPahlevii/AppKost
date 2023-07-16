@@ -305,6 +305,13 @@ export const createKost = async (req, res) => {
   }
 };
 export const updateKost = async (req, res) => {
+  if (req.files === null)
+    return res.status(400).json({ msg: "No File Uploaded" });
+  const fotoFiles = req.files; // Mengambil semua file foto yang diupload
+
+  // Mengatur ukuran maksimal dan jenis file yang diizinkan
+  const allowedTypes = [".png", ".jpg", ".jpeg"];
+  const maxSize = 5000000; // 5MB
   try {
     const kost = await Kost.findOne({
       where: {
@@ -413,54 +420,47 @@ export const updateKost = async (req, res) => {
     }
 
     // Menyimpan informasi foto
-    if (req.files) {
-      const fotoFiles = req.files;
+    const existingFoto = await Foto.findOne({ where: { kostId: kost.id } });
 
-      const fotoUrls = [];
-      const allowedTypes = [".png", ".jpg", ".jpeg"];
-      const maxSize = 5000000;
+    let fileName = "";
+    if (req.files === null) {
+      fileName = existingFoto.url1;
+    } else {
+      const fotoFiles = req.files;
 
       for (let i = 1; i <= 4; i++) {
         const file = fotoFiles[`url${i}`];
 
-        if (file) {
-          const fileSize = file.data.length;
-          const ext = path.extname(file.name);
-          const fileName = file.md5 + ext;
-          const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
+        if (!file) continue;
 
-          if (!allowedTypes.includes(ext.toLowerCase()))
-            return res
-              .status(422)
-              .json({ msg: `Invalid Image Type for foto${i}` });
+        const fileSize = file.size;
+        const ext = path.extname(file.name);
+        fileName = `${i}${ext}`;
+        const allowedTypes = [".png", ".jpg", ".jpeg"];
 
-          if (fileSize > maxSize)
-            return res
-              .status(422)
-              .json({ msg: `Image for foto${i} must be less than 5 MB` });
+        if (!allowedTypes.includes(ext.toLowerCase()))
+          return res
+            .status(422)
+            .json({ msg: `Invalid Image Type for foto${i}` });
 
-          await file.mv(`./public/images/${fileName}`);
+        if (fileSize > 5000000)
+          return res
+            .status(422)
+            .json({ msg: `Image for foto${i} must be less than 5 MB` });
 
-          fotoUrls.push(url);
-        } else {
-          fotoUrls.push(kost.Foto[`url${i}`]);
-        }
+        const filepath = `./public/images/${existingFoto[`url${i}`]}`;
+        fs.unlinkSync(filepath);
+
+        file.mv(`./public/images/${fileName}`, (err) => {
+          if (err) return res.status(500).json({ msg: err.message });
+        });
+
+        existingFoto[`url${i}`] = fileName;
       }
-
-      await Foto.update(
-        {
-          url1: fotoUrls[0],
-          url2: fotoUrls[1],
-          url3: fotoUrls[2],
-          url4: fotoUrls[3],
-        },
-        {
-          where: {
-            kostId: kost.id,
-          },
-        }
-      );
     }
+
+    await existingFoto.save();
+
     res.status(200).json({ msg: "Berhasil update kost" });
   } catch (error) {
     res.status(500).json({ msg: error.message });
@@ -561,18 +561,26 @@ export const filterKostByFacilities = async (req, res) => {
 
     // Filter pencarian berdasarkan fasilitas
     const response = await Kost.findAll({
-      attributes: ["uuid", "nama", "harga", "f_kamar"],
-      where: {
-        f_kamar: {
-          [Op.or]: facilitiesArray.map((facility) => ({
-            [Op.like]: `%${facility}%`,
-          })),
-        },
-      },
+      attributes: ["uuid", "nama", "harga"],
       include: [
         {
           model: Users,
           attributes: ["name", "email"],
+        },
+        {
+          model: KostPeraturan,
+          attributes: ["peraturan"],
+        },
+        {
+          model: KostFasilitas,
+          attributes: ["nama_f"],
+          where: {
+            f_kamar: {
+              [Op.or]: facilitiesArray.map((facility) => ({
+                [Op.like]: `%${facility}%`,
+              })),
+            },
+          },
         },
       ],
     });
@@ -630,8 +638,6 @@ export const getKostViewById = async (req, res) => {
         "desa",
         "alamat",
         "jk",
-        "f_kamar",
-        "peraturan_kost",
         "catatan_tambahan",
         "kordinat",
       ],
@@ -643,6 +649,18 @@ export const getKostViewById = async (req, res) => {
           model: Users,
           attributes: ["name", "email"],
         },
+        {
+          model: Peraturan,
+          attributes: ["peraturan"],
+        },
+        {
+          model: Fasilitas,
+          attributes: ["nama_f"],
+        },
+        {
+          model: Foto,
+          attributes: ["url1", "url2", "url3", "url4"],
+        },
       ],
     });
     res.status(200).json(response);
@@ -651,23 +669,3 @@ export const getKostViewById = async (req, res) => {
   }
 };
 
-// export const saveFoto =(req, res)=>{
-//   if(req.file === null) return res.status(400).json({msg: "No File Uploaded"});
-//   const file = req.files.file;
-//   const fileSize = file.data.length;
-//   const ext = path.extname(file.name);
-//   const url = `${req.protocol}://${req.get("host")}/image/${fileName}`;
-//   const allowedType = [' png','.jpg','jpeg'];
-
-//   if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({msg: "foto harus di bawah 5 MB"});
-// }
-
-// file.mv(`.public/images/${fileName}`), async(err)=>{
-//   if(err) return res.status(500).json({msg: err.message});
-//   try {
-//     await Kost.create({image: fileName, url: url});
-//     res.status(201).json({msg: "foto kost berhasil di upload"});
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// }
