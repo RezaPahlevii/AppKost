@@ -604,8 +604,6 @@ export const getKostView = async (req, res) => {
         "desa",
         "alamat",
         "jk",
-        "f_kamar",
-        "peraturan_kost",
         "catatan_tambahan",
         "kordinat",
       ],
@@ -663,6 +661,55 @@ export const getKostViewById = async (req, res) => {
         },
       ],
     });
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
+export const getKordinat = async (req, res) => {
+  try {
+    let response;
+    if (req.role === "admin" || !req.userId) {
+      response = await Kost.findAll({
+        attributes: [
+          "uuid",
+          "nama",
+          "desa",
+          "alamat",
+          "harga",
+          "jk",
+          "kordinat"
+        ],
+        include: [
+          {
+            model: Users,
+            attributes: ["name", "email"],
+          }
+        ],
+      });
+    } else {
+      response = await Kost.findAll({
+        attributes: [
+          "uuid",
+          "nama",
+          "desa",
+          "alamat",
+          "harga",
+          "jk",
+          "kordinat"
+        ],
+        where: {
+          userId: req.userId,
+        },
+        include: [
+          {
+            model: Users,
+            attributes: ["name", "email"],
+          }
+        ]
+      });
+    }
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json({ msg: error.message });
