@@ -80,6 +80,7 @@ const ListKost = () => {
       const nameLower = kost.nama.toLowerCase();
       const jkLower = kost.jk.toLowerCase();
       const alamatLower = kost.alamat.toLowerCase();
+      const desaLower = kost.desa.toLowerCase();
       const priceLower = kost.harga.toString().toLowerCase();
       const ownerNameLower = kost.user.name.toLowerCase();
       const filterFasilitas = kost.fasilitas.find((fasilitas) =>
@@ -91,7 +92,7 @@ const ListKost = () => {
       return (
         (searchWords.length === 1 && searchWords[0] === "") ||
         searchWords.every((word) =>
-          [nameLower, jkLower, alamatLower, priceLower, ownerNameLower].some(
+          [nameLower, jkLower, alamatLower, desaLower, priceLower, ownerNameLower].some(
             (text) => text.includes(word)
           )
         ) ||
@@ -119,75 +120,121 @@ const ListKost = () => {
     });
 
   const handlePriceChange = (event) => {
-    setPriceRange({
-      ...priceRange,
-      [event.target.name]: Number(event.target.value),
-    });
+    const { name, value } = event.target;
+
+    // Memeriksa apakah nilai input adalah angka
+    if (!isNaN(value)) {
+      setPriceRange({
+        ...priceRange,
+        [name]: Number(value),
+      });
+    }
   };
 
   return (
     <div>
       <Nav2 />
       <Container style={{ maxWidth: "1250px" }}>
-        <Row className="sticky-top pt-5 ">
+        <Row className="pt-4">
+          {/* menu fasilitas, gender, dan harga (fixed top) */}
           <Col className="mt-auto">
             <div>
               <div className="bg-white">
-                <Button
-                  onClick={handleFacilitiesModal}
-                  as={ButtonGroup}
-                  title="Fasilitas"
-                  variant="outline-secondary"
-                  className="rounded-pill mr-3"
-                >
-                  {" "}
-                  Fasilitas
-                </Button>
-                <DropdownButton
-                  as={ButtonGroup}
-                  title="Gender"
-                  variant="outline-secondary"
-                  className="rounded-pill mr-3"
-                >
-                  <Dropdown.Item
-                    active={gender === "putra"}
-                    onClick={() => handleGenderChange("putra")}
-                  >
-                    Putra
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    active={gender === "putri"}
-                    onClick={() => handleGenderChange("putri")}
-                  >
-                    Putri
-                  </Dropdown.Item>
-                </DropdownButton>
-                <div className="d-flex align-items-center">
-                  <span className="me-2">Harga:</span>
-                  <RangeSlider
-                    className="range-slider"
-                    min={0}
-                    max={1000000}
-                    value={priceRange.min}
-                    onChange={handlePriceChange}
-                    name="min"
-                  />
-                  <RangeSlider
-                    className="range-slider"
-                    min={0}
-                    max={1000000}
-                    value={priceRange.max}
-                    onChange={handlePriceChange}
-                    name="max"
-                  />
-                  <span className="ms-2">Min: {priceRange.min}</span>
-                  <span className="mx-1">-</span>
-                  <span className="me-2">Max: {priceRange.max}</span>
-                </div>
+                <Row className="align-items-center">
+                  <Col sm={12} md={6} lg={3}>
+                    <Button
+                      onClick={handleFacilitiesModal}
+                      as={ButtonGroup}
+                      title="Fasilitas"
+                      variant="outline-secondary"
+                      className="rounded-pill mb-3 mb-md-0 mr-2"
+                    >
+                      Fasilitas
+                    </Button>
+                    <DropdownButton
+                      as={ButtonGroup}
+                      title="Gender"
+                      variant="outline-secondary"
+                      className="rounded-pill mb-3 mb-md-0"
+                    >
+                      <Dropdown.Item
+                        active={gender === "putra"}
+                        onClick={() => handleGenderChange("putra")}
+                      >
+                        Putra
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        active={gender === "putri"}
+                        onClick={() => handleGenderChange("putri")}
+                      >
+                        Putri
+                      </Dropdown.Item>
+                    </DropdownButton>
+                  </Col>
+                  <Col sm={12} md={6} lg={6}>
+                    <div className="d-flex align-items-center">
+                      <div className="input-group me-2">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">Min:</span>
+                        </div>
+                        <input
+                          type="tel"
+                          className="form-control"
+                          value={priceRange.min}
+                          onChange={handlePriceChange}
+                          name="min"
+                          min={0}
+                          max={1000000}
+                          style={{ minWidth: "100px" }}
+                          pattern="[0-9]*"
+                        />
+                      </div>
+                      <div className="input-group me-2">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">Max:</span>
+                        </div>
+                        <input
+                          type="tel"
+                          className="form-control"
+                          value={priceRange.max}
+                          onChange={handlePriceChange}
+                          name="max"
+                          min={0}
+                          max={1000000}
+                          style={{ minWidth: "100px" }}
+                          pattern="[0-9]*"
+                        />
+                      </div>
+                    </div>
+                  </Col>
+
+                  <Col sm={12} lg={3}>
+                    <div className="d-flex align-items-center">
+                      <span className="me-2">Harga:</span>
+                      <RangeSlider
+                        className="range-slider"
+                        min={0}
+                        max={1000000}
+                        value={priceRange.min}
+                        onChange={handlePriceChange}
+                        name="min"
+                      />
+                      <RangeSlider
+                        className="range-slider"
+                        min={0}
+                        max={1000000}
+                        value={priceRange.max}
+                        onChange={handlePriceChange}
+                        name="max"
+                      />
+                    </div>
+                  </Col>
+                </Row>
               </div>
               <hr />
             </div>
           </Col>
+
           <Col sm={4}>
             <Form sticky="top" className="d-flex pt-2 pb-5 mt-auto">
               <Form.Control
