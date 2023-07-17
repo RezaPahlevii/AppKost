@@ -58,7 +58,7 @@ const HomePage = () => {
           </Col>
         </div>
         <div>
-          <Banner/>
+          <Banner />
         </div>
         <div className="row mt-5 pt-5">
           <div>
@@ -73,14 +73,17 @@ const HomePage = () => {
               .filter((kost) => {
                 const searchLower = search.toLowerCase();
                 const nameLower = kost.nama.toLowerCase();
+                const alamatLower = kost.alamat.toLowerCase();
                 const priceLower = kost.harga.toString().toLowerCase();
                 const ownerNameLower = kost.user.name.toLowerCase();
-                // const filterFasilitas = kost.f_kamar((fasilitas) =>
-                // fasilitas.toLowerCase().includes(searchLower));
+                const filterFasilitas = kost.fasilitas.find((fasilitas) =>
+                  fasilitas.nama_f.toLowerCase().includes(searchLower)
+                );
 
                 return (
                   search.toLowerCase() === "" ||
                   nameLower.includes(searchLower) ||
+                  alamatLower.includes(searchLower) ||
                   priceLower.includes(searchLower) ||
                   ownerNameLower.includes(searchLower) ||
                   filterFasilitas
