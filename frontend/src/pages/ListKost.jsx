@@ -9,6 +9,7 @@ import {
   Dropdown,
   DropdownButton,
   Form,
+  Modal,
   Row,
 } from "react-bootstrap";
 import Nav2 from "../components/Nav2";
@@ -24,6 +25,8 @@ const ListKost = () => {
   const [kosts, setKosts] = useState([]);
   const [search, setSearch] = useState("");
   const [gender, setGender] = useState("");
+  const [showFacilitiesModal, setShowFacilitiesModal] = useState(false);
+  const [selectedFacilities, setSelectedFacilities] = useState([]);
 
   useEffect(() => {
     getKosts();
@@ -53,6 +56,21 @@ const ListKost = () => {
     setGender(selectedGender);
   };
 
+  const handleFacilitiesModal = () => {
+    setShowFacilitiesModal(!showFacilitiesModal);
+  };
+
+  const handleFacilityCheckboxChange = (event) => {
+    const { value, checked } = event.target;
+    if (checked) {
+      setSelectedFacilities((prevFacilities) => [...prevFacilities, value]);
+    } else {
+      setSelectedFacilities((prevFacilities) =>
+        prevFacilities.filter((facility) => facility !== value)
+      );
+    }
+  };
+
   const filteredKosts = kosts
     .filter((kost) => {
       const searchWords = search.toLowerCase().split(/[.,\s]+/);
@@ -70,8 +88,8 @@ const ListKost = () => {
       return (
         (searchWords.length === 1 && searchWords[0] === "") ||
         searchWords.every((word) =>
-          [nameLower, jkLower, alamatLower, priceLower, ownerNameLower].some((text) =>
-            text.includes(word)
+          [nameLower, jkLower, alamatLower, priceLower, ownerNameLower].some(
+            (text) => text.includes(word)
           )
         ) ||
         filterFasilitas
@@ -82,6 +100,15 @@ const ListKost = () => {
         return true;
       } else {
         return kost.jk.toLowerCase() === gender.toLowerCase();
+      }
+    })
+    .filter((kost) => {
+      if (selectedFacilities.length === 0) {
+        return true;
+      } else {
+        return kost.fasilitas.some((fasilitas) =>
+          selectedFacilities.includes(fasilitas.nama_f)
+        );
       }
     });
 
@@ -94,22 +121,18 @@ const ListKost = () => {
             <div>
               <div className="bg-white">
                 <Button
+                  onClick={handleFacilitiesModal}
+                  as={ButtonGroup}
+                  title="Fasilitas"
                   variant="outline-secondary"
-                  className="mr-2 rounded-pill"
-                >
-                  Harga
-                </Button>
-                <Button
-                  variant="outline-secondary"
-                  className="mr-2 rounded-pill"
-                >
-                  Fasilitas
+                  className="rounded-pill mr-3"
+                > Fasilitas
                 </Button>
                 <DropdownButton
                   as={ButtonGroup}
                   title="Gender"
                   variant="outline-secondary"
-                  className="rounded-pill"
+                  className="rounded-pill mr-3"
                 >
                   <Dropdown.Item
                     active={gender === "putra"}
@@ -124,6 +147,12 @@ const ListKost = () => {
                     Putri
                   </Dropdown.Item>
                 </DropdownButton>
+                <Button
+                  variant="outline-secondary"
+                  className="mr-2 rounded-pill"
+                >
+                  Harga
+                </Button>
               </div>
               <hr />
             </div>
@@ -249,9 +278,37 @@ const ListKost = () => {
           </Col>
         </Row>
       </Container>
-      <>
-        <Footer2 />
-      </>
+
+      {/* Facilities Modal */}
+      <Modal show={showFacilitiesModal} onHide={handleFacilitiesModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Pilih Fasilitas</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            {kosts.length > 0 && (
+              <Form.Group>
+                {kosts[0].fasilitas.map((fasilitas) => (
+                  <Form.Check
+                    key={fasilitas.nama_f}
+                    type="checkbox"
+                    label={fasilitas.nama_f}
+                    value={fasilitas.nama_f}
+                    checked={selectedFacilities.includes(fasilitas.nama_f)}
+                    onChange={handleFacilityCheckboxChange}
+                  />
+                ))}
+              </Form.Group>
+            )}
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleFacilitiesModal}>
+            Tutup
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Footer2 />
     </div>
   );
 };
