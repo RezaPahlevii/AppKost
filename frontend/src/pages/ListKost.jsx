@@ -20,6 +20,8 @@ import { Icon, divIcon } from "leaflet";
 import { Link } from "react-router-dom";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
+import RangeSlider from "react-bootstrap-range-slider";
+import "react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css";
 
 const ListKost = () => {
   const [kosts, setKosts] = useState([]);
@@ -27,6 +29,7 @@ const ListKost = () => {
   const [gender, setGender] = useState("");
   const [showFacilitiesModal, setShowFacilitiesModal] = useState(false);
   const [selectedFacilities, setSelectedFacilities] = useState([]);
+  const [priceRange, setPriceRange] = useState({ min: 0, max: 1000000 });
 
   useEffect(() => {
     getKosts();
@@ -110,7 +113,17 @@ const ListKost = () => {
           selectedFacilities.includes(fasilitas.nama_f)
         );
       }
+    })
+    .filter((kost) => {
+      return kost.harga >= priceRange.min && kost.harga <= priceRange.max;
     });
+
+  const handlePriceChange = (event) => {
+    setPriceRange({
+      ...priceRange,
+      [event.target.name]: Number(event.target.value),
+    });
+  };
 
   return (
     <div>
@@ -126,7 +139,9 @@ const ListKost = () => {
                   title="Fasilitas"
                   variant="outline-secondary"
                   className="rounded-pill mr-3"
-                > Fasilitas
+                >
+                  {" "}
+                  Fasilitas
                 </Button>
                 <DropdownButton
                   as={ButtonGroup}
@@ -147,12 +162,28 @@ const ListKost = () => {
                     Putri
                   </Dropdown.Item>
                 </DropdownButton>
-                <Button
-                  variant="outline-secondary"
-                  className="mr-2 rounded-pill"
-                >
-                  Harga
-                </Button>
+                <div className="d-flex align-items-center">
+                  <span className="me-2">Harga:</span>
+                  <RangeSlider
+                    className="range-slider"
+                    min={0}
+                    max={1000000}
+                    value={priceRange.min}
+                    onChange={handlePriceChange}
+                    name="min"
+                  />
+                  <RangeSlider
+                    className="range-slider"
+                    min={0}
+                    max={1000000}
+                    value={priceRange.max}
+                    onChange={handlePriceChange}
+                    name="max"
+                  />
+                  <span className="ms-2">Min: {priceRange.min}</span>
+                  <span className="mx-1">-</span>
+                  <span className="me-2">Max: {priceRange.max}</span>
+                </div>
               </div>
               <hr />
             </div>
