@@ -24,7 +24,9 @@ const FormBiodataPenyewa = () => {
         NoWA: NoWA,
         asal: asal
       });
-      navigate("/biodata-penyewa");
+      const waNumber = '085278685008';
+      window.open(`https://wa.me/${waNumber}`, '_blank');
+      navigate("/dashboard");
     } catch (error) {
       if (error.response) {
         setMsg(error.response.data.msg);
