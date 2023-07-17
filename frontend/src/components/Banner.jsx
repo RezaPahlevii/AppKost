@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Slider from "react-slick";
 import rumah1 from "./../image/carousel1.jpg";
 import rumah2 from "./../image/carousel2.svg";
-import rumah3 from "./../image/carousel3.jpg";
+import rumah3 from "./../image/carousel3.webp";
 import rumah4 from "./../image/carousel4.jpg";
 import { Card, CardImg } from "react-bootstrap";
 
