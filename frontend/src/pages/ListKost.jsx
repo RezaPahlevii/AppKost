@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {
   Button,
+  ButtonGroup,
   Card,
   CardImg,
   Col,
   Container,
+  Dropdown,
+  DropdownButton,
   Form,
   Row,
 } from "react-bootstrap";
@@ -20,11 +23,12 @@ import MarkerClusterGroup from "react-leaflet-cluster";
 const ListKost = () => {
   const [kosts, setKosts] = useState([]);
   const [search, setSearch] = useState("");
-  console.log(search);
+  const [gender, setGender] = useState("");
 
   useEffect(() => {
     getKosts();
   }, []);
+
   const getKosts = async () => {
     const response = await axios.get("http://localhost:5000/rekomendasi-kost");
     setKosts(response.data);
@@ -40,6 +44,46 @@ const ListKost = () => {
       html: `<div class="cluster-icon">${cluster.getChildCount()}</div>`,
     });
   };
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const handleGenderChange = (selectedGender) => {
+    setGender(selectedGender);
+  };
+
+  const filteredKosts = kosts
+    .filter((kost) => {
+      const searchWords = search.toLowerCase().split(/[.,\s]+/);
+      const nameLower = kost.nama.toLowerCase();
+      const jkLower = kost.jk.toLowerCase();
+      const alamatLower = kost.alamat.toLowerCase();
+      const priceLower = kost.harga.toString().toLowerCase();
+      const ownerNameLower = kost.user.name.toLowerCase();
+      const filterFasilitas = kost.fasilitas.find((fasilitas) =>
+        searchWords.some((word) =>
+          fasilitas.nama_f.toLowerCase().includes(word)
+        )
+      );
+
+      return (
+        (searchWords.length === 1 && searchWords[0] === "") ||
+        searchWords.every((word) =>
+          [nameLower, jkLower, alamatLower, priceLower, ownerNameLower].some((text) =>
+            text.includes(word)
+          )
+        ) ||
+        filterFasilitas
+      );
+    })
+    .filter((kost) => {
+      if (gender === "") {
+        return true;
+      } else {
+        return kost.jk.toLowerCase() === gender.toLowerCase();
+      }
+    });
 
   return (
     <div>
@@ -61,12 +105,25 @@ const ListKost = () => {
                 >
                   Fasilitas
                 </Button>
-                <Button
+                <DropdownButton
+                  as={ButtonGroup}
+                  title="Gender"
                   variant="outline-secondary"
-                  className="mr-2 rounded-pill"
+                  className="rounded-pill"
                 >
-                  Gender
-                </Button>
+                  <Dropdown.Item
+                    active={gender === "putra"}
+                    onClick={() => handleGenderChange("putra")}
+                  >
+                    Putra
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    active={gender === "putri"}
+                    onClick={() => handleGenderChange("putri")}
+                  >
+                    Putri
+                  </Dropdown.Item>
+                </DropdownButton>
               </div>
               <hr />
             </div>
@@ -74,7 +131,7 @@ const ListKost = () => {
           <Col sm={4}>
             <Form sticky="top" className="d-flex pt-2 pb-5 mt-auto">
               <Form.Control
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={handleSearch}
                 type="search"
                 placeholder="Masukkan nama kost/alamat/fasilitas"
                 className="me-2"
@@ -88,86 +145,69 @@ const ListKost = () => {
         <Row className="mt-5">
           <Col xs={12} lg={7}>
             <div className="card-container">
-              {kosts
-                .filter((kost) => {
-                  const searchLower = search.toLowerCase();
-                  const nameLower = kost.nama.toLowerCase();
-                  const priceLower = kost.harga.toString().toLowerCase();
-                  const ownerNameLower = kost.user.name.toLowerCase();
-                  // const filterFasilitas = kost.f_kamar.find((fasilitas) =>
-                  //   fasilitas.toLowerCase().includes(searchLower));
-
-                  return (
-                    search.toLowerCase() === "" ||
-                    nameLower.includes(searchLower) ||
-                    priceLower.includes(searchLower) ||
-                    ownerNameLower.includes(searchLower) ||
-                    filterFasilitas
-                  );
-                })
-                .map((kost, index) => (
-                  <Link
-                    to={`/rumah-kost/detail/${kost.uuid}`}
-                    style={{ textDecoration: "none" }}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Card key={kost.uuid} className="mb-3">
-                      <Row>
-                        <Col xs={6}>
-                          <CardImg
-                            style={{ width: "auto", height: "100%" }}
-                            variant="top"
-                            src={kost.fotos[0].url1}
-                          />
-                        </Col>
-                        <Col xs={6}>
-                          <Card.Body>
-                            <Row>
-                              <Card.Title>{kost.nama}</Card.Title>
-                            </Row>
-                            <Row>
+              {filteredKosts.map((kost) => (
+                <Link
+                  to={`/rumah-kost/detail/${kost.uuid}`}
+                  style={{ textDecoration: "none" }}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  key={kost.uuid}
+                >
+                  <Card className="mb-3">
+                    <Row>
+                      <Col xs={6}>
+                        <CardImg
+                          style={{ width: "auto", height: "100%" }}
+                          variant="top"
+                          src={kost.fotos[0].url1}
+                        />
+                      </Col>
+                      <Col xs={6}>
+                        <Card.Body>
+                          <Row>
+                            <Card.Title>{kost.nama}</Card.Title>
+                          </Row>
+                          <Row>
+                            <Card.Text>
+                              Desa {kost.desa}
+                              <br />
+                              {kost.alamat}
+                            </Card.Text>
+                          </Row>
+                          <Row>
+                            <Col>
                               <Card.Text>
-                                Desa {kost.desa}
-                                <br />
-                                {kost.alamat}
+                                {kost.fasilitas
+                                  .slice(0, 5)
+                                  .map((item, index) => (
+                                    <span
+                                      key={item.nama_f}
+                                      className="mr-2 text-muted"
+                                      style={{ fontSize: "15px" }}
+                                    >
+                                      {item.nama_f}
+                                      {index !== 4 && ","}
+                                    </span>
+                                  ))}
                               </Card.Text>
-                            </Row>
-                            <Row>
-                              <Col>
-                                <Card.Text>
-                                  {kost.fasilitas
-                                    .slice(0, 5)
-                                    .map((item, index) => (
-                                      <span
-                                        key={item.nama_f}
-                                        className="mr-2 text-muted"
-                                        style={{ fontSize: "15px" }}
-                                      >
-                                        {item.nama_f}
-                                        {index !== 4 && ","}
-                                        {/* Add comma separator between items except for the last one */}
-                                      </span>
-                                    ))}
-                                </Card.Text>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col>
-                                <Card.Text></Card.Text>
-                              </Col>
-                              <Col>
-                                <Card.Text className="text-end">
-                                  <strong>{kost.harga}</strong> /bulan
-                                </Card.Text>
-                              </Col>
-                            </Row>
-                          </Card.Body>
-                        </Col>
-                      </Row>
-                    </Card>
-                  </Link>
-                ))}
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col>
+                              <Card.Text></Card.Text>
+                            </Col>
+                            <Col>
+                              <Card.Text className="text-end">
+                                <strong>{kost.harga}</strong> /bulan
+                              </Card.Text>
+                            </Col>
+                          </Row>
+                        </Card.Body>
+                      </Col>
+                    </Row>
+                  </Card>
+                </Link>
+              ))}
             </div>
           </Col>
           <Col className="" xs={12} lg={5}>
@@ -198,12 +238,14 @@ const ListKost = () => {
               </MarkerClusterGroup>
             </MapContainer>
             <Link
-            className="btn btn-outline-success"
+              className="btn btn-outline-success"
               to={"/maps"}
-              style={{textDecoration: "none", marginTop: "10px"}}
+              style={{ textDecoration: "none", marginTop: "10px" }}
               target="_blank"
               rel="noopener noreferrer"
-            >Full Maps</Link>
+            >
+              Full Maps
+            </Link>
           </Col>
         </Row>
       </Container>
