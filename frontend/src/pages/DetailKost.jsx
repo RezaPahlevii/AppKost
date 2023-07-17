@@ -91,7 +91,7 @@ const DetailKost = () => {
     switch (namaFasilitas) {
       case "Kasur":
         return <FaBed />;
-      case "WiFi":
+      case "Wifi":
         return <FaWifi />;
       case "Kipas Angin":
         return <FaWifi />;
