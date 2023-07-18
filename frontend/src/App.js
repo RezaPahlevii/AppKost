@@ -17,6 +17,7 @@ import PencariKost from './pages/PencariKost';
 import EditFooter from './pages/EditFooter';
 import EditBanner from './pages/EditBanner';
 import EditProfilPemilik from './pages/EditProfilPemilik';
+import AddProfilPemilik from './pages/AddProfilPemilik';
 import LoginRegister from './pages/LoginRegister';
 import Maps from './pages/Maps';
 import TestMap from './components/TestMap';
@@ -41,8 +42,9 @@ function App() {
         <Route path="/footer-edit" element={<EditFooter/>}/>
         <Route path="/banner-edit" element={<EditBanner/>}/>
         <Route path="/pencari-kost" element={<PencariKost/>}/>
-        <Route path="/edit-profil-pemilik" element={<EditProfilPemilik/>}/>
         <Route path="/pengaturan-akun" element={<PengaturanAkunPencari/>}/>
+        <Route path="/profil/edit/:id" element={<EditProfilPemilik/>}/>
+        <Route path="/profil/" element={<AddProfilPemilik/>}/>
       </Routes>
       <Routes>
         <Route path="/" element={<HomePage/>}/>

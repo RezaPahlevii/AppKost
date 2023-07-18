@@ -1,93 +1,131 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../css/sidebar.css";
 // import logo from "../../Asset/logo.png";
-import { IoIosHome, IoIosLogOut, IoIosPeople, IoMdSpeedometer } from "react-icons/io";
+import {
+  IoIosHome,
+  IoIosLogOut,
+  IoIosPeople,
+  IoMdSpeedometer,
+} from "react-icons/io";
 import { ImPlay } from "react-icons/im";
 import { AiOutlineSetting } from "react-icons/ai";
 import { VscDashboard } from "react-icons/vsc";
 import { BsQuestion } from "react-icons/bs";
 import { BiCarousel } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { LogOut, reset } from "../features/authSlice";
 import levi from "../image/Levi.jpg";
-import { Button, Col, Row } from 'react-bootstrap';
+import { Button, Col, Row } from "react-bootstrap";
+import axios from "axios";
 
 // Import Icons =================>
 
 const Sidebar = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {user} = useSelector((state) => state.auth)
+  const { user } = useSelector((state) => state.auth);
+  const [hasBiodata, setHasBiodata] = useState();
+  const [biodataUuid, setBiodataUuid] = useState("");
 
-  const logout = () =>{
+  const logout = () => {
     dispatch(LogOut());
     dispatch(reset());
     navigate("/");
   };
-  const editProfil =()=>{
-    navigate("/edit-profil-pemilik");
-  }
+  useEffect(() => {
+    const checkBiodata = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/biodata");
+        const biodataList = response.data;
+        if (biodataList.length > 0) {
+          setHasBiodata(true);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    checkBiodata();
+  }, []);
+
+  const editProfil = () => {
+    if (hasBiodata) {
+      navigate(`/profil/edit/5d3ef017-ca6a-4b55-a275-98295d2a6dc7`);
+    } else {
+      navigate("/profil");
+    }
+  };
+
   return (
     <div className="sideBar grid my-5">
       <Row className="">
         <Col className="text-center ml-5">
-        <img  src={levi} alt="Imge Name" class="rounded-circle" style={{ width: "100px" }} />
+          <img
+            src={levi}
+            alt="Imge Name"
+            class="rounded-circle"
+            style={{ width: "100px" }}
+          />
         </Col>
         <Col className="mt-4">
-        <Button onClick={editProfil} variant="outline-success">Edit Profil</Button>
+          <Button onClick={editProfil} variant="outline-success">
+            Edit Profil
+          </Button>
         </Col>
-        </Row>
-        <Row className="ml-4">
+      </Row>
+      <Row className="ml-4">
         <div className="menuDiv">
-        <h3 className="divTitle">MENU USER</h3>
+          <h3 className="divTitle">MENU USER</h3>
 
-        <ul className="menuLists grid">
-        {user && (user.role === "pemilik kost" || user.role === "admin" ) &&(
-          <li className="listItem">
-            <a href="/dashboard" className="menuLink flex">
-              <IoMdSpeedometer className="icon" />
-              <span className="smallText">Dashboard</span>
-            </a>
-          </li>
-        )}
+          <ul className="menuLists grid">
+            {user &&
+              (user.role === "pemilik kost" || user.role === "admin") && (
+                <li className="listItem">
+                  <a href="/dashboard" className="menuLink flex">
+                    <IoMdSpeedometer className="icon" />
+                    <span className="smallText">Dashboard</span>
+                  </a>
+                </li>
+              )}
 
-          {user && (user.role === "pemilik kost" || user.role === "admin" ) &&(
-          <li className="listItem ">
-            <a href="/rumah-kost" className="menuLink flex">
-              <IoIosHome className="icon" />
-              <span className="smallText">Rumah Kost</span>
-            </a>
-          </li>
-          )}
+            {user &&
+              (user.role === "pemilik kost" || user.role === "admin") && (
+                <li className="listItem ">
+                  <a href="/rumah-kost" className="menuLink flex">
+                    <IoIosHome className="icon" />
+                    <span className="smallText">Rumah Kost</span>
+                  </a>
+                </li>
+              )}
 
-          {user && user.role === "pencari kost" &&(
-          <li className="listItem ">
-            <a href="/dashboard" className="menuLink flex">
-              <VscDashboard className="icon" />
-              <span className="smallText">Dashboard</span>
-            </a>
-          </li>
-          )}
+            {user && user.role === "pencari kost" && (
+              <li className="listItem ">
+                <a href="/dashboard" className="menuLink flex">
+                  <VscDashboard className="icon" />
+                  <span className="smallText">Dashboard</span>
+                </a>
+              </li>
+            )}
 
-          {user && user.role === "pencari kost" &&(
-          <li className="listItem ">
-            <a href="/pengaturan-akun" className="menuLink flex">
-              <AiOutlineSetting className="icon" />
-              <span className="smallText">Pengaturan Akun</span>
-            </a>
-          </li>
-          )}
+            {user && user.role === "pencari kost" && (
+              <li className="listItem ">
+                <a href="/pengaturan-akun" className="menuLink flex">
+                  <AiOutlineSetting className="icon" />
+                  <span className="smallText">Pengaturan Akun</span>
+                </a>
+              </li>
+            )}
 
-          {user && user.role === "admin" && (
-            <>
-          <li className="listItem">
-            <a href="/users" className="menuLink flex">
-              <IoIosPeople className="icon" />
-              <span className="smallText">Users</span>
-            </a>
-          </li>
-          {/* <li className="listItem">
+            {user && user.role === "admin" && (
+              <>
+                <li className="listItem">
+                  <a href="/users" className="menuLink flex">
+                    <IoIosPeople className="icon" />
+                    <span className="smallText">Users</span>
+                  </a>
+                </li>
+                {/* <li className="listItem">
             <a href="/dashboard" className="menuLink flex">
               <ImPlay className="icon" />
               <span className="smallText">Sosmed</span>
@@ -105,29 +143,31 @@ const Sidebar = () => {
               <span className="smallText">Footer</span>
             </a>
           </li> */}
-            </>
-          )}
-          <li className="listItem">
-            <a href="/biodata-penyewa" className="menuLink flex">
-              <IoIosPeople className="icon" />
-              <span className="smallText">Biodata Penyewa</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-        </Row>
+              </>
+            )}
+            <li className="listItem">
+              <a href="/biodata-penyewa" className="menuLink flex">
+                <IoIosPeople className="icon" />
+                <span className="smallText">Biodata Penyewa</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </Row>
       <Row className="ml-4">
-      <div className="settingDiv">
-        <h3 className="divTitle">SETTING</h3>
-        <ul className="menuLists grid">
-          <li className="listItem">
-            <a href="/dashboard" className="menuLink flex">
-              <IoIosLogOut className="icon" />
-              <span onClick={logout} className="smallText">Logout</span>
-            </a>
-          </li>
-        </ul>
-      </div>
+        <div className="settingDiv">
+          <h3 className="divTitle">SETTING</h3>
+          <ul className="menuLists grid">
+            <li className="listItem">
+              <a href="/dashboard" className="menuLink flex">
+                <IoIosLogOut className="icon" />
+                <span onClick={logout} className="smallText">
+                  Logout
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </Row>
       <div className="sideBarCard">
         <div className="circle">
