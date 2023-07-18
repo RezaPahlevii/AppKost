@@ -7,7 +7,7 @@ export const getBioUsers = async (req, res) => {
     let response;
     if (req.role === "admin") {
       response = await Bio.findAll({
-        attributes: ["nama", "jk", "umur", "NoWA", "asal"],
+        attributes: ["uuid","nama", "jk", "umur", "NoWA", "asal"],
         include: [
           {
             model: Users,
@@ -17,7 +17,7 @@ export const getBioUsers = async (req, res) => {
       });
     } else {
       response = await Bio.findAll({
-        attributes: ["nama", "jk", "umur", "NoWA", "asal"],
+        attributes: ["uuid","nama", "jk", "umur", "NoWA", "asal"],
         where: {
           userId: req.userId,
         },

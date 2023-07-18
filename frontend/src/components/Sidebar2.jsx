@@ -13,7 +13,7 @@ import { VscDashboard } from "react-icons/vsc";
 import { BsQuestion } from "react-icons/bs";
 import { BiCarousel } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { LogOut, reset } from "../features/authSlice";
 import levi from "../image/Levi.jpg";
 import { Button, Col, Row } from "react-bootstrap";
@@ -25,36 +25,20 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
-  const [hasBiodata, setHasBiodata] = useState();
-  const [biodataUuid, setBiodataUuid] = useState("");
+  const [bios, setBios] = useState([]);
 
   const logout = () => {
     dispatch(LogOut());
     dispatch(reset());
     navigate("/");
   };
+
   useEffect(() => {
-    const checkBiodata = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/biodata");
-        const biodataList = response.data;
-        if (biodataList.length > 0) {
-          setHasBiodata(true);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    checkBiodata();
+    getBios();
   }, []);
-
-  const editProfil = () => {
-    if (hasBiodata) {
-      navigate(`/profil/edit/5d3ef017-ca6a-4b55-a275-98295d2a6dc7`);
-    } else {
-      navigate("/profil");
-    }
+  const getBios = async () => {
+    const response = await axios.get("http://localhost:5000/biodata");
+    setBios(response.data);
   };
 
   return (
@@ -68,11 +52,24 @@ const Sidebar = () => {
             style={{ width: "100px" }}
           />
         </Col>
-        <Col className="mt-4">
-          <Button onClick={editProfil} variant="outline-success">
-            Edit Profil
-          </Button>
-        </Col>
+        {bios.length > 0 ? (
+          bios.map((bio, index) => (
+            <Col className="mt-4" key={index}>
+              <Link
+                to={`/profil/edit/${bio.uuid}`}
+                className="btn btn-warning mr-1"
+              >
+                Edit
+              </Link>
+            </Col>
+          ))
+        ) : (
+          <Col className="mt-4">
+            <Link to="/profil" className="btn btn-warning mr-1">
+              Edit
+            </Link>
+          </Col>
+        )}
       </Row>
       <Row className="ml-4">
         <div className="menuDiv">
