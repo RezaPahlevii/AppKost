@@ -53,7 +53,7 @@ const FormBiodataPenyewa = () => {
   const saveBio = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/biodata", {
+      await axios.put("http://localhost:5000/biodata", {
         nama: nama,
         jk: jk,
         umur: umur,

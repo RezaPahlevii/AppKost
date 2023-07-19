@@ -52,17 +52,17 @@ const Sidebar = () => {
             style={{ width: "100px" }}
           />
         </Col>
-        {bios.length > 0 ? (
-          bios.map((bio, index) => (
-            <Col className="mt-4" key={index}>
-              <Link
-                to={`/profil/edit/${bio.uuid}`}
-                className="btn btn-warning mr-1"
-              >
-                Edit
-              </Link>
-            </Col>
-          ))
+        {bios.length > 0 && bios.some((bio) => bio.userId === user.userId) ? (
+          <Col className="mt-4">
+            <Link
+              to={`/profil/edit/${
+                bios.find((bio) => bio.userId === user.userId).uuid
+              }`}
+              className="btn btn-warning mr-1"
+            >
+              Edit
+            </Link>
+          </Col>
         ) : (
           <Col className="mt-4">
             <Link to="/profil" className="btn btn-warning mr-1">
