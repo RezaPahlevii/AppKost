@@ -80,21 +80,20 @@ export const updateBioUsers = async (req, res) => {
   try {
     const { nama, jk, umur, NoWA, asal } = req.body;
     const userId = req.userId;
+    const bioId = req.params.id;
 
-    let bio = await Bio.findOne({
+    const bio = await Bio.findOne({
       where: {
-        uuid: req.params.id,
+        uuid: bioId,
         userId: userId
       }
     });
 
     if (!bio) {
-      // Biodata tidak ditemukan
       return res.status(404).json({ msg: "Biodata tidak ditemukan" });
     }
 
     if (req.role !== "admin" && req.userId !== bio.userId) {
-      // Akses terlarang
       return res.status(403).json({ msg: "Akses terlarang" });
     }
 
