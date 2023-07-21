@@ -31,6 +31,7 @@ const FormEditKost = () => {
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
+  const [isFotoValid, setIsFotoValid] = useState(true);
   const [markerPosition, setMarkerPosition] = useState([
     1.4585110731407618, 102.15337262025002,
   ]);
@@ -56,10 +57,6 @@ const FormEditKost = () => {
         setNama_f(response.data.fasilitas.map((item) => item.nama_f));
         setPeraturan(response.data.peraturans.map((item) => item.peraturan));
         setCatatan_tambahan(response.data.catatan_tambahan);
-        setUrl1(response.data.url1);
-        setUrl2(response.data.url2);
-        setUrl3(response.data.url3);
-        setUrl4(response.data.url4);
         setKordinat(response.data.kordinat);
       } catch (error) {
         if (error.response) {
@@ -72,6 +69,13 @@ const FormEditKost = () => {
 
   const updateKost = async (e) => {
     e.preventDefault();
+    // Cek validasi foto
+  if (!url1 || !url2 || !url3 || !url4) {
+    setIsFotoValid(false);
+    return;
+  }
+  // Reset status validasi foto
+  setIsFotoValid(true);
     const formData = new FormData();
     formData.append("nama", nama);
     formData.append("harga", harga);
@@ -82,10 +86,18 @@ const FormEditKost = () => {
     formData.append("nama_f", nama_f);
     formData.append("peraturan", peraturan);
     formData.append("catatan_tambahan", catatan_tambahan);
+   // Cek apakah foto telah diinputkan sebelum mengirimkan data
+  if (url1 && url2 && url3 && url4) {
     formData.append("url1", url1);
     formData.append("url2", url2);
     formData.append("url3", url3);
     formData.append("url4", url4);
+  } else {
+    // Tampilkan pesan error jika foto belum diinputkan
+    console.log("Harap lengkapi data foto");
+    return;
+  }
+
     formData.append("kordinat", kordinat);
     try {
       await axios.patch(`http://localhost:5000/rumah-kost/${id}`, formData,{
@@ -282,7 +294,7 @@ const FormEditKost = () => {
       <div className="card is-shadowless">
         <div className="card-content">
           <div className="content">
-            <form onSubmit={updateKost}>
+            <form enctype="multipart/form-data" onSubmit={updateKost}>
               <p className="has-text-centered">{msg}</p>
 
               <div className="field mb-4">
@@ -530,6 +542,7 @@ const FormEditKost = () => {
                 <label className="label">Foto Kost</label>
                 <Col>
                   {/* Foto Kost1 */}
+                  {!isFotoValid && <p className="text-danger">Silakan isi semua foto</p>}
                   <div className="field">
                     <div className="control">
                       <label htmlFor="fileInput1" className="file-label">
@@ -537,11 +550,12 @@ const FormEditKost = () => {
                         {/* Gunakan id yang unik untuk setiap input */}
                         <input
                           id="fileInput1"
+                          name="url1"
                           className="file-input"
                           type="file"
                           accept="image/*"
                           capture="user"
-                          onChange={loadImage1}
+                          onChange={(e) => setUrl1(e.target.files[0])}
                           style={{ display: "none" }}
                         />
                         <span className="file-cta">
@@ -569,11 +583,12 @@ const FormEditKost = () => {
                         {/* Gunakan id yang unik untuk setiap input */}
                         <input
                           id="fileInput2"
+                          name="url2"
                           className="file-input"
                           type="file"
                           accept="image/*"
                           capture="user"
-                          onChange={loadImage2}
+                          onChange={(e) => setUrl2(e.target.files[0])}
                           style={{ display: "none" }}
                         />
                         <span className="file-cta">
@@ -603,11 +618,12 @@ const FormEditKost = () => {
                         {/* Gunakan id yang unik untuk setiap input */}
                         <input
                           id="fileInput3"
+                          name="url3"
                           className="file-input"
                           type="file"
                           accept="image/*"
                           capture="user"
-                          onChange={loadImage3}
+                          onChange={(e) => setUrl3(e.target.files[0])}
                           style={{ display: "none" }}
                         />
                         <span className="file-cta">
@@ -635,11 +651,12 @@ const FormEditKost = () => {
                         {/* Gunakan id yang unik untuk setiap input */}
                         <input
                           id="fileInput4"
+                          name="url4"
                           className="file-input"
                           type="file"
                           accept="image/*"
                           capture="user"
-                          onChange={loadImage4}
+                          onChange={(e) => setUrl4(e.target.files[0])}
                           style={{ display: "none" }}
                         />
                         <span className="file-cta">

@@ -141,7 +141,6 @@ export const getKostById = async (req, res) => {
           "alamat",
           "jk",
           "catatan_tambahan",
-          "url",
           "kordinat",
         ],
         where: {
@@ -304,19 +303,13 @@ export const createKost = async (req, res) => {
     console.log(error.message);
   }
 };
-export const updateKost = async (req, res) => {
-  if (req.files === null)
-    return res.status(400).json({ msg: "No File Uploaded" });
-  const fotoFiles = req.files; // Mengambil semua file foto yang diupload
 
-  // Mengatur ukuran maksimal dan jenis file yang diizinkan
-  const allowedTypes = [".png", ".jpg", ".jpeg"];
-  const maxSize = 5000000; // 5MB
+export const updateKost = async (req, res) => {
   try {
     const kost = await Kost.findOne({
       where: {
         uuid: req.params.id,
-      },
+      }
     });
     if (!kost) return res.status(404).json({ msg: "Data tidak ditemukan" });
     const {
@@ -329,8 +322,75 @@ export const updateKost = async (req, res) => {
       nama_f,
       peraturan,
       catatan_tambahan,
+      url1,
+      url2,
+      url3,
+      url4,
       kordinat,
     } = req.body;
+    const userId = req.userId;
+    console.log(req.body);
+// Cek validasi data
+    const errors = [];
+
+    if (!nama || nama.trim() === '') {
+      errors.push('Nama harus diisi');
+    }
+
+    if (!no_hp || no_hp.trim() === '') {
+      errors.push('Nomor HP harus diisi');
+    }
+
+    if (!harga || isNaN(harga)) {
+      errors.push('Harga harus diisi dengan angka');
+    }
+
+    if (!desa || desa.trim() === '') {
+      errors.push('Desa harus diisi');
+    }
+
+    if (!alamat || alamat.trim() === '') {
+      errors.push('Alamat harus diisi');
+    }
+
+    if (!jk || !['Putra', 'Putri', 'Campur'].includes(jk)) {
+      errors.push('Jenis Kost harus dipilih');
+    }
+
+    if (!catatan_tambahan || catatan_tambahan.trim() === '') {
+      errors.push('Catatan Tambahan harus diisi');
+    }
+
+    if (!kordinat || kordinat.trim() === '') {
+      errors.push('Koordinat harus diisi');
+    }
+
+    if (!url1 || url1.trim() === '') {
+      errors.push('URL 1 harus diisi');
+    }
+    
+    if (!url2 || url2.trim() === '') {
+      errors.push('URL 2 harus diisi');
+    }
+    
+    if (!url3 || url3.trim() === '') {
+      errors.push('URL 3 harus diisi');
+    }
+    
+    if (!url4 || url4.trim() === '') {
+      errors.push('URL 4 harus diisi');
+    }
+
+    if (!userId || isNaN(userId)) {
+      errors.push('User ID harus diisi dengan angka');
+    }
+
+    // Jika terdapat error validasi, kirim respons dengan pesan error
+    if (errors.length > 0) {
+      console.log(errors);
+      return res.status(400).json({ errors });
+    }
+
     if (req.role === "admin") {
       await Kost.update(
         {
