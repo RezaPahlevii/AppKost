@@ -174,13 +174,6 @@ export const getKostById = async (req, res) => {
 };
 
 export const createKost = async (req, res) => {
-  if (req.files === null)
-    return res.status(400).json({ msg: "No File Uploaded" });
-  const fotoFiles = req.files; // Mengambil semua file foto yang diupload
-
-  // Mengatur ukuran maksimal dan jenis file yang diizinkan
-  const allowedTypes = [".png", ".jpg", ".jpeg"];
-  const maxSize = 5000000; // 5MB
   try {
     const {
       nama,
@@ -206,6 +199,14 @@ export const createKost = async (req, res) => {
       kordinat: kordinat,
       userId: req.userId,
     });
+    //================================================================================
+    if (req.files === null)
+      return res.status(400).json({ msg: "No File Uploaded" });
+    const fotoFiles = req.files; // Mengambil semua file foto yang diupload
+
+    // Mengatur ukuran maksimal dan jenis file yang diizinkan
+    const allowedTypes = [".png", ".jpg", ".jpeg"];
+    const maxSize = 5000000; // 5MB
     // Menyimpan informasi foto ke dalam tabel "Foto"
     const fotoUrls = []; // Menampung URL foto
 
@@ -245,7 +246,7 @@ export const createKost = async (req, res) => {
       kostId: newKost.id,
     });
 
-    //================================================================
+    //==========================================================================
     // Menyimpan Peraturan kost
     const existingPeraturan = [];
     const peraturanArray = peraturan.split(","); // Ubah string menjadi array
@@ -304,21 +305,9 @@ export const createKost = async (req, res) => {
     console.log(error.message);
   }
 };
-export const updateKost = async (req, res) => {
-  if (req.files === null)
-    return res.status(400).json({ msg: "No File Uploaded" });
-  const fotoFiles = req.files; // Mengambil semua file foto yang diupload
 
-  // Mengatur ukuran maksimal dan jenis file yang diizinkan
-  const allowedTypes = [".png", ".jpg", ".jpeg"];
-  const maxSize = 5000000; // 5MB
+export const updateKost = async (req, res) => {
   try {
-    const kost = await Kost.findOne({
-      where: {
-        uuid: req.params.id,
-      },
-    });
-    if (!kost) return res.status(404).json({ msg: "Data tidak ditemukan" });
     const {
       nama,
       no_hp,
@@ -326,54 +315,74 @@ export const updateKost = async (req, res) => {
       desa,
       alamat,
       jk,
-      nama_f,
       peraturan,
+      nama_f,
       catatan_tambahan,
       kordinat,
     } = req.body;
-    if (req.role === "admin") {
-      await Kost.update(
-        {
-          nama,
-          no_hp,
-          harga,
-          desa,
-          alamat,
-          jk,
-          catatan_tambahan,
-          kordinat,
-        },
-        {
-          where: {
-            id: kost.id,
-          },
-        }
-      );
-    } else {
-      if (req.userId !== kost.userId)
-        return res.status(403).json({ msg: "Akses terlarang" });
-      await Kost.update(
-        {
-          nama,
-          no_hp,
-          harga,
-          desa,
-          alamat,
-          jk,
-          catatan_tambahan,
-          kordinat,
-        },
-        {
-          where: {
-            [Op.and]: [{ id: kost.id }, { userId: req.userId }],
-          },
-        }
-      );
+
+    const newKost = await Kost.create({
+      nama: nama,
+      no_hp: no_hp,
+      harga: harga,
+      desa: desa,
+      alamat: alamat,
+      jk: jk,
+      catatan_tambahan: catatan_tambahan,
+      kordinat: kordinat,
+      userId: req.userId,
+    });
+    //================================================================================
+    if (req.files === null)
+      return res.status(400).json({ msg: "No File Uploaded" });
+    const fotoFiles = req.files; // Mengambil semua file foto yang diupload
+
+    // Mengatur ukuran maksimal dan jenis file yang diizinkan
+    const allowedTypes = [".png", ".jpg", ".jpeg"];
+    const maxSize = 5000000; // 5MB
+    // Menyimpan informasi foto ke dalam tabel "Foto"
+    const fotoUrls = []; // Menampung URL foto
+
+    // Mengunggah dan menyimpan setiap file foto
+    for (let i = 1; i <= 4; i++) {
+      const file = fotoFiles[`url${i}`];
+
+      if (!file)
+        // Jika file tidak ada, lanjutkan ke iterasi berikutnya
+        continue;
+
+      const fileSize = file.data.length;
+      const ext = path.extname(file.name);
+      const fileName = file.md5 + ext;
+      const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
+
+      if (!allowedTypes.includes(ext.toLowerCase()))
+        return res.status(422).json({ msg: `Invalid Image Type for foto${i}` });
+
+      if (fileSize > maxSize)
+        return res
+          .status(422)
+          .json({ msg: `Image for foto${i} must be less than 5 MB` });
+
+      await file.mv(`./public/images/${fileName}`);
+
+      // Menyimpan URL foto ke dalam array
+      fotoUrls.push(url);
     }
-    // Menyimpan data peraturan
-    await KostPeraturan.destroy({ where: { kostId: kost.id } });
+
+    // Menyimpan informasi foto ke dalam tabel "Foto"
+    await Foto.create({
+      url1: fotoUrls[0],
+      url2: fotoUrls[1],
+      url3: fotoUrls[2],
+      url4: fotoUrls[3],
+      kostId: newKost.id,
+    });
+
+    //==========================================================================
+    // Menyimpan Peraturan kost
     const existingPeraturan = [];
-    const peraturanArray = peraturan;
+    const peraturanArray = peraturan.split(","); // Ubah string menjadi array
     for (let i = 0; i < peraturanArray.length; i++) {
       const peraturanName = peraturanArray[i];
       let peraturan = await Peraturan.findOne({
@@ -388,18 +397,20 @@ export const updateKost = async (req, res) => {
       if (peraturan) {
         existingPeraturan.push(peraturan.id); // Simpan ID fasilitas yang ada atau yang baru dibuat
         await KostPeraturan.create({
-          kostId: kost.id,
+          kostId: newKost.id,
           peraturanId: peraturan.id, // Gunakan ID fasilitas yang ada atau yang baru dibuat
         });
       }
     }
+    console.log(existingPeraturan);
 
-    // Menyimpan data fasilitas
-    await KostFasilitas.destroy({ where: { kostId: kost.id } });
+    //==================================================================
+    // Menyimpan fasilitas kost
     const existingFasilitas = [];
-    const fasilitasArray = nama_f;
+    const fasilitasArray = nama_f.split(","); // Ubah string menjadi array
     for (let i = 0; i < fasilitasArray.length; i++) {
-      const fasilitasName = fasilitasArray[i].trim();
+      const fasilitasName = fasilitasArray[i];
+
       let fasilitas = await Fasilitas.findOne({
         where: { nama_f: fasilitasName },
       });
@@ -413,57 +424,18 @@ export const updateKost = async (req, res) => {
       if (fasilitas) {
         existingFasilitas.push(fasilitas.id); // Simpan ID fasilitas yang ada atau yang baru dibuat
         await KostFasilitas.create({
-          kostId: kost.id,
+          kostId: newKost.id,
           fasilitaId: fasilitas.id, // Gunakan ID fasilitas yang ada atau yang baru dibuat
         });
       }
     }
 
-    // Menyimpan informasi foto
-    const existingFoto = await Foto.findOne({ where: { kostId: kost.id } });
+    console.log(existingFasilitas);
 
-    let fileName = "";
-    if (req.files === null) {
-      fileName = existingFoto.url1;
-    } else {
-      const fotoFiles = req.files;
-
-      for (let i = 1; i <= 4; i++) {
-        const file = fotoFiles[`url${i}`];
-
-        if (!file) continue;
-
-        const fileSize = file.size;
-        const ext = path.extname(file.name);
-        fileName = `${i}${ext}`;
-        const allowedTypes = [".png", ".jpg", ".jpeg"];
-
-        if (!allowedTypes.includes(ext.toLowerCase()))
-          return res
-            .status(422)
-            .json({ msg: `Invalid Image Type for foto${i}` });
-
-        if (fileSize > 5000000)
-          return res
-            .status(422)
-            .json({ msg: `Image for foto${i} must be less than 5 MB` });
-
-        const filepath = `./public/images/${existingFoto[`url${i}`]}`;
-        fs.unlinkSync(filepath);
-
-        file.mv(`./public/images/${fileName}`, (err) => {
-          if (err) return res.status(500).json({ msg: err.message });
-        });
-
-        existingFoto[`url${i}`] = fileName;
-      }
-    }
-
-    await existingFoto.save();
-
-    res.status(200).json({ msg: "Berhasil update kost" });
+    res.status(201).json({ msg: "Berhasil menambahkan kamar kost" });
   } catch (error) {
     res.status(500).json({ msg: error.message });
+    console.log(error.message);
   }
 };
 
@@ -679,13 +651,13 @@ export const getKordinat = async (req, res) => {
           "alamat",
           "harga",
           "jk",
-          "kordinat"
+          "kordinat",
         ],
         include: [
           {
             model: Users,
             attributes: ["name", "email"],
-          }
+          },
         ],
       });
     } else {
@@ -697,7 +669,7 @@ export const getKordinat = async (req, res) => {
           "alamat",
           "harga",
           "jk",
-          "kordinat"
+          "kordinat",
         ],
         where: {
           userId: req.userId,
@@ -706,8 +678,8 @@ export const getKordinat = async (req, res) => {
           {
             model: Users,
             attributes: ["name", "email"],
-          }
-        ]
+          },
+        ],
       });
     }
     res.status(200).json(response);
@@ -715,4 +687,3 @@ export const getKordinat = async (req, res) => {
     res.status(500).json({ msg: error.message });
   }
 };
-
