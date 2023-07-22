@@ -346,54 +346,75 @@ export const updateKost = async (req, res) => {
         where: { uuid: kostId }, // Tambahkan kondisi untuk mencari data Kost yang sesuai
       }
     );
-    //=====================================================================================
-
     //================================================================================
-    if (req.files === null)
-      return res.status(400).json({ msg: "No File Uploaded" });
-    const fotoFiles = req.files; // Mengambil semua file foto yang diupload
+    try {
+      if (req.files === null)
+        return res.status(400).json({ msg: "No File Uploaded" });
+      const fotoFiles = req.files; // Mengambil semua file foto yang diupload
 
-    // Mengatur ukuran maksimal dan jenis file yang diizinkan
-    const allowedTypes = [".png", ".jpg", ".jpeg"];
-    const maxSize = 5000000; // 5MB
-    // Menyimpan informasi foto ke dalam tabel "Foto"
-    const fotoUrls = []; // Menampung URL foto
+      // Mengatur ukuran maksimal dan jenis file yang diizinkan
+      const allowedTypes = [".png", ".jpg", ".jpeg"];
+      const maxSize = 5000000; // 5MB
+      // Menyimpan informasi foto ke dalam tabel "Foto"
+      const fotoUrls = []; // Menampung URL foto
 
-    // Mengunggah dan menyimpan setiap file foto
-    for (let i = 1; i <= 4; i++) {
-      const file = fotoFiles[`url${i}`];
+      // Mengunggah dan menyimpan setiap file foto
+      for (let i = 1; i <= 4; i++) {
+        const file = fotoFiles[`url${i}`];
 
-      if (!file)
-        // Jika file tidak ada, lanjutkan ke iterasi berikutnya
-        continue;
+        if (!file)
+          // Jika file tidak ada, lanjutkan ke iterasi berikutnya
+          continue;
 
-      const fileSize = file.data.length;
-      const ext = path.extname(file.name);
-      const fileName = file.md5 + ext;
-      const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
+        const fileSize = file.data.length;
+        const ext = path.extname(file.name);
+        const fileName = file.md5 + ext;
+        const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
 
-      if (!allowedTypes.includes(ext.toLowerCase()))
-        return res.status(422).json({ msg: `Invalid Image Type for foto${i}` });
+        if (!allowedTypes.includes(ext.toLowerCase()))
+          return res
+            .status(422)
+            .json({ msg: `Invalid Image Type for foto${i}` });
 
-      if (fileSize > maxSize)
-        return res
-          .status(422)
-          .json({ msg: `Image for foto${i} must be less than 5 MB` });
+        if (fileSize > maxSize)
+          return res
+            .status(422)
+            .json({ msg: `Image for foto${i} must be less than 5 MB` });
 
-      await file.mv(`./public/images/${fileName}`);
+        await file.mv(`./public/images/${fileName}`);
 
-      // Menyimpan URL foto ke dalam array
-      fotoUrls.push(url);
-    }
-    console.log(fotoUrls);
-    // Menyimpan informasi foto ke dalam tabel "Foto"
-    await Foto.create({
-      url1: fotoUrls[0],
-      url2: fotoUrls[1],
-      url3: fotoUrls[2],
-      url4: fotoUrls[3],
-      kostId: kost.id,
-    });
+        // Menyimpan URL foto ke dalam array
+        fotoUrls.push(url);
+      }
+
+      let fotoData = await Foto.findOne({
+        where: { kostId: kost.id },
+      });
+      if (fotoData) {
+        // Jika data foto sudah ada, maka perbarui data foto tersebut
+        await Foto.update(
+          {
+            url1: fotoUrls[0],
+            url2: fotoUrls[1],
+            url3: fotoUrls[2],
+            url4: fotoUrls[3],
+          },
+          {
+            where: { kostId: kost.id },
+          }
+        );
+      } else {
+        // Jika data foto belum ada, maka buat baris baru dalam tabel "Foto"
+        await Foto.create({
+          url1: fotoUrls[0],
+          url2: fotoUrls[1],
+          url3: fotoUrls[2],
+          url4: fotoUrls[3],
+          kostId: kost.id,
+        });
+      }
+      console.log(fotoUrls);
+    } catch (error) {}
     //===============================================================================
     // Menyimpan Peraturan kost
     try {
