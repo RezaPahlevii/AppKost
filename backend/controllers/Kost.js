@@ -308,6 +308,10 @@ export const createKost = async (req, res) => {
 
 export const updateKost = async (req, res) => {
   try {
+    const kostId = req.params.id;
+    const kost = await Kost.findOne({
+      where: { uuid: kostId },
+    });
     const {
       nama,
       no_hp,
@@ -321,7 +325,12 @@ export const updateKost = async (req, res) => {
       kordinat,
     } = req.body;
 
-    const newKost = await Kost.create({
+    // Temukan data Kost yang sudah ada berdasarkan kostId
+    if (!kost) {
+      return res.status(404).json({ msg: "Kost tidak ditemukan" });
+    }
+
+    const upKost = await Kost.update({
       nama: nama,
       no_hp: no_hp,
       harga: harga,
@@ -331,8 +340,15 @@ export const updateKost = async (req, res) => {
       catatan_tambahan: catatan_tambahan,
       kordinat: kordinat,
       userId: req.userId,
-    });
-    //================================================================================
+    },
+    {
+      where: { uuid: kostId } // Tambahkan kondisi untuk mencari data Kost yang sesuai
+    }
+    );
+//=====================================================================================
+
+
+//================================================================================
     if (req.files === null)
       return res.status(400).json({ msg: "No File Uploaded" });
     const fotoFiles = req.files; // Mengambil semua file foto yang diupload
@@ -369,44 +385,46 @@ export const updateKost = async (req, res) => {
       // Menyimpan URL foto ke dalam array
       fotoUrls.push(url);
     }
-
+console.log(fotoUrls)
     // Menyimpan informasi foto ke dalam tabel "Foto"
     await Foto.create({
       url1: fotoUrls[0],
       url2: fotoUrls[1],
       url3: fotoUrls[2],
       url4: fotoUrls[3],
-      kostId: newKost.id,
+      kostId: kost.id,
+    });
+//===============================================================================
+try {
+  // Menyimpan Peraturan kost
+  const existingPeraturan = [];
+  const peraturanArray = peraturan.split(","); // Ubah string menjadi array
+  for (let i = 0; i < peraturanArray.length; i++) {
+    const peraturanName = peraturanArray[i];
+    let peraturan = await Peraturan.findOne({
+      where: { peraturan: peraturanName },
     });
 
-    //==========================================================================
-    // Menyimpan Peraturan kost
-    const existingPeraturan = [];
-    const peraturanArray = peraturan.split(","); // Ubah string menjadi array
-    for (let i = 0; i < peraturanArray.length; i++) {
-      const peraturanName = peraturanArray[i];
-      let peraturan = await Peraturan.findOne({
-        where: { peraturan: peraturanName },
+    if (!peraturan) {
+      peraturan = await Peraturan.create({
+        peraturan: peraturanName,
       });
-
-      if (!peraturan) {
-        peraturan = await Peraturan.create({
-          peraturan: peraturanName,
-        });
-      }
-      if (peraturan) {
-        existingPeraturan.push(peraturan.id); // Simpan ID fasilitas yang ada atau yang baru dibuat
-        await KostPeraturan.create({
-          kostId: newKost.id,
-          peraturanId: peraturan.id, // Gunakan ID fasilitas yang ada atau yang baru dibuat
-        });
-      }
     }
-    console.log(existingPeraturan);
-
+    if (peraturan) {
+      existingPeraturan.push(peraturan.id); // Simpan ID fasilitas yang ada atau yang baru dibuat
+      await KostPeraturan.create({
+        kostId: kost.id,
+        peraturanId: peraturan.id, // Gunakan ID fasilitas yang ada atau yang baru dibuat
+      });
+    }
+  }
+} catch (error) {
+  console.log(peraturan)
+}
     //==================================================================
     // Menyimpan fasilitas kost
-    const existingFasilitas = [];
+    try {
+      const existingFasilitas = [];
     const fasilitasArray = nama_f.split(","); // Ubah string menjadi array
     for (let i = 0; i < fasilitasArray.length; i++) {
       const fasilitasName = fasilitasArray[i];
@@ -424,13 +442,15 @@ export const updateKost = async (req, res) => {
       if (fasilitas) {
         existingFasilitas.push(fasilitas.id); // Simpan ID fasilitas yang ada atau yang baru dibuat
         await KostFasilitas.create({
-          kostId: newKost.id,
+          kostId: kost.id,
           fasilitaId: fasilitas.id, // Gunakan ID fasilitas yang ada atau yang baru dibuat
         });
       }
     }
-
-    console.log(existingFasilitas);
+    } catch (error) {
+      console.log(error.message);
+    }
+    
 
     res.status(201).json({ msg: "Berhasil menambahkan kamar kost" });
   } catch (error) {
