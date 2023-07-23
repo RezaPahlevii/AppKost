@@ -7,11 +7,10 @@ import {
   Container,
   Figure,
   Row,
-  Tooltip,
 } from "react-bootstrap";
 import Nav2 from "../components/Nav2";
 import Footer2 from "../components/Footer2";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { Icon, divIcon } from "leaflet";
 import axios from "axios";
@@ -25,7 +24,6 @@ import { reset, getMe } from "../features/authSlice";
 const DetailKost = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   const [foto1, setFoto1] = useState("");
   const [foto2, setFoto2] = useState("");
   const [foto3, setFoto3] = useState("");
@@ -33,7 +31,7 @@ const DetailKost = () => {
   const [kost, setKost] = useState(null);
   const { id } = useParams();
   const dispatch = useDispatch();
-  const {user} = useSelector((state) => state.auth)
+  const { user } = useSelector((state) => state.auth);
   const petaPosition = [1.4583828821304539, 102.15096143773447];
   const markers = [
     {
@@ -52,6 +50,10 @@ const DetailKost = () => {
     });
   };
 
+  useEffect(()=>{
+    dispatch(getMe());
+  }, [dispatch]);
+  
   useEffect(() => {
     const getKostById = async () => {
       try {
@@ -71,7 +73,53 @@ const DetailKost = () => {
   }, [id]);
 
   if (!kost) {
-    return <div>Loading...</div>;
+    return (
+      <div
+        style={{
+          fontFamily: "Arial, sans-serif",
+          backgroundColor: "#f2f2f2",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          margin: 0,
+        }}
+      >
+        <div
+          style={{
+            textAlign: "center",
+            padding: "20px",
+            borderRadius: "8px",
+            backgroundColor: "#fff",
+            boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          <img
+            style={{ maxWidth: "300px", height: "auto" }}
+            src="https://cdn.example.com/not-found-image.png"
+            alt="Page Not Found"
+          />
+          <div
+            style={{
+              fontSize: "24px",
+              fontWeight: "bold",
+              marginBottom: "10px",
+            }}
+          >
+            Oops! Page Not Found
+          </div>
+          <div
+            style={{ fontSize: "16px", color: "#666", marginBottom: "20px" }}
+          >
+            The page you are looking for might have been removed or is
+            temporarily unavailable.
+          </div>
+          <a style={{ color: "#007bff", textDecoration: "none" }} href="/kost-list">
+            Go back
+          </a>
+        </div>
+      </div>
+    );
   }
 
   const {
@@ -84,7 +132,6 @@ const DetailKost = () => {
     fasilitas,
     peraturans,
     catatan_tambahan,
-    fotos,
   } = kost;
 
   const renderIcon = (namaFasilitas) => {
@@ -133,10 +180,11 @@ const DetailKost = () => {
     dispatch(reset());
     window.open("/login", "_blank");
   };
-  
-  const ajukanSewa =()=>{
-    window.open('/form-biodata-penyewa', '_blank');
-  }
+
+  const ajukanSewa = () => {
+    const noWa = no_hp.replace(/^0/, "+62");
+    window.open(`https://wa.me/${noWa}`, "_blank");
+  };
   return (
     <div>
       <Nav2 />
@@ -366,14 +414,13 @@ const DetailKost = () => {
               <h4 className="mb-3">
                 <strong>{harga}</strong> / bulan
               </h4>
-              <p>No. HP: {no_hp}</p>
               {user == null ? (
                 <Button onClick={loginDulu} variant="success">
-                  Ajukan Sewa
+                  Hubungi Pemilik
                 </Button>
               ) : (
                 <Button onClick={ajukanSewa} variant="success">
-                  Ajukan Sewa
+                  Hubungi Pemilik
                 </Button>
               )}
             </Card>

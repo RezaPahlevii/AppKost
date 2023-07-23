@@ -13,11 +13,17 @@ import Nav2 from "./../components/Nav2";
 import Footer2 from "../components/Footer2";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { getMe } from '../features/authSlice';
+import { useDispatch } from "react-redux";
 
 const HomePage = () => {
   const [kosts, setKosts] = useState([]);
   const [search, setSearch] = useState("");
-  console.log(search);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getMe());
+  }, [dispatch]);
 
   const getRekomendasiKosts = async () => {
     try {

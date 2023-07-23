@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Nav2 from '../components/Nav2'
 import { Accordion, Container } from 'react-bootstrap'
 import Footer2 from '../components/Footer2'
+import { useDispatch } from 'react-redux'
+import { getMe } from '../features/authSlice';
 
 const PusatBantuan = () => {
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    dispatch(getMe());
+  }, [dispatch]);
+  
+
   return (
     <div>
       <Nav2/>

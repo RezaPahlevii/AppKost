@@ -18,18 +18,25 @@ import Footer2 from "../components/Footer2";
 import "../css/ListKost.css";
 import { Icon, divIcon } from "leaflet";
 import { Link } from "react-router-dom";
+import { getMe } from '../features/authSlice';
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import RangeSlider from "react-bootstrap-range-slider";
 import "react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css";
+import { useDispatch } from "react-redux";
 
 const ListKost = () => {
+  const dispatch = useDispatch();
   const [kosts, setKosts] = useState([]);
   const [search, setSearch] = useState("");
   const [gender, setGender] = useState("");
   const [showFacilitiesModal, setShowFacilitiesModal] = useState(false);
   const [selectedFacilities, setSelectedFacilities] = useState([]);
   const [priceRange, setPriceRange] = useState({ min: 0, max: 1000000 });
+
+  useEffect(()=>{
+    dispatch(getMe());
+  }, [dispatch]);
 
   useEffect(() => {
     getKosts();

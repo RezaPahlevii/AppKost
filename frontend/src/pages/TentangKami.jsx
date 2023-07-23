@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Nav2 from "../components/Nav2";
 import { Col, Container, Image, Row } from "react-bootstrap";
-// import Footer from "../components/Footer";
 import Pendiri1 from "./../image/Levi.jpg";
 import Pendiri2 from "./../image/Bima.jpeg";
 import Hero from "./../image/hero.jpg";
 import { Link } from "react-scroll";
 import Footer2 from "../components/Footer2";
 import './../css/footer.css'
+import { useDispatch } from "react-redux";
+import { getMe } from '../features/authSlice';
 
 const TentangKami = () => {
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(getMe());
+  }, [dispatch]);
+
   return (
     <div>
       <Nav2 />
