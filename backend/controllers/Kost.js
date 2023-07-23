@@ -141,7 +141,6 @@ export const getKostById = async (req, res) => {
           "alamat",
           "jk",
           "catatan_tambahan",
-          "url",
           "kordinat",
         ],
         where: {
