@@ -19,11 +19,11 @@ import EditBanner from './pages/EditBanner';
 import EditProfilPemilik from './pages/EditProfilPemilik';
 import AddProfilPemilik from './pages/AddProfilPemilik';
 import LoginRegister from './pages/LoginRegister';
-import Maps from './pages/Maps';
-import TestMap from './components/TestMap';
+import BigMaps from './pages/BigMaps';
 import PengaturanAkunPencari from './components/PengaturanAkunPencari';
 import FormBiodataPenyewa from './pages/FormBiodataPenyewa';
 import BiodataPenyewa from './components/BiodataPenyewa';
+import PageNotFound from './components/PageNotFound';
 
 
 function App() {
@@ -48,8 +48,8 @@ function App() {
       </Routes>
       <Routes>
         <Route path="/" element={<HomePage/>}/>
-        <Route path="/test" element={<TestMap/>}/>
-        <Route path="/maps" element={<Maps/>}/>
+        <Route path="/page-not-found" element={<PageNotFound/>}/>
+        <Route path="/maps" element={<BigMaps/>}/>
         <Route path="/pusat-bantuan" element={<PusatBantuan/>}/>
         <Route path="/tentang-kami" element={<TentangKami/>}/>
         <Route exact path="/kost-list" element={<ListKost/>}/>
