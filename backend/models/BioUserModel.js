@@ -53,7 +53,7 @@ const Bio = db.define('biodata_users',{
  {
 freezeTableName: true
  });
- Users.hasMany(Bio);
+ Users.hasOne(Bio);
  Bio.belongsTo(Users, {foreignKey: 'userId'});
  
  export default Bio;

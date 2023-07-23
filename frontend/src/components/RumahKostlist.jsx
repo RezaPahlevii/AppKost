@@ -18,7 +18,7 @@ const RumahKostlist = () => {
     await axios.delete(`http://localhost:5000/rumah-kost/${kostId}`);
     getKosts();
   };
-  console.log(getKosts);
+
   return (
     <div>
       <h1 className="title">Rumah Kost</h1>

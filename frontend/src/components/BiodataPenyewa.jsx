@@ -26,14 +26,15 @@ const BiodataPenyewa = () => {
   }, []);
 
   const getBio = async () => {
-    const response = await axios.get("http://localhost:5000/biodata-penyewa");
+    const response = await axios.get("http://localhost:5000/biodata");
     setBios(response.data);
   };
 
-  const deleteUser = async (userId) => {
-    await axios.delete(`http://localhost:5000/users/${userId}`);
-    getUsers();
+  const deleteBio = async (bioId) => {
+    await axios.delete(`http://localhost:5000/biodata/${bioId}`);
+    getBio();
   };
+  console.log(getBio);
 
   return (
     <Layout>
@@ -63,13 +64,13 @@ const BiodataPenyewa = () => {
                 <td>{bio.asal}</td>
                 <td>
                   <Link
-                    to={`/users/edit/${bio.uuid}`}
+                    to={`/edit-profil-pemilik/${bio.uuid}`}
                     className="btn btn-warning"
                   >
                     Edit
                   </Link>
                   <button
-                    onClick={() => deleteUser(bio.uuid)}
+                    onClick={() => deleteBio(bio.uuid)}
                     className="btn btn-danger"
                   >
                     Delete

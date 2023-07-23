@@ -29,31 +29,10 @@ const FormBiodataPenyewa = () => {
     }
   }, [isError, navigate]);
 
-  // Tampilkan data form edit sesuai record database
-  useEffect(() => {
-    const getBioUsersById = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:5000/biodata/${id}`
-        );
-        setNama(response.data.nama);
-        setJK(response.data.jk);
-        setUmur(response.data.umur);
-        setNoWA(response.data.NoWA);
-        setAsal(response.data.asal);
-      } catch (error) {
-        if (error.response) {
-          setMsg("Silahkan lengkapi biodata anda!");
-        }
-      }
-    };
-    getBioUsersById();
-  }, [id]);
-
   const saveBio = async (e) => {
     e.preventDefault();
     try {
-      await axios.put("http://localhost:5000/biodata", {
+      await axios.post("http://localhost:5000/biodata", {
         nama: nama,
         jk: jk,
         umur: umur,
