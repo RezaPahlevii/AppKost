@@ -24,6 +24,9 @@ const Nav = () => {
     dispatch(reset());
     navigate("/login");
   };
+  const dashboard =()=>{
+    navigate("/dashboard")
+  }
   
   return (
     <div className="mb-5 ">
@@ -52,7 +55,10 @@ const Nav = () => {
            {user == null ? (
             <Button onClick={login} variant="outline-success">Login</Button>
            ) : (
+            <>
             <Button onClick={logout} variant="outline-success">Logout</Button>
+            <Button onClick={dashboard} variant="outline-success">avatar</Button>
+            </>
            )
         }
           </Form>
