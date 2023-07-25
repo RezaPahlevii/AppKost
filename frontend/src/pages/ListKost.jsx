@@ -141,7 +141,7 @@ const ListKost = () => {
   return (
     <div>
       <Nav2 />
-      <Container style={{ maxWidth: "1250px" }}>
+      <Container className="my-3 py-5" style={{ maxWidth: "1250px" }}>
         <Row className="pt-4">
           {/* menu fasilitas, gender, dan harga (fixed top) */}
           <Col className="mt-auto">

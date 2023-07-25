@@ -22,3 +22,20 @@
     justify-content: flex-end; /* Mengatur agar item-navbar rata kanan pada tampilan desktop */
   }
 }
+
+/* Gaya untuk mengubah warna caret menjadi transparan */
+.avatar-icon::after {
+  border-top-color: transparent;
+}
+
+.no-caret::after {
+  display: none !important;
+}
+
+/* Gaya untuk mengubah ukuran lingkaran avatar */
+#avatar-dropdown {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+}
+

@@ -43,7 +43,7 @@ const HomePage = () => {
   return (
     <div>
       <Nav2 />
-      <Container style={{ maxWidth: "1250px" }}>
+      <Container className="my-5 py-5" style={{ maxWidth: "1250px" }}>
         <div className="pb-5 search-container">
           <h2>
             <strong>Temukan Kost Kebutuhan Anda</strong>

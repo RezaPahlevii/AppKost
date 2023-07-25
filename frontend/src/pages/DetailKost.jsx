@@ -188,7 +188,7 @@ const DetailKost = () => {
   return (
     <div>
       <Nav2 />
-      <Container className="pt-3" style={{ maxWidth: "1100px" }}>
+      <Container className="pt-4" style={{ maxWidth: "1100px" }}>
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Modal heading</Modal.Title>
