@@ -1,9 +1,13 @@
 import React from 'react'
 import { Col, Container, Nav, Row } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
-// import Iframe from 'react-iframe'
 
 const Footer2 = () => {
+const kontakWA = ()=>{
+  const wa = "+6285278685008"
+  window.open(`https://wa.me/${wa}`, "_blank");
+}
+
   return (
     <div className='footer'>
     <Container>
@@ -58,10 +62,10 @@ const Footer2 = () => {
               <h5 className='mt-lg-0 mt-md-0 mt-4 mb-3'>Contact</h5>
             </li>
             <li className='list-unstyled mb-2'>
-              <a href="#0"><i className="bi bi-telephone-fill"></i> 0852 7868 5008</a>
+              <a onClick={kontakWA}><i className="bi bi-telephone-fill"></i> 0852 7868 5008</a>
             </li>
             <li className='list-unstyled mb-2'>
-              <a href="#0"><i className="bi bi-envelope-at-fill"></i> appkost@gmail.com</a>
+              <a href="#0"><i className="bi bi-envelope-at-fill"></i> admin@bengkaliskost.com</a>
             </li>
             <li className='list-unstyled'>
               {/* <div className="map mt-4">
