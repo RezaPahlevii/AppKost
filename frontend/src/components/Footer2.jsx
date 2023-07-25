@@ -14,11 +14,11 @@ const kontakWA = ()=>{
       <Row className='main-foot'>
         <Col className='col col-lg-4 col-md-12 col-12'>
           <h2>
-          <NavLink
+          <Nav.Link
             className='text-lg-start text-md-center text-center mb-lg-0 mb-md-5 mb-2 main-title'
-            to={"/"}>
+            href='/'>
             AppKost
-          </NavLink>
+          </Nav.Link>
           </h2>
         </Col>
         <Col className='col col-lg-2 col-md-3 col-12'>
