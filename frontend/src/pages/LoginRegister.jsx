@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-// import "../css/register.css";
+import "../css/register.css";
 import * as Components from "../css/registerComponents.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -55,7 +55,7 @@ const LoginRegister = () => {
   
 
   return (
-    <div className="container">
+    <div className="centered-form">
       <Components.Container className="">
         {/* form register */}
         <Components.SignUpContainer signinIn={signIn}>
