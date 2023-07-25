@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Container, Row } from 'react-bootstrap'
+import { Col, Container, Nav, Row } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 // import Iframe from 'react-iframe'
 
@@ -23,32 +23,32 @@ const Footer2 = () => {
               <h5 className='mt-lg-0 mt-md-0 mt-4 mb-3'>AppKost</h5>
             </li>
             <li className='list-unstyled mb-2'>
-            <NavLink
+            <Nav.Link
             style={{ textDecoration: "none", paddingRight: 15, color: "green" }}
-            to={"/pusat-bantuan"}>
+            href="/pusat-bantuan">
             Pusat Bantuan
-            </NavLink>
+            </Nav.Link>
             </li>
             <li className='list-unstyled mb-2'>
-            <NavLink
+            <Nav.Link
             style={{ textDecoration: "none", paddingRight: 15, color: "green" }}
-            to={"/tentang-kami"}>
+            href="/tentang-kami">
             Tentang Kami
-            </NavLink>
+            </Nav.Link>
             </li>
             <li className='list-unstyled mb-2'>
-            <NavLink
+            <Nav.Link
             style={{ textDecoration: "none", paddingRight: 15, color: "green" }}
-            to={"/maps"}>
+            href="/maps">
             Maps
-            </NavLink>
+            </Nav.Link>
             </li>
             <li className='list-unstyled mb-2'>
-            <NavLink
+            <Nav.Link
             style={{ textDecoration: "none", paddingRight: 15, color: "green" }}
-            to={"/kost-list"}>
+            href="/kost-list">
            List Rumah Kost
-            </NavLink>
+            </Nav.Link>
             </li>
           </ul>
         </Col>
