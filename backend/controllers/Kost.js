@@ -7,6 +7,10 @@ import Peraturan from "../models/PeraturanModel.js";
 import KostPeraturan from "../models/KostPeraturanModel.js";
 import Fasilitas from "../models/FasilitasModel.js";
 import KostFasilitas from "../models/KostFasilitasModel.js";
+import FasilitasUmum from "../models/FasilitasUmumModel.js";
+import KostFasilitasUmum from "../models/KostFasilitasUmumModel.js";
+import FasilitasKeamanan from "../models/FasilitasKeamananModel.js";
+import KostFasilitasKeamanan from "../models/KostFasilitasKeamananModel.js";
 // import fs from "fs";
 
 export const getKost = async (req, res) => {
@@ -37,6 +41,14 @@ export const getKost = async (req, res) => {
           {
             model: Fasilitas,
             attributes: ["nama_f"],
+          },
+          {
+            model: FasilitasUmum,
+            attributes: ["f_umum"],
+          },
+          {
+            model: FasilitasKeamanan,
+            attributes: ["f_keamanan"],
           },
           {
             model: Foto,
@@ -72,6 +84,14 @@ export const getKost = async (req, res) => {
           {
             model: Fasilitas,
             attributes: ["nama_f"],
+          },
+          {
+            model: FasilitasUmum,
+            attributes: ["f_umum"],
+          },
+          {
+            model: FasilitasKeamanan,
+            attributes: ["f_keamanan"],
           },
           {
             model: Foto,
@@ -125,6 +145,14 @@ export const getKostById = async (req, res) => {
             attributes: ["nama_f"],
           },
           {
+            model: FasilitasUmum,
+            attributes: ["f_umum"],
+          },
+          {
+            model: FasilitasKeamanan,
+            attributes: ["f_keamanan"],
+          },
+          {
             model: Foto,
             attributes: ["url1", "url2", "url3", "url4"],
           },
@@ -160,6 +188,14 @@ export const getKostById = async (req, res) => {
             attributes: ["nama_f"],
           },
           {
+            model: FasilitasUmum,
+            attributes: ["f_umum"],
+          },
+          {
+            model: FasilitasKeamanan,
+            attributes: ["f_keamanan"],
+          },
+          {
             model: Foto,
             attributes: ["url1", "url2", "url3", "url4"],
           },
@@ -183,6 +219,8 @@ export const createKost = async (req, res) => {
       jk,
       peraturan,
       nama_f,
+      f_umum,
+      f_keamanan,
       catatan_tambahan,
       kordinat,
     } = req.body;
@@ -297,6 +335,58 @@ export const createKost = async (req, res) => {
     }
 
     console.log(existingFasilitas);
+    //==================================================================
+    // Menyimpan fasilitas Umum kost
+    const existingFasilitasUmum = [];
+    const fasilitasUmumArray = f_umum.split(","); // Ubah string menjadi array
+    for (let i = 0; i < fasilitasUmumArray.length; i++) {
+      const fasilitasUmumName = fasilitasUmumArray[i];
+
+      let fasilitasUmum = await FasilitasUmum.findOne({
+        where: { f_umum: fasilitasUmumName },
+      });
+
+      if (!fasilitasUmum) {
+        fasilitasUmum = await FasilitasUmum.create({
+          f_umum: fasilitasUmumName,
+        });
+      }
+
+      if (fasilitasUmum) {
+        existingFasilitasUmum.push(fasilitasUmum.id); // Simpan ID fasilitas yang ada atau yang baru dibuat
+        await KostFasilitasUmum.create({
+          kostId: newKost.id,
+          fasilitasUmumId: fasilitasUmum.id, // Gunakan ID fasilitas yang ada atau yang baru dibuat
+        });
+      }
+    }
+    console.log(existingFasilitasUmum);
+        //==================================================================
+    // Menyimpan fasilitas Keamanan kost
+    const existingFasilitasKeamanan = [];
+    const fasilitasKeamananArray = f_keamanan.split(","); // Ubah string menjadi array
+    for (let i = 0; i < fasilitasKeamananArray.length; i++) {
+      const fasilitasKeamananName = fasilitasKeamananArray[i];
+
+      let fasilitasKeamanan = await FasilitasKeamanan.findOne({
+        where: { f_keamanan: fasilitasKeamananName },
+      });
+
+      if (!fasilitasKeamanan) {
+        fasilitasKeamanan = await FasilitasKeamanan.create({
+          f_keamanan: fasilitasKeamananName,
+        });
+      }
+
+      if (fasilitasKeamanan) {
+        existingFasilitasKeamanan.push(fasilitasKeamanan.id); // Simpan ID fasilitas yang ada atau yang baru dibuat
+        await KostFasilitasKeamanan.create({
+          kostId: newKost.id,
+          fasilitasKeamananId: fasilitasKeamanan.id, // Gunakan ID fasilitas yang ada atau yang baru dibuat
+        });
+      }
+    }
+    console.log(existingFasilitasKeamanan);
 
     res.status(201).json({ msg: "Berhasil menambahkan kamar kost" });
   } catch (error) {
@@ -320,6 +410,8 @@ export const updateKost = async (req, res) => {
       jk,
       peraturan,
       nama_f,
+      f_keamanan,
+      f_umum,
       catatan_tambahan,
       kordinat,
     } = req.body;
@@ -475,6 +567,35 @@ export const updateKost = async (req, res) => {
         console.log(fasilitas);
       }
     } catch (error) {}
+    //==================================================================
+    // Menyimpan fasilitas keamanan kost
+    try {
+      await KostFasilitasKeamanan.destroy({ where: { kostId: kost.id } });
+      const existingFasilitasKeamanan = [];
+      const fasilitasKeamananArray = f_keamanan.split(","); // Ubah string menjadi array
+      for (let i = 0; i < fasilitasKeamananArray.length; i++) {
+        const fasilitasKeamananName = fasilitasKeamananArray[i];
+
+        let fasilitasKeamanan = await FasilitasKeamanan.findOne({
+          where: { f_keamanan: fasilitasKeamananName },
+        });
+
+        if (!fasilitasKeamanan) {
+          fasilitasKeamanan = await FasilitasKeamanan.create({
+            f_keamanan: fasilitasKeamananName,
+          });
+        }
+
+        if (fasilitasKeamanan) {
+          existingFasilitasKeamanan.push(fasilitasKeamanan.id); // Simpan ID fasilitas yang ada atau yang baru dibuat
+          await KostFasilitasKeamanan.create({
+            kostId: kost.id,
+            fasilitaId: fasilitasKeamanan.id, // Gunakan ID fasilitas yang ada atau yang baru dibuat
+          });
+        }
+        console.log(fasilitasKeamanan);
+      }
+    } catch (error) {}
 
     res.status(201).json({ msg: "Berhasil menambahkan kamar kost" });
   } catch (error) {
@@ -492,6 +613,16 @@ export const deleteKost = async (req, res) => {
     });
     if (!kost) return res.status(404).json({ msg: "Data tidak ditemukan" });
     await KostFasilitas.destroy({
+      where: {
+        kostId: kost.id,
+      },
+    });
+    await KostFasilitasUmum.destroy({
+      where: {
+        kostId: kost.id,
+      },
+    });
+    await KostFasilitasKeamanan.destroy({
       where: {
         kostId: kost.id,
       },
@@ -670,6 +801,14 @@ export const getKostViewById = async (req, res) => {
         {
           model: Fasilitas,
           attributes: ["nama_f"],
+        },
+        {
+          model: FasilitasUmum,
+          attributes: ["f_umum"],
+        },
+        {
+          model: FasilitasKeamanan,
+          attributes: ["f_keamanan"],
         },
         {
           model: Foto,
