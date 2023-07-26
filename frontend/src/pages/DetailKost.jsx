@@ -20,6 +20,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { FaBed, FaWifi, FaShower, FaTv, FaUtensils } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { reset, getMe } from "../features/authSlice";
+import PageNotFound from "../image/404 home.webp"
 
 const DetailKost = () => {
   const [show, setShow] = useState(false);
@@ -96,7 +97,7 @@ const DetailKost = () => {
         >
           <img
             style={{ maxWidth: "300px", height: "auto" }}
-            src="https://cdn.example.com/not-found-image.png"
+            src={PageNotFound}
             alt="Page Not Found"
           />
           <div
@@ -106,13 +107,13 @@ const DetailKost = () => {
               marginBottom: "10px",
             }}
           >
-            Oops! Page Not Found
+            Oops! Halaman Tidak Di Temukan
           </div>
           <div
             style={{ fontSize: "16px", color: "#666", marginBottom: "20px" }}
           >
-            The page you are looking for might have been removed or is
-            temporarily unavailable.
+            <p></p>
+           Halaman yang Anda cari mungkin telah dihapus atau untuk sementara tidak tersedia.
           </div>
           <a style={{ color: "#007bff", textDecoration: "none" }} href="/kost-list">
             Go back
@@ -130,6 +131,8 @@ const DetailKost = () => {
     alamat,
     jk,
     fasilitas,
+    fasilitas_umums,
+    fasilitas_keamanans,
     peraturans,
     catatan_tambahan,
   } = kost;
@@ -264,7 +267,7 @@ const DetailKost = () => {
                 </p>
                 <hr />
               </div>
-              <div className="mt-5">
+              <div className="mt-2">
                 <h3>
                   <strong>Fasilitas kamar</strong>
                 </h3>
@@ -300,7 +303,7 @@ const DetailKost = () => {
                 </Row>
                 <hr />
               </div>
-              <div className="mt-5">
+              <div className="mt-2">
                 <h3>
                   <strong>Peraturan kost</strong>
                 </h3>
@@ -314,70 +317,56 @@ const DetailKost = () => {
                 </Row>
                 <hr />
               </div>
-              <div className="mt-5">
+              <div className="mt-2">
                 <h3>
                   <strong>Catatan Tambahan</strong>
                 </h3>
                 <p>{catatan_tambahan}</p>
                 <hr />
               </div>
-              <div className="mt-5">
+              <div className="mt-2">
                 <h3>
                   <strong>Fasilitas Umum</strong>
                 </h3>
                 <Row>
                   <Col xs={6}>
-                    {fasilitas
-                      .slice(0, Math.ceil(fasilitas.length / 2))
+                    {fasilitas_umums
+                      .slice(0, Math.ceil(fasilitas_umums.length / 2))
                       .map((item) => (
-                        <div key={item.nama_f} className="fasilitas-item">
-                          <div className="icon">{renderIcon(item.nama_f)}</div>
-                          <div className="text">{item.nama_f}</div>
+                        <div key={item.f_umum} className="fasilitas-item">
+                          <div className="icon">{renderIcon(item.f_umum)}</div>
+                          <div className="text">{item.f_umum}</div>
                         </div>
                       ))}
                   </Col>
                   <Col xs={6}>
-                    {fasilitas
-                      .slice(Math.ceil(fasilitas.length / 2))
+                    {fasilitas_umums
+                      .slice(Math.ceil(fasilitas_umums.length / 2))
                       .map((item) => (
-                        <div key={item.nama_f} className="fasilitas-item">
-                          {renderIcon(item.nama_f)}
-                          {item.nama_f}
+                        <div key={item.f_umum} className="fasilitas-item">
+                          {renderIcon(item.f_umum)}
+                          {item.f_umum}
                         </div>
                       ))}
                   </Col>
                 </Row>
                 <hr />
               </div>
-              <div className="mt-5">
+              <div className="mt-2">
                 <h3>
                   <strong>Fasilitas Keamanan</strong>
                 </h3>
                 <Row>
-                  <Col xs={6}>
-                    {fasilitas
-                      .slice(0, Math.ceil(fasilitas.length / 2))
-                      .map((item) => (
-                        <div key={item.nama_f} className="fasilitas-item">
-                          <div className="icon">{renderIcon(item.nama_f)}</div>
-                          <div className="text">{item.nama_f}</div>
-                        </div>
-                      ))}
-                  </Col>
-                  <Col xs={6}>
-                    {fasilitas
-                      .slice(Math.ceil(fasilitas.length / 2))
-                      .map((item) => (
-                        <div key={item.nama_f} className="fasilitas-item">
-                          {renderIcon(item.nama_f)}
-                          {item.nama_f}
-                        </div>
-                      ))}
-                  </Col>
+                {fasilitas_keamanans.map((item) => (
+                    <div key={item.f_keamanan} className="fasilitas-item">
+                      {renderIcon(item.f_keamanan)}
+                      {item.f_keamanan}
+                    </div>
+                  ))} 
                 </Row>
                 <hr />
               </div>
-              <div className="mt-5">
+              <div className="mt-2">
                 <h3>
                   <strong>Lokasi dan Lingkungan Sekitar</strong>
                 </h3>
