@@ -16,6 +16,8 @@ const FormEditKost = () => {
   const [alamat, setAlamat] = useState("");
   const [jk, setJk] = useState("");
   const [nama_f, setNama_f] = useState([]);
+  const [f_umum, setF_umum] = useState([]);
+  const [f_keamanan, setF_keamanan] = useState([]);
   const [peraturan, setPeraturan] = useState("");
   const [catatan_tambahan, setCatatan_tambahan] = useState("");
   const [kordinat, setKordinat] = useState("");
@@ -55,6 +57,8 @@ const FormEditKost = () => {
         setJk(response.data.jk);
         setNama_f(response.data.fasilitas.map((item) => item.nama_f));
         setPeraturan(response.data.peraturans.map((item) => item.peraturan));
+        setF_umum(response.data.fasilitas_umums.map((item) => item.f_umum));
+        setF_keamanan(response.data.fasilitas_keamanans.map((item) => item.f_keamanan));
         setCatatan_tambahan(response.data.catatan_tambahan);
         setUrl1(response.data.url1);
         setUrl2(response.data.url2);
@@ -80,6 +84,8 @@ const FormEditKost = () => {
     formData.append("alamat", alamat);
     formData.append("jk", jk);
     formData.append("nama_f", nama_f);
+    formData.append("f_keamanan", f_keamanan);
+    formData.append("f_umum", f_umum);
     formData.append("peraturan", peraturan);
     formData.append("catatan_tambahan", catatan_tambahan);
     formData.append("url1", url1);
@@ -117,6 +123,22 @@ const FormEditKost = () => {
       setPeraturan([...peraturan, value]);
     } else {
       setPeraturan(peraturan.filter((item) => item !== value));
+    }
+  };
+  const handleCheckboxChangeFasilitasUmum = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setF_umum([...f_umum, value]);
+    } else {
+      setF_umum(f_umum.filter((item) => item !== value));
+    }
+  };
+  const handleCheckboxChangeFasilitasKeamanan = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setF_keamanan([...f_keamanan, value]);
+    } else {
+      setF_keamanan(f_keamanan.filter((item) => item !== value));
     }
   };
 
@@ -299,23 +321,23 @@ const FormEditKost = () => {
                     label="CCTV"
                     value="CCTV"
                     className="checkbox-item"
-                    checked={nama_f.includes("CCTV")}
-                    onChange={handleCheckboxChangeFasilitas}
+                    checked={f_keamanan.includes("CCTV")}
+                    onChange={handleCheckboxChangeFasilitasKeamanan}
                   />
                   <Form.Check
                     inline
                     label="Jendela Bertrali"
                     value="Jendela Bertrali"
                     className="checkbox-item"
-                    checked={nama_f.includes("Jendela Bertrali")}
-                    onChange={handleCheckboxChangeFasilitas}
+                    checked={f_keamanan.includes("Jendela Bertrali")}
+                    onChange={handleCheckboxChangeFasilitasKeamanan}
                   />
                   <Form.Check
                     inline
                     label="Pagar"
                     value="Pagar"
-                    checked={nama_f.includes("Pagar")}
-                    onChange={handleCheckboxChangeFasilitas}
+                    checked={f_keamanan.includes("Pagar")}
+                    onChange={handleCheckboxChangeFasilitasKeamanan}
                   />
                 </div>
               </div>
@@ -328,37 +350,37 @@ const FormEditKost = () => {
                     label="Pengurus Kost"
                     value="Pengurus Kost"
                     className="checkbox-item"
-                    checked={nama_f.includes("Pengurus Kost")}
-                    onChange={handleCheckboxChangeFasilitas}
+                    checked={f_umum.includes("Pengurus Kost")}
+                    onChange={handleCheckboxChangeFasilitasUmum}
                   />
                   <Form.Check
                     inline
                     label="Wifi"
                     value="Wifi"
                     className="checkbox-item"
-                    checked={nama_f.includes("Wifi")}
-                    onChange={handleCheckboxChangeFasilitas}
+                    checked={f_umum.includes("Wifi")}
+                    onChange={handleCheckboxChangeFasilitasUmum}
                   />
                   <Form.Check
                     inline
                     label="Jemuran"
                     value="Jemuran"
-                    checked={nama_f.includes("Jemuran")}
-                    onChange={handleCheckboxChangeFasilitas}
+                    checked={f_umum.includes("Jemuran")}
+                    onChange={handleCheckboxChangeFasilitasUmum}
                   />
                   <Form.Check
                     inline
                     label="Parkir Motor"
                     value="Parkir Motor"
-                    checked={nama_f.includes("Parkir Motor")}
-                    onChange={handleCheckboxChangeFasilitas}
+                    checked={f_umum.includes("Parkir Motor")}
+                    onChange={handleCheckboxChangeFasilitasUmum}
                   />
                   <Form.Check
                     inline
                     label="Dapur"
                     value="Dapur"
-                    checked={nama_f.includes("Dapur")}
-                    onChange={handleCheckboxChangeFasilitas}
+                    checked={f_umum.includes("Dapur")}
+                    onChange={handleCheckboxChangeFasilitasUmum}
                   />
                 </div>
               </div>
