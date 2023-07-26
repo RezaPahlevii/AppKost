@@ -18,7 +18,12 @@ const RumahKostlist = () => {
     await axios.delete(`http://localhost:5000/rumah-kost/${kostId}`);
     getKosts();
   };
-
+  const handleDeleteClick = (kostId) => {
+    const isConfirmed = window.confirm('Apakah Anda yakin ingin menghapus kost ini?');
+    if (isConfirmed) {
+      deleteKost(kostId);
+    }
+  };
   return (
     <div>
       <h1 className="title">Rumah Kost</h1>
@@ -76,7 +81,7 @@ const RumahKostlist = () => {
                     Edit
                   </Link>
                   <button
-                    onClick={() => deleteKost(kost.uuid)}
+                    onClick={() => handleDeleteClick(kost.uuid)}
                     className="btn btn-danger"
                   >
                     Delete
