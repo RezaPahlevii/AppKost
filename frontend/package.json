@@ -18,6 +18,7 @@
     "bootstrap": "^5.2.3",
     "bulma": "^0.9.4",
     "eslint": "^8.44.0",
+    "font-awesome": "^4.7.0",
     "jquery": "^3.7.0",
     "leaflet": "^1.9.4",
     "react": "^18.2.0",
@@ -26,6 +27,7 @@
     "react-dom": "^18.2.0",
     "react-icon": "^1.0.0",
     "react-icons": "^4.8.0",
+    "react-id-swiper": "^4.0.0",
     "react-iframe": "^1.8.5",
     "react-leaflet": "^4.2.1",
     "react-leaflet-cluster": "^2.1.0",
@@ -37,6 +39,7 @@
     "react-whatsapp": "^0.3.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.11",
+    "swiper": "^10.0.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
