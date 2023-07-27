@@ -137,6 +137,18 @@ const ListKost = () => {
       });
     }
   };
+  const formatCurrency = (value) => {
+    // Convert the value to a number (in case it's a string)
+    const numberValue = Number(value);
+  
+    // Check if the value is a valid number
+    if (isNaN(numberValue)) {
+      return "Invalid Number";
+    }
+  
+    // Use toLocaleString to format the number as currency
+    return numberValue.toLocaleString("id-ID");
+  };
 
   return (
     <div>
@@ -303,6 +315,18 @@ const ListKost = () => {
                                       {index !== 4 && ","}
                                     </span>
                                   ))}
+                                  {kost.peraturans
+                                  .slice(0, 5)
+                                  .map((item, index) => (
+                                    <span
+                                      key={item.peraturan}
+                                      className="mr-2 text-muted"
+                                      style={{ fontSize: "15px" }}
+                                    >
+                                      {item.peraturan}
+                                      {index !== 4 && ","}
+                                    </span>
+                                  ))}
                               </Card.Text>
                             </Col>
                           </Row>
@@ -312,7 +336,7 @@ const ListKost = () => {
                             </Col>
                             <Col>
                               <Card.Text className="text-end">
-                                <strong>{kost.harga}</strong> /bulan
+                              Rp <strong>{formatCurrency(kost.harga)}</strong> /bulan
                               </Card.Text>
                             </Col>
                           </Row>

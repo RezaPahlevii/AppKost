@@ -1,25 +1,34 @@
-import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Card,
-  CardImg,
-  Col,
-  Container,
-  Form,
-  Row,
-} from "react-bootstrap";
+import React, { useEffect, useState, useRef } from "react";
+import { Button, Card, CardImg, Col, Container, Form, Row } from "react-bootstrap";
 import Banner from "../components/Banner";
 import Nav2 from "./../components/Nav2";
 import Footer2 from "../components/Footer2";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { getMe } from '../features/authSlice';
+import { getMe } from "../features/authSlice";
 import { useDispatch } from "react-redux";
+import Slider from "react-slick";
+import "../css/cardHomePage.css";
 
 const HomePage = () => {
   const [kosts, setKosts] = useState([]);
   const [search, setSearch] = useState("");
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     dispatch(getMe());
@@ -39,6 +48,78 @@ const HomePage = () => {
   useEffect(() => {
     getRekomendasiKosts();
   }, []);
+
+  const sliderRef = useRef(null);
+
+  function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{
+          ...style,
+          display: "block",
+          background: "transparent",
+          fontSize: "24px",
+          width: "40px", // Customize the width of the arrow container
+          height: "40px", // Customize the height of the arrow container
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          cursor: "pointer",
+        }}
+        onClick={onClick}
+      >
+        <i className="fa fa-chevron-left" style={{ color: "grey" }}></i>
+      </div>
+    );
+  }
+  function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{
+          ...style,
+          display: "block",
+          background: "transparent",
+          fontSize: "24px",
+          width: "40px", // Customize the width of the arrow container
+          height: "40px", // Customize the height of the arrow container
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          cursor: "pointer",
+        }}
+        onClick={onClick}
+      >
+        <i className="fa fa-chevron-right" style={{ color: "grey" }}></i>
+      </div>
+    );
+  }
+  const sliderSettings = {
+    infinite: true,
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: windowWidth >= 768 ? 4 : 2,
+    slidesToScroll: windowWidth >= 768 ? 1 : 1,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+  };
+  const formatCurrency = (value) => {
+    // Convert the value to a number (in case it's a string)
+    const numberValue = Number(value);
+  
+    // Check if the value is a valid number
+    if (isNaN(numberValue)) {
+      return "Invalid Number";
+    }
+  
+    // Use toLocaleString to format the number as currency
+    return numberValue.toLocaleString("id-ID");
+  };
+  
 
   return (
     <div>
@@ -67,14 +148,17 @@ const HomePage = () => {
           <Banner />
         </div>
         <div className="row mt-5 pt-5">
-          <div>
-            <h3 className="pb-4">
-              <>
-                <strong>Rekomendasi Kost</strong>
-              </>
-            </h3>
-          </div>
           <Row>
+            <Col xs={8} sm={9} md={9} lg={10}>
+            <h3 className="pb-4">
+              <strong>Rekomendasi Kost</strong>
+            </h3>
+            </Col>
+            <Col className="text-end">
+            <Button size="sm" href="/kost-list" variant="success" className="mr-2" style={{ padding: "10px 10px" }}>Lihat Semua</Button>
+            </Col>
+          </Row>
+          <Slider ref={sliderRef} {...sliderSettings}>
             {kosts
               .filter((kost) => {
                 const searchLower = search.toLowerCase();
@@ -96,43 +180,45 @@ const HomePage = () => {
                 );
               })
               .map((kost, index) => (
-                <Col key={kost.uuid} xs={12} sm={6} md={4} lg={3}>
-                  <Link
-                    to={`/rumah-kost/detail/${kost.uuid}`}
-                    style={{ textDecoration: "none" }}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Card className="mb-3">
-                      <CardImg variant="top" src={kost.fotos[0].url1} />
-                      <Card.Body>
-                        <Card.Title>{kost.nama}</Card.Title>
-                        <Card.Text className="my-1">{kost.jk}</Card.Text>
-                        <Card.Text className="my-1">
-                          {kost.desa} <br />
-                          {kost.alamat}
-                        </Card.Text>
-                        <Card.Text>
-                          {kost.fasilitas.slice(0, 5).map((item, index) => (
-                            <span
-                              key={item.nama_f}
-                              className="mr-1 text-muted"
-                              style={{ fontSize: "13px" }}
-                            >
-                              {item.nama_f}
-                              {index !== 4 && ","}
-                            </span>
-                          ))}
-                        </Card.Text>
-                        <Card.Text>
-                          <strong>{kost.harga}</strong> /bulan
-                        </Card.Text>
-                      </Card.Body>
-                    </Card>
-                  </Link>
-                </Col>
+                <div className="slider-card" key={kost.uuid}>
+                  <Col className="mx-4" xs={10} sm={10} md={10} lg={10}>
+                    <Link
+                      to={`/rumah-kost/detail/${kost.uuid}`}
+                      style={{ textDecoration: "none" }}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Card>
+                        <CardImg variant="top" src={kost.fotos[0].url1} />
+                        <Card.Body>
+                          <Card.Title>{kost.nama}</Card.Title>
+                          <Card.Text className="my-1">{kost.jk}</Card.Text>
+                          <Card.Text className="my-1">
+                            {kost.desa} <br />
+                            {kost.alamat}
+                          </Card.Text>
+                          <Card.Text>
+                            {kost.fasilitas.slice(0, 5).map((item, index) => (
+                              <span
+                                key={item.nama_f}
+                                className="mr-1 text-muted"
+                                style={{ fontSize: "13px" }}
+                              >
+                                {item.nama_f}
+                                {index !== 4 && ","}
+                              </span>
+                            ))}
+                          </Card.Text>
+                          <Card.Text>
+                           Rp <strong>{formatCurrency(kost.harga)}</strong> /bulan
+                          </Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </Link>
+                  </Col>
+                </div>
               ))}
-          </Row>
+          </Slider>
         </div>
       </Container>
       <Footer2 />

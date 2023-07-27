@@ -1,0 +1,43 @@
+/* HomePage.css */
+.slider-card {
+    margin: 10px;
+  }
+  
+  @media (max-width: 767px) {
+    /* Mode mobile */
+    .slider-card {
+      width: 50%; /* Kartu akan menempati 50% lebar layar pada mode mobile */
+    }
+  }
+  
+  @media (min-width: 768px) {
+    /* Mode desktop */
+    .slider-card {
+      margin-left: 150px;
+      width: 40%; /* Kartu akan menempati 40% lebar layar pada mode desktop */
+    }
+  }
+
+  .arrow-container {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+  }
+  
+  .arrow-btn {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .arrow-btn:focus {
+    outline: none;
+  }
+  
