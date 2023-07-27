@@ -18,6 +18,8 @@ import FasilitasUmum from "./models/FasilitasUmumModel.js";
 import KostFasilitasUmum from "./models/KostFasilitasUmumModel.js";
 import FasilitasKeamanan from "./models/FasilitasKeamananModel.js";
 import KostFasilitasKeamanan from "./models/KostFasilitasKeamananModel.js";
+import Spesifikasi from "./models/SpesifikasiModel.js";
+import KostSpesifikasi from "./models/KostSpesifikasiModel.js";
 dotenv.config();
 
 const app = express();
@@ -63,6 +65,8 @@ app.use(FasilitasUmum);
 app.use(KostFasilitasUmum);
 app.use(FasilitasKeamanan);
 app.use(KostFasilitasKeamanan);
+app.use(Spesifikasi);
+app.use(KostSpesifikasi);
 
 // store.sync();
 

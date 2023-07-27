@@ -11,6 +11,8 @@ import FasilitasUmum from "../models/FasilitasUmumModel.js";
 import KostFasilitasUmum from "../models/KostFasilitasUmumModel.js";
 import FasilitasKeamanan from "../models/FasilitasKeamananModel.js";
 import KostFasilitasKeamanan from "../models/KostFasilitasKeamananModel.js";
+import Spesifikasi from "../models/SpesifikasiModel.js";
+import KostSpesifikasi from "../models/KostSpesifikasiModel.js";
 // import fs from "fs";
 
 export const getKost = async (req, res) => {
@@ -217,6 +219,7 @@ export const createKost = async (req, res) => {
       desa,
       alamat,
       jk,
+      spesifikasi,
       peraturan,
       nama_f,
       f_umum,
@@ -387,6 +390,32 @@ export const createKost = async (req, res) => {
       }
     }
     console.log(existingFasilitasKeamanan);
+        //==================================================================
+    // Menyimpan Spesifikasi kost
+    const existingSpesifikasi = [];
+    const SpesifikasiArray = spesifikasi.split(","); // Ubah string menjadi array
+    for (let i = 0; i < SpesifikasiArray.length; i++) {
+      const SpesifikasiName = SpesifikasiArray[i];
+
+      let spesifikasi = await Spesifikasi.findOne({
+        where: { spesifikasi: SpesifikasiName },
+      });
+
+      if (!spesifikasi) {
+        spesifikasi = await Spesifikasi.create({
+          spesifikasi: SpesifikasiName,
+        });
+      }
+
+      if (spesifikasi) {
+        existingSpesifikasi.push(spesifikasi.id); // Simpan ID fasilitas yang ada atau yang baru dibuat
+        await KostSpesifikasi.create({
+          kostId: newKost.id,
+          spesifikasiId: spesifikasi.id, // Gunakan ID fasilitas yang ada atau yang baru dibuat
+        });
+      }
+    }
+    console.log(existingSpesifikasi);
 
     res.status(201).json({ msg: "Berhasil menambahkan kamar kost" });
   } catch (error) {
@@ -628,6 +657,11 @@ export const deleteKost = async (req, res) => {
       },
     });
     await KostPeraturan.destroy({
+      where: {
+        kostId: kost.id,
+      },
+    });
+    await KostSpesifikasi.destroy({
       where: {
         kostId: kost.id,
       },
