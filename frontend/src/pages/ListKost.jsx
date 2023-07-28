@@ -18,7 +18,7 @@ import Footer2 from "../components/Footer2";
 import "../css/ListKost.css";
 import { Icon, divIcon } from "leaflet";
 import { Link } from "react-router-dom";
-import { getMe } from '../features/authSlice';
+import { getMe } from "../features/authSlice";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import RangeSlider from "react-bootstrap-range-slider";
@@ -31,10 +31,11 @@ const ListKost = () => {
   const [search, setSearch] = useState("");
   const [gender, setGender] = useState("");
   const [showFacilitiesModal, setShowFacilitiesModal] = useState(false);
-  const [selectedFacilities, setSelectedFacilities] = useState([]);
   const [priceRange, setPriceRange] = useState({ min: 0, max: 1000000 });
+  const [selectedFacilities, setSelectedFacilities] = useState([]);
+  const [selectedCommonFacilities, setSelectedCommonFacilities] = useState([]);
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getMe());
   }, [dispatch]);
 
@@ -80,6 +81,39 @@ const ListKost = () => {
       );
     }
   };
+  const availableFacilities = [
+    "Kasur",
+    "Bantal",
+    "Meja",
+    "Kursi",
+    "Lemari Pakaian",
+    "Kipas Angin",
+    "Dispenser",
+    "Kamar Mandi di Dalam",
+  ];
+
+  const handleCommonFacilityCheckboxChange = (event) => {
+    const { value, checked } = event.target;
+    if (checked) {
+      setSelectedCommonFacilities((prevFacilities) => [
+        ...prevFacilities,
+        value,
+      ]);
+    } else {
+      setSelectedCommonFacilities((prevFacilities) =>
+        prevFacilities.filter((facility) => facility !== value)
+      );
+    }
+  };
+
+  const availableCommonFacilities  = [
+    "Wifi",
+    "Pengurus Kost",
+    "Jemuran",
+    "Dapur",
+    "Parkir Motor",
+    "R. Tengah",
+  ];
 
   const filteredKosts = kosts
     .filter((kost) => {
@@ -99,9 +133,14 @@ const ListKost = () => {
       return (
         (searchWords.length === 1 && searchWords[0] === "") ||
         searchWords.every((word) =>
-          [nameLower, jkLower, alamatLower, desaLower, priceLower, ownerNameLower].some(
-            (text) => text.includes(word)
-          )
+          [
+            nameLower,
+            jkLower,
+            alamatLower,
+            desaLower,
+            priceLower,
+            ownerNameLower,
+          ].some((text) => text.includes(word))
         ) ||
         filterFasilitas
       );
@@ -138,15 +177,10 @@ const ListKost = () => {
     }
   };
   const formatCurrency = (value) => {
-    // Convert the value to a number (in case it's a string)
     const numberValue = Number(value);
-  
-    // Check if the value is a valid number
     if (isNaN(numberValue)) {
       return "Invalid Number";
     }
-  
-    // Use toLocaleString to format the number as currency
     return numberValue.toLocaleString("id-ID");
   };
 
@@ -160,7 +194,7 @@ const ListKost = () => {
             <div>
               <div className="bg-white">
                 <Row className="align-items-center">
-                  <Col sm={12} md={6} lg={3}>
+                  <Col className="mb-3" sm={12} md={12} lg={4}>
                     <Button
                       onClick={handleFacilitiesModal}
                       as={ButtonGroup}
@@ -190,7 +224,7 @@ const ListKost = () => {
                       </Dropdown.Item>
                     </DropdownButton>
                   </Col>
-                  <Col sm={12} md={6} lg={6}>
+                  <Col sm={12} md={12} lg={5}>
                     <div className="d-flex align-items-center">
                       <div className="input-group me-2">
                         <div className="input-group-prepend">
@@ -227,7 +261,7 @@ const ListKost = () => {
                     </div>
                   </Col>
 
-                  <Col sm={12} lg={3}>
+                  <Col sm={12} md={12} lg={3}>
                     <div className="d-flex align-items-center">
                       <span className="me-2">Harga:</span>
                       <RangeSlider
@@ -259,7 +293,7 @@ const ListKost = () => {
               <Form.Control
                 onChange={handleSearch}
                 type="search"
-                placeholder="Masukkan nama kost/alamat/fasilitas"
+                placeholder="Masukkan nama kost/harga/alamat/fasilitas"
                 className="me-2"
                 aria-label="Search"
                 style={{ height: "2.5rem", width: "2" }}
@@ -303,19 +337,20 @@ const ListKost = () => {
                           <Row>
                             <Col>
                               <Card.Text>
-                                {kost.fasilitas
-                                  .slice(0, 5)
-                                  .map((item, index) => (
-                                    <span
-                                      key={item.nama_f}
-                                      className="mr-2 text-muted"
-                                      style={{ fontSize: "15px" }}
-                                    >
-                                      {item.nama_f}
-                                      {index !== 4 && ","}
-                                    </span>
-                                  ))}
-                                  {kost.peraturans
+                                {kost.fasilitas &&
+                                  kost.fasilitas
+                                    .slice(0, 5)
+                                    .map((item, index) => (
+                                      <span
+                                        key={item.nama_f}
+                                        className="mr-2 text-muted"
+                                        style={{ fontSize: "15px" }}
+                                      >
+                                        {item.nama_f}
+                                        {index !== 4 && ","}
+                                      </span>
+                                    ))}
+                                {kost.peraturans
                                   .slice(0, 5)
                                   .map((item, index) => (
                                     <span
@@ -336,7 +371,8 @@ const ListKost = () => {
                             </Col>
                             <Col>
                               <Card.Text className="text-end">
-                              Rp <strong>{formatCurrency(kost.harga)}</strong> /bulan
+                                Rp <strong>{formatCurrency(kost.harga)}</strong>{" "}
+                                /bulan
                               </Card.Text>
                             </Col>
                           </Row>
@@ -389,26 +425,41 @@ const ListKost = () => {
       </Container>
 
       {/* Facilities Modal */}
-      <Modal show={showFacilitiesModal} onHide={handleFacilitiesModal}>
+      <Modal size="lg" show={showFacilitiesModal} onHide={handleFacilitiesModal}>
+        <div className="mx-5 my-3">
         <Modal.Header closeButton>
           <Modal.Title>Pilih Fasilitas</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="modal-body">
           <Form>
-            {kosts.length > 0 && (
-              <Form.Group>
-                {kosts[0].fasilitas.map((fasilitas) => (
-                  <Form.Check
-                    key={fasilitas.nama_f}
-                    type="checkbox"
-                    label={fasilitas.nama_f}
-                    value={fasilitas.nama_f}
-                    checked={selectedFacilities.includes(fasilitas.nama_f)}
-                    onChange={handleFacilityCheckboxChange}
-                  />
-                ))}
-              </Form.Group>
-            )}
+          <Row>
+            <Col className="mb-4" sm={12} md={6} lg={6}>
+            <Form.Label className="form-label">Fasilitas Kost</Form.Label>
+            {availableFacilities.map((facility) => (
+              <Form.Check
+                key={facility}
+                type="checkbox"
+                label={facility}
+                value={facility}
+                checked={selectedFacilities.includes(facility)}
+                onChange={handleFacilityCheckboxChange}
+              />
+            ))}
+            </Col>
+            <Col sm={12} md={6} lg={5}>
+            <Form.Label className="form-label">Fasilitas Umum</Form.Label>
+            {availableCommonFacilities.map((facility) => (
+              <Form.Check
+                key={facility}
+                type="checkbox"
+                label={facility}
+                value={facility}
+                checked={selectedCommonFacilities.includes(facility)}
+                onChange={handleCommonFacilityCheckboxChange}
+              />
+            ))}
+            </Col>
+          </Row>
           </Form>
         </Modal.Body>
         <Modal.Footer>
@@ -416,6 +467,7 @@ const ListKost = () => {
             Tutup
           </Button>
         </Modal.Footer>
+        </div>
       </Modal>
       <Footer2 />
     </div>
