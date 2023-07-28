@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Button, Card, CardImg, Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Card, CardImg, Col, Container, Form, Image, Row } from "react-bootstrap";
 import Banner from "../components/Banner";
 import Nav2 from "./../components/Nav2";
 import Footer2 from "../components/Footer2";
@@ -9,6 +9,7 @@ import { getMe } from "../features/authSlice";
 import { useDispatch } from "react-redux";
 import Slider from "react-slick";
 import "../css/cardHomePage.css";
+import fotoHeadKost from "../image/fotoHeadKost.svg"
 
 const HomePage = () => {
   const [kosts, setKosts] = useState([]);
@@ -125,25 +126,19 @@ const HomePage = () => {
     <div>
       <Nav2 />
       <Container className="my-5 py-5" style={{ maxWidth: "1250px" }}>
-        <div className="pb-5 search-container">
+        <Row className="pb-5 search-container">
+          <Col>
+          <div className="mt-5 pt-1">
           <h2>
             <strong>Temukan Kost Kebutuhan Anda</strong>
           </h2>
-          <p> Dapatkan infonya dan langsung sewa di AppKost</p>
-          <Col sm={4}>
-            <Form sticky="top" className="d-flex pt-2 pb-5">
-              <Form.Control
-                onChange={(e) => setSearch(e.target.value)}
-                type="search"
-                placeholder="Masukkan nama kost/alamat/area"
-                className="me-2"
-                aria-label="Search"
-                style={{ height: "2.5rem", width: "2" }}
-              />
-              <Button variant="outline-success">Search</Button>
-            </Form>
+          <p>Dapatkan infomasi lengkapnya di Bengkalis Kost</p>
+          </div>
           </Col>
-        </div>
+          <Col className="text-center">
+          <Image width="300" src={fotoHeadKost}/>
+          </Col>
+        </Row>
         <div>
           <Banner />
         </div>
@@ -159,27 +154,7 @@ const HomePage = () => {
             </Col>
           </Row>
           <Slider ref={sliderRef} {...sliderSettings}>
-            {kosts
-              .filter((kost) => {
-                const searchLower = search.toLowerCase();
-                const nameLower = kost.nama.toLowerCase();
-                const alamatLower = kost.alamat.toLowerCase();
-                const priceLower = kost.harga.toString().toLowerCase();
-                const ownerNameLower = kost.user.name.toLowerCase();
-                const filterFasilitas = kost.fasilitas.find((fasilitas) =>
-                  fasilitas.nama_f.toLowerCase().includes(searchLower)
-                );
-
-                return (
-                  search.toLowerCase() === "" ||
-                  nameLower.includes(searchLower) ||
-                  alamatLower.includes(searchLower) ||
-                  priceLower.includes(searchLower) ||
-                  ownerNameLower.includes(searchLower) ||
-                  filterFasilitas
-                );
-              })
-              .map((kost, index) => (
+            {kosts.map((kost, index) => (
                 <div className="slider-card" key={kost.uuid}>
                   <Col className="mx-4" xs={10} sm={10} md={10} lg={10}>
                     <Link
