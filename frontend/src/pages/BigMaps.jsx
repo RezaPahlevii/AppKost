@@ -46,7 +46,7 @@ const BigMaps = () => {
   return (
     <div className="full-maps">
       <Nav2 />
-      <div className="pt-3">
+      <div className="pt-3 mt-5">
         <MapContainer center={position} zoom={15} scrollWheelZoom={false}>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
