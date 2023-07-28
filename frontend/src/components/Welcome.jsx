@@ -17,8 +17,14 @@ const Welcome = () => {
         const response = await axios.get("http://localhost:5000/rumah-kost");
         setKosts(response.data);
     };
-
     const myImageStyle = {marginRight:"10px", marginTop:"10px", width: '150px', height: 'auto' };
+    const formatCurrency = (value) => {
+      const numberValue = Number(value);
+      if (isNaN(numberValue)) {
+        return "Invalid Number";
+      }
+      return numberValue.toLocaleString("id-ID");
+    };
 
   return (
     <div>
@@ -49,7 +55,7 @@ const Welcome = () => {
                       <Col lg={4}></Col>
                       <Row>
                         <Col></Col>
-                        <Col className='text-end'><p>{kost.harga} /bulan</p></Col>
+                        <Col className='text-end'><p>{formatCurrency(kost.harga)} /bulan</p></Col>
                       </Row>
                     </Row>
                   </Row>

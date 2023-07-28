@@ -188,6 +188,14 @@ const DetailKost = () => {
     const noWa = no_hp.replace(/^0/, "+62");
     window.open(`https://wa.me/${noWa}`, "_blank");
   };
+
+  const formatCurrency = (value) => {
+    const numberValue = Number(value);
+    if (isNaN(numberValue)) {
+      return "Invalid Number";
+    }
+    return numberValue.toLocaleString("id-ID");
+  };
   return (
     <div>
       <Nav2 />
@@ -401,7 +409,7 @@ const DetailKost = () => {
           <Col>
             <Card className="py-4 px-5">
               <h4 className="mb-3">
-                <strong>{harga}</strong> / bulan
+                <strong>{formatCurrency(kost.harga)}</strong> / bulan
               </h4>
               {user == null ? (
                 <Button onClick={loginDulu} variant="success">
