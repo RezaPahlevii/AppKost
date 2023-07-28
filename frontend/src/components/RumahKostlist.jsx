@@ -24,6 +24,13 @@ const RumahKostlist = () => {
       deleteKost(kostId);
     }
   };
+  const formatCurrency = (value) => {
+    const numberValue = Number(value);
+    if (isNaN(numberValue)) {
+      return "Invalid Number";
+    }
+    return numberValue.toLocaleString("id-ID");
+  };
   return (
     <div>
       <h1 className="title">Rumah Kost</h1>
@@ -55,7 +62,7 @@ const RumahKostlist = () => {
               <tr key={kosts.uuid}>
                 <td>{index + 1}</td>
                 <td>{kost.nama}</td>
-                <td>{kost.harga}</td>
+                <td>{formatCurrency(kost.harga)}</td>
                 <td>{kost.user.name}</td>
                 <td>{kost.no_hp}</td>
                 <td>{kost.desa}</td>
