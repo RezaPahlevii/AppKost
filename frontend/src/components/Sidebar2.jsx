@@ -33,13 +33,13 @@ const Sidebar = () => {
     navigate("/");
   };
 
-  useEffect(() => {
-    getBios();
-  }, []);
-  const getBios = async () => {
-    const response = await axios.get("http://localhost:5000/biodata");
-    setBios(response.data);
-  };
+  // useEffect(() => {
+  //   getBios();
+  // }, []);
+  // const getBios = async () => {
+  //   const response = await axios.get("http://localhost:5000/biodata");
+  //   setBios(response.data);
+  // };
 
   return (
     <div className="sideBar grid my-5">
@@ -142,12 +142,12 @@ const Sidebar = () => {
           </li> */}
               </>
             )}
-            <li className="listItem">
+            {/* <li className="listItem">
               <a href="/biodata-penyewa" className="menuLink flex">
                 <IoIosPeople className="icon" />
                 <span className="smallText">Biodata Penyewa</span>
               </a>
-            </li>
+            </li> */}
           </ul>
         </div>
       </Row>
