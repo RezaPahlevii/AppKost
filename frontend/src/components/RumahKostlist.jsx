@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { Table } from "react-bootstrap";
 
 const RumahKostlist = () => {
   const [kosts, setKosts] = useState([]);
@@ -41,7 +42,7 @@ const RumahKostlist = () => {
         Tambah Kost
       </Link>
       <div className="">
-        <table className="table table-striped">
+        <Table responsive className="table table-striped table-hover table-sm">
           <thead>
             <tr>
               <th>No</th>
@@ -101,7 +102,7 @@ const RumahKostlist = () => {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </div>
     </div>
   );

@@ -44,15 +44,15 @@ const Sidebar = () => {
   return (
     <div className="sideBar grid my-5">
       <Row className="">
-        <Col className="text-center ml-5">
+        {/* <Col className="text-center ml-5">
           <img
             src={levi}
             alt="Imge Name"
             class="rounded-circle"
             style={{ width: "100px" }}
           />
-        </Col>
-        {bios.length > 0 && bios.some((bio) => bio.userId === user.userId) ? (
+        </Col> */}
+        {/* {bios.length > 0 && bios.some((bio) => bio.userId === user.userId) ? (
           <Col className="mt-4">
             <Link
               to={`/profil/edit/${
@@ -69,7 +69,7 @@ const Sidebar = () => {
               Edit
             </Link>
           </Col>
-        )}
+        )} */}
       </Row>
       <Row className="ml-4">
         <div className="menuDiv">

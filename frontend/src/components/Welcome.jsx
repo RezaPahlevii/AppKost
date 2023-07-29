@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Card, CardImg, Col, Row } from 'react-bootstrap';
+import { Card, CardImg, Col, Container, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
 // import rumah from "./../image/rumah.jpg";
@@ -28,6 +28,7 @@ const Welcome = () => {
 
   return (
     <div>
+      <Container className='custom-container'>
         <h1 className='title'>Dashboard</h1>
         <h2 className='subtitle'>Selamat Datang {user && user.name}</h2>
         <Row>
@@ -64,6 +65,7 @@ const Welcome = () => {
               </Col>
             ))}
           </Row>
+          </Container>
     </div>
   )
 }
