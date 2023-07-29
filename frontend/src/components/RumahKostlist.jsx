@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const RumahKostlist = () => {
   const [kosts, setKosts] = useState([]);
+  const {user} = useSelector((state) => state.auth)
 
   useEffect(() => {
     getKosts();
@@ -45,9 +47,10 @@ const RumahKostlist = () => {
               <th>No</th>
               <th>Nama Kost</th>
               <th>Harga</th>
+              {user && user.role === "admin" &&(
               <th>Nama Pemilik</th>
+              )}
               <th>No WA</th>
-              <th>Desa</th>
               <th>Alamat</th>
               <th>Jenis Kost</th>
               <th>Fasilitas</th>
@@ -63,10 +66,11 @@ const RumahKostlist = () => {
                 <td>{index + 1}</td>
                 <td>{kost.nama}</td>
                 <td>{formatCurrency(kost.harga)}</td>
+                {user && user.role === "admin" &&(
                 <td>{kost.user.name}</td>
+                )}
                 <td>{kost.no_hp}</td>
-                <td>{kost.desa}</td>
-                <td>{kost.alamat}</td>
+                <td>{kost.desa} {kost.alamat}</td>
                 <td>{kost.jk}</td>
                 <td>
                   {kost.fasilitas.map((fasilitas, index) => (
