@@ -153,6 +153,15 @@ const ListKost = () => {
       }
     })
     .filter((kost) => {
+      if (selectedCommonFacilities.length === 0) {
+        return true;
+      } else {
+        return kost.fasilitas_umums.some((fasilitas_umums) =>
+        selectedCommonFacilities.includes(fasilitas_umums.f_umum)
+        );
+      }
+    })
+    .filter((kost) => {
       if (selectedFacilities.length === 0) {
         return true;
       } else {
@@ -350,15 +359,15 @@ const ListKost = () => {
                                         {index !== 4 && ","}
                                       </span>
                                     ))}
-                                {kost.peraturans
+                                {kost.fasilitas_umums
                                   .slice(0, 5)
                                   .map((item, index) => (
                                     <span
-                                      key={item.peraturan}
+                                      key={item.f_umum}
                                       className="mr-2 text-muted"
                                       style={{ fontSize: "15px" }}
                                     >
-                                      {item.peraturan}
+                                      {item.f_umum}
                                       {index !== 4 && ","}
                                     </span>
                                   ))}
