@@ -722,6 +722,14 @@ export const getRekomendasiKost = async (req, res) => {
           attributes: ["nama_f"],
         },
         {
+          model: FasilitasUmum,
+          attributes: ["f_umum"],
+        },
+        {
+          model: FasilitasKeamanan,
+          attributes: ["f_keamanan"],
+        },
+        {
           model: Foto,
           attributes: ["url1", "url2", "url3", "url4"],
         },
@@ -788,10 +796,32 @@ export const getKostView = async (req, res) => {
         "catatan_tambahan",
         "kordinat",
       ],
-      include: {
-        model: Users,
-        attributes: ["name"],
-      },
+      include: [
+        {
+          model: Users,
+          attributes: ["name", "email"],
+        },
+        {
+          model: Peraturan,
+          attributes: ["peraturan"],
+        },
+        {
+          model: Fasilitas,
+          attributes: ["nama_f"],
+        },
+        {
+          model: FasilitasUmum,
+          attributes: ["f_umum"],
+        },
+        {
+          model: FasilitasKeamanan,
+          attributes: ["f_keamanan"],
+        },
+        {
+          model: Foto,
+          attributes: ["url1", "url2", "url3", "url4"],
+        },
+      ],
     });
     res.json(response);
   } catch (error) {
