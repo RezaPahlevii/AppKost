@@ -28,7 +28,6 @@ const Welcome = () => {
 
   return (
     <div>
-      <Container className='custom-container'>
         <h1 className='title'>Dashboard</h1>
         <h2 className='subtitle'>Selamat Datang {user && user.name}</h2>
         <Row>
@@ -65,7 +64,6 @@ const Welcome = () => {
               </Col>
             ))}
           </Row>
-          </Container>
     </div>
   )
 }

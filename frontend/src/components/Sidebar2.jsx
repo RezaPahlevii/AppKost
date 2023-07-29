@@ -42,16 +42,16 @@ const Sidebar = () => {
   // };
 
   return (
-    <div className="sideBar grid my-5">
+    <div className="sideBar grid">
       <Row className="">
-        {/* <Col className="text-center ml-5">
+        <Col className="text-center">
           <img
             src={levi}
             alt="Imge Name"
             class="rounded-circle"
             style={{ width: "100px" }}
           />
-        </Col> */}
+        </Col>
         {/* {bios.length > 0 && bios.some((bio) => bio.userId === user.userId) ? (
           <Col className="mt-4">
             <Link
@@ -71,7 +71,7 @@ const Sidebar = () => {
           </Col>
         )} */}
       </Row>
-      <Row className="ml-4">
+      <Row className="">
         <div className="menuDiv">
           <h3 className="divTitle">MENU USER</h3>
 
@@ -151,7 +151,7 @@ const Sidebar = () => {
           </ul>
         </div>
       </Row>
-      <Row className="ml-4">
+      <Row className="">
         <div className="settingDiv">
           <h3 className="divTitle">SETTING</h3>
           <ul className="menuLists grid">
