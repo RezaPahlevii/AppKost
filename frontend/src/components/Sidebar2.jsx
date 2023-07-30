@@ -15,7 +15,7 @@ import { BiCarousel } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { LogOut, reset } from "../features/authSlice";
-import levi from "../image/Levi.jpg";
+import Avatar from "../image/Avatar.jpg";
 import { Button, Col, Row } from "react-bootstrap";
 import axios from "axios";
 
@@ -46,7 +46,7 @@ const Sidebar = () => {
       <Row className="">
         <Col className="text-center">
           <img
-            src={levi}
+            src={Avatar}
             alt="Imge Name"
             class="rounded-circle"
             style={{ width: "100px" }}
