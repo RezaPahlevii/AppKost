@@ -3,18 +3,21 @@ import { Container } from "react-bootstrap";
 import axios from "axios";
 import { getMe } from "../features/authSlice";
 import { useNavigate, useParams } from "react-router-dom";
-import Layout from "./Layout";
+import Nav2 from "../components/Nav2";
 import { useDispatch, useSelector } from "react-redux";
+import Sidebar from "../components/Sidebar2";
 
 const FormBiodataPenyewa = () => {
   const { isError } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [nama, setNama] = useState("");
+  const [file, setFile] = useState("");
   const [jk, setJK] = useState("");
   const [umur, setUmur] = useState("");
   const [NoWA, setNoWA] = useState("");
   const [asal, setAsal] = useState("");
+  const [preview, setPreview] = useState("");
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
@@ -29,21 +32,30 @@ const FormBiodataPenyewa = () => {
     }
   }, [isError, navigate]);
 
+  const loadImage = (e) => {
+    const image = e.target.files[0];
+    setFile(image);
+    setPreview(URL.createObjectURL(image));
+  };
+
   const saveBio = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("nama", nama);
+    formData.append("jk", jk);
+    formData.append("umur", umur);
+    formData.append("NoWA", NoWA);
+    formData.append("asal", asal);
     try {
-      await axios.post("http://localhost:5000/biodata", {
-        nama: nama,
-        jk: jk,
-        umur: umur,
-        NoWA: NoWA,
-        asal: asal,
+      await axios.post("http://localhost:5000/biodata", formData, {
+        headers: {
+          "Content-type": "multipart/form-data",
+        },
       });
-      navigate("/dashboard");
+      navigate("/");
     } catch (error) {
-      if (error.response) {
-        setMsg(error.response.data.msg);
-      }
+      console.log(error);
     }
   };
 
@@ -64,6 +76,33 @@ const FormBiodataPenyewa = () => {
                         <div className="content">
                           <form onSubmit={saveBio}>
                             <p className="has-text-centered">{msg}</p>
+                            <div className="field">
+                              <label className="label">Image</label>
+                              <div className="control">
+                                <div className="file">
+                                  <label className="file-label">
+                                    <input
+                                      type="file"
+                                      className="file-input"
+                                      onChange={loadImage}
+                                    />
+                                    <span className="file-cta">
+                                      <span className="file-label">
+                                        Choose a file...
+                                      </span>
+                                    </span>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+
+                            {preview ? (
+                              <figure className="image is-128x128">
+                                <img src={preview} alt="Preview Image" />
+                              </figure>
+                            ) : (
+                              ""
+                            )}
                             <div className="field">
                               <label className="label">Nama</label>
                               <div className="control">

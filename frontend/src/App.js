@@ -43,8 +43,8 @@ function App() {
         <Route path="/banner-edit" element={<EditBanner/>}/>
         <Route path="/pencari-kost" element={<PencariKost/>}/>
         <Route path="/pengaturan-akun" element={<PengaturanAkunPencari/>}/>
-        <Route path="/profil/edit/:id" element={<EditProfilPemilik/>}/>
-        <Route path="/profil/" element={<AddProfilPemilik/>}/>
+        <Route path="/biodata/edit/:id" element={<EditProfilPemilik/>}/>
+        <Route path="/biodata" element={<AddProfilPemilik/>}/>
       </Routes>
       <Routes>
         <Route path="/" element={<HomePage/>}/>

@@ -1,23 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../css/sidebar.css";
-// import logo from "../../Asset/logo.png";
 import {
   IoIosHome,
   IoIosLogOut,
   IoIosPeople,
   IoMdSpeedometer,
 } from "react-icons/io";
-import { ImPlay } from "react-icons/im";
 import { AiOutlineSetting } from "react-icons/ai";
 import { VscDashboard } from "react-icons/vsc";
 import { BsQuestion } from "react-icons/bs";
-import { BiCarousel } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LogOut, reset } from "../features/authSlice";
 import levi from "../image/Levi.jpg";
-import { Button, Col, Row } from "react-bootstrap";
-import axios from "axios";
+import { Col, Row } from "react-bootstrap";
 
 // Import Icons =================>
 
@@ -122,32 +118,15 @@ const Sidebar = () => {
                     <span className="smallText">Users</span>
                   </a>
                 </li>
-                {/* <li className="listItem">
-            <a href="/dashboard" className="menuLink flex">
-              <ImPlay className="icon" />
-              <span className="smallText">Sosmed</span>
-            </a>
-          </li>
-          <li className="listItem">
-            <a href="/dashboard" className="menuLink flex">
-              <BiCarousel className="icon" />
-              <span className="smallText">Carousel</span>
-            </a>
-          </li>
-          <li className="listItem">
-            <a href="/dashboard" className="menuLink flex">
-              <IoIosPeople className="icon" />
-              <span className="smallText">Footer</span>
-            </a>
-          </li> */}
               </>
             )}
-            {/* <li className="listItem">
-              <a href="/biodata-penyewa" className="menuLink flex">
+
+            <li className="listItem">
+              <a href="/biodata" className="menuLink flex">
                 <IoIosPeople className="icon" />
-                <span className="smallText">Biodata Penyewa</span>
+                <span className="smallText">Biodata</span>
               </a>
-            </li> */}
+            </li>
           </ul>
         </div>
       </Row>
