@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../css/sidebar.css";
 import {
   IoIosHome,
@@ -10,10 +10,11 @@ import { AiOutlineSetting } from "react-icons/ai";
 import { VscDashboard } from "react-icons/vsc";
 import { BsQuestion } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { LogOut, reset } from "../features/authSlice";
 import levi from "../image/Levi.jpg";
 import { Col, Row } from "react-bootstrap";
+import axios from "axios";
 
 // Import Icons =================>
 
@@ -22,11 +23,21 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
   const [bios, setBios] = useState([]);
+  const [foto, setFoto] = useState([]);
+  const { id } = useParams();
 
   const logout = () => {
     dispatch(LogOut());
     dispatch(reset());
     navigate("/");
+  };
+
+  useEffect(() => {
+    getBio();
+  }, []);
+  const getBio = async () => {
+    const response = await axios.get(`http://localhost:5000/biodata/${id}`);
+    setFoto(response.data);
   };
 
   // useEffect(() => {
@@ -42,7 +53,7 @@ const Sidebar = () => {
       <Row className="">
         <Col className="text-center">
           <img
-            src={levi}
+            src={foto.url}
             alt="Imge Name"
             class="rounded-circle"
             style={{ width: "100px" }}

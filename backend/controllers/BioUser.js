@@ -1,13 +1,14 @@
 import Bio from "../models/BioUserModel.js";
 import Users from "../models/UserModel.js";
 import { Op } from "sequelize";
+import path from "path";
 
 export const getBioUsers = async (req, res) => {
   try {
     let response;
     if (req.role === "admin") {
       response = await Bio.findAll({
-        attributes: ["uuid", "nama", "jk", "umur", "NoWA", "asal"],
+        attributes: ["uuid","nama","jk","umur","NoWA","asal","url"],
         include: [
           {
             model: Users,
@@ -50,6 +51,7 @@ export const getBioUsersById = async (req, res) => {
       umur: bio.umur,
       NoWA: bio.NoWA,
       asal: bio.asal,
+      url: bio.url,
       user: bio.User,
     };
 

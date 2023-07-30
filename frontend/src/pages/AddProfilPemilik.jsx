@@ -53,7 +53,7 @@ const FormBiodataPenyewa = () => {
           "Content-type": "multipart/form-data",
         },
       });
-      navigate("/");
+      navigate("/dashboard");
     } catch (error) {
       console.log(error);
     }
