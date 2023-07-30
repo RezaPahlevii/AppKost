@@ -12,19 +12,13 @@ import { BsQuestion } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { LogOut, reset } from "../features/authSlice";
-import levi from "../image/Levi.jpg";
+import Avatar from "../image/Avatar.jpg";
 import { Col, Row } from "react-bootstrap";
-import axios from "axios";
-
-// Import Icons =================>
 
 const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
-  const [bios, setBios] = useState([]);
-  const [foto, setFoto] = useState([]);
-  const { id } = useParams();
 
   const logout = () => {
     dispatch(LogOut());
@@ -32,51 +26,17 @@ const Sidebar = () => {
     navigate("/");
   };
 
-  useEffect(() => {
-    getBio();
-  }, []);
-  const getBio = async () => {
-    const response = await axios.get(`http://localhost:5000/biodata/${id}`);
-    setFoto(response.data);
-  };
-
-  // useEffect(() => {
-  //   getBios();
-  // }, []);
-  // const getBios = async () => {
-  //   const response = await axios.get("http://localhost:5000/biodata");
-  //   setBios(response.data);
-  // };
-
   return (
     <div className="sideBar grid">
       <Row className="">
         <Col className="text-center">
           <img
-            src={foto.url}
+            src={Avatar}
             alt="Imge Name"
             class="rounded-circle"
             style={{ width: "100px" }}
           />
         </Col>
-        {/* {bios.length > 0 && bios.some((bio) => bio.userId === user.userId) ? (
-          <Col className="mt-4">
-            <Link
-              to={`/profil/edit/${
-                bios.find((bio) => bio.userId === user.userId).uuid
-              }`}
-              className="btn btn-warning mr-1"
-            >
-              Edit
-            </Link>
-          </Col>
-        ) : (
-          <Col className="mt-4">
-            <Link to="/profil" className="btn btn-warning mr-1">
-              Edit
-            </Link>
-          </Col>
-        )} */}
       </Row>
       <Row className="">
         <div className="menuDiv">

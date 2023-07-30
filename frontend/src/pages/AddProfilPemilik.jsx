@@ -65,7 +65,7 @@ const FormBiodataPenyewa = () => {
         <Nav2 />
         <Sidebar />
         <div className="mainContent">
-          <Container className="pt-3">
+          <Container>
             <div className="hero-body">
               <div className="container">
                 <div className="columns is-centered">

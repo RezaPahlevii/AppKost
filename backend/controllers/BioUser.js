@@ -39,6 +39,7 @@ export const getBioUsers = async (req, res) => {
 export const getBioUsersById = async (req, res) => {
   try {
     const bio = await Bio.findOne({
+      attributes:['id','nama','jk','umur','NoWA','asal','url'],
       where: {
         uuid: req.params.id,
       },
