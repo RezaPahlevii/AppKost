@@ -15,6 +15,7 @@ const FormEditKost = () => {
   const [desa, setDesa] = useState("");
   const [alamat, setAlamat] = useState("");
   const [jk, setJk] = useState("");
+  const [spesifikasi, setSpesifikasi] = useState("");
   const [nama_f, setNama_f] = useState([]);
   const [f_umum, setF_umum] = useState([]);
   const [f_keamanan, setF_keamanan] = useState([]);
@@ -55,10 +56,15 @@ const FormEditKost = () => {
         setDesa(response.data.desa);
         setAlamat(response.data.alamat);
         setJk(response.data.jk);
+        setSpesifikasi(
+          response.data.spesifikasis.map((item) => item.spesifikasi)
+        );
         setNama_f(response.data.fasilitas.map((item) => item.nama_f));
         setPeraturan(response.data.peraturans.map((item) => item.peraturan));
         setF_umum(response.data.fasilitas_umums.map((item) => item.f_umum));
-        setF_keamanan(response.data.fasilitas_keamanans.map((item) => item.f_keamanan));
+        setF_keamanan(
+          response.data.fasilitas_keamanans.map((item) => item.f_keamanan)
+        );
         setCatatan_tambahan(response.data.catatan_tambahan);
         setUrl1(response.data.url1);
         setUrl2(response.data.url2);
@@ -83,6 +89,7 @@ const FormEditKost = () => {
     formData.append("desa", desa);
     formData.append("alamat", alamat);
     formData.append("jk", jk);
+    formData.append("spesifikasi", spesifikasi);
     formData.append("nama_f", nama_f);
     formData.append("f_keamanan", f_keamanan);
     formData.append("f_umum", f_umum);
@@ -94,7 +101,7 @@ const FormEditKost = () => {
     formData.append("url4", url4);
     formData.append("kordinat", kordinat);
     try {
-      await axios.patch(`http://localhost:5000/rumah-kost/${id}`, formData,{
+      await axios.patch(`http://localhost:5000/rumah-kost/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -139,6 +146,14 @@ const FormEditKost = () => {
       setF_keamanan([...f_keamanan, value]);
     } else {
       setF_keamanan(f_keamanan.filter((item) => item !== value));
+    }
+  };
+  const handleCheckboxChangeSpesifikasi = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setSpesifikasi([...spesifikasi, value]);
+    } else {
+      setSpesifikasi(spesifikasi.filter((item) => item !== value));
     }
   };
 
@@ -259,6 +274,37 @@ const FormEditKost = () => {
                   <option>Campur</option>
                 </Form.Select>
               </div>
+
+              {/* Spesifikasi tipe kamar */}
+              <div className="field mb-4">
+                <label className="label">Spesifikasi Kamar</label>
+                <div className="control ml-5 checkbox-container">
+                  <Form.Check
+                    inline
+                    label="Sudah termasuk listrik"
+                    value="Sudah termasuk listrik"
+                    className="checkbox-item"
+                    checked={spesifikasi.includes("Sudah termasuk listrik")}
+                    onChange={handleCheckboxChangeSpesifikasi}
+                  />
+                  <Form.Check
+                    inline
+                    label="Sudah termasuk Air"
+                    value="Sudah termasuk Air"
+                    className="checkbox-item"
+                    checked={spesifikasi.includes("Sudah termasuk Air")}
+                    onChange={handleCheckboxChangeSpesifikasi}
+                  />
+                  <Form.Check
+                    inline
+                    label="3 x 2 meter"
+                    value="3 x 2 meter"
+                    checked={spesifikasi.includes("3 x 2 meter")}
+                    onChange={handleCheckboxChangeSpesifikasi}
+                  />
+                </div>
+              </div>
+
               <div className="field mb-4">
                 <label className="label">Fasilitas Kamar</label>
                 <div className="control ml-5 checkbox-container">

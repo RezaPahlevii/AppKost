@@ -45,7 +45,7 @@ const FormAddKost = () => {
     formData.append("desa", desa);
     formData.append("alamat", alamat);
     formData.append("jk", jk);
-    formData.append("spesifikasi", JSON.stringify(spesifikasi));
+    formData.append("spesifikasi", spesifikasi);
     formData.append("nama_f", nama_f);
     formData.append("f_keamanan", f_keamanan);
     formData.append("f_umum", f_umum);
@@ -94,14 +94,14 @@ const FormAddKost = () => {
       setF_keamanan(f_keamanan.filter((item) => item !== value));
     }
   };
-  const handleSelectChangeSpesifikasi = (e, attribute) => {
-    const value = e.target.value;
-    setSpesifikasi((prevState) => ({
-      ...prevState,
-      [attribute]: value,
-    }));
+  const handleCheckboxChangeSpesifikasi = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setSpesifikasi([...spesifikasi, value]);
+    } else {
+      setSpesifikasi(spesifikasi.filter((item) => item !== value));
+    }
   };
-
   const handleCheckboxChangePeraturan = (e) => {
     const { value, checked } = e.target;
     if (checked) {
@@ -241,47 +241,32 @@ const FormAddKost = () => {
 
                 {/* Spesifikasi tipe kamar */}
                 <div className="field mb-4">
-                  <label className="label">Spesifikasi tipe kamar</label>
-                  <Form.Select
-                    style={{ maxWidth: "450px" }}
-                    className="mb-2"
-                    value={spesifikasi.listrik}
-                    onChange={(e) =>
-                      handleSelectChangeSpesifikasi(e, "listrik")
-                    }
-                  >
-                    <option value="">Informasi biaya listrik</option>
-                    <option value="Sudah termasuk listrik">
-                      Sudah termasuk listrik
-                    </option>
-                    <option value="Tidak termasuk listrik">
-                      Tidak termasuk listrik
-                    </option>
-                  </Form.Select>
-                  <Form.Select
-                    style={{ maxWidth: "450px" }}
-                    className="mb-2"
-                    value={spesifikasi.air}
-                    onChange={(e) => handleSelectChangeSpesifikasi(e, "air")}
-                  >
-                    <option value="">Informasi biaya Air</option>
-                    <option value="Sudah termasuk Air">
-                      Sudah termasuk Air
-                    </option>
-                    <option value="Tidak termasuk Air">
-                      Tidak termasuk Air
-                    </option>
-                  </Form.Select>
-                  <Form.Select
-                    style={{ maxWidth: "450px" }}
-                    value={spesifikasi.ukuran}
-                    onChange={(e) => handleSelectChangeSpesifikasi(e, "ukuran")}
-                  >
-                    <option value="">Ukuran Kamar</option>
-                    <option value="3 x 2 meter">3 x 2 meter</option>
-                    <option value="4 x 3 meter">4 x 3 meter</option>
-                    <option value="5 x 4 meter">5 x 4 meter</option>
-                  </Form.Select>
+                  <label className="label">Spesifikasi Kamar</label>
+                  <div className="control ml-5 checkbox-container">
+                    <Form.Check
+                      inline
+                      label="Sudah termasuk listrik"
+                      value="Sudah termasuk listrik"
+                      className="checkbox-item"
+                      checked={spesifikasi.includes("Sudah termasuk listrik")}
+                      onChange={handleCheckboxChangeSpesifikasi}
+                    />
+                    <Form.Check
+                      inline
+                      label="Sudah termasuk Air"
+                      value="Sudah termasuk Air"
+                      className="checkbox-item"
+                      checked={spesifikasi.includes("Sudah termasuk Air")}
+                      onChange={handleCheckboxChangeSpesifikasi}
+                    />
+                    <Form.Check
+                      inline
+                      label="3 x 2 meter"
+                      value="3 x 2 meter"
+                      checked={spesifikasi.includes("3 x 2 meter")}
+                      onChange={handleCheckboxChangeSpesifikasi}
+                    />
+                  </div>
                 </div>
 
                 {/* Fasilitas Kamar */}
@@ -468,7 +453,7 @@ const FormAddKost = () => {
                     />
                   </div>
                 </div>
-                <div className="field mb-4">
+                {/* <div className="field mb-4">
                   <Form.Select
                     className="mb-2 mx-4"
                     style={{ maxWidth: "450px" }}
@@ -479,7 +464,7 @@ const FormAddKost = () => {
                     <option>Tipe ini bisa diisi maks. 3 orang/ kamar</option>
                     <option>Tipe ini bisa diisi maks. 2 orang/ kamar</option>
                   </Form.Select>
-                </div>
+                </div> */}
 
                 {/* Catatan Tambahan*/}
                 <div className="field mb-4">

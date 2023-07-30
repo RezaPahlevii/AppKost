@@ -131,6 +131,7 @@ const DetailKost = () => {
     alamat,
     jk,
     fasilitas,
+    spesifikasis,
     fasilitas_umums,
     fasilitas_keamanans,
     peraturans,
@@ -174,7 +175,7 @@ const DetailKost = () => {
       case "Jam Malam":
         return <FaUtensils />;
       default:
-        return null;
+        return <FaShower />;;
     }
   };
 
@@ -269,10 +270,14 @@ const DetailKost = () => {
                 <h3>
                   <strong>Spesifikasi tipe kamar</strong>
                 </h3>
-                <p>
-                  2.7 x 2.2 meter <br />
-                  Tidak termasuk listrik
-                </p>
+                <Row>
+                {spesifikasis.map((item) => (
+                    <div key={item.spesifikasi} className="fasilitas-item">
+                      {renderIcon(item.spesifikasi)}
+                      {item.spesifikasi}
+                    </div>
+                  ))} 
+                  </Row>
                 <hr />
               </div>
               <div className="mt-2">
