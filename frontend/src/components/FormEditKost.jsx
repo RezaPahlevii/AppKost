@@ -15,6 +15,7 @@ const FormEditKost = () => {
   const [desa, setDesa] = useState("");
   const [alamat, setAlamat] = useState("");
   const [jk, setJk] = useState("");
+  const [tersisa, setTersisa] = useState("");
   const [spesifikasi, setSpesifikasi] = useState("");
   const [nama_f, setNama_f] = useState([]);
   const [f_umum, setF_umum] = useState([]);
@@ -56,6 +57,7 @@ const FormEditKost = () => {
         setDesa(response.data.desa);
         setAlamat(response.data.alamat);
         setJk(response.data.jk);
+        setTersisa(response.data.tersisa);
         setSpesifikasi(
           response.data.spesifikasis.map((item) => item.spesifikasi)
         );
@@ -89,6 +91,7 @@ const FormEditKost = () => {
     formData.append("desa", desa);
     formData.append("alamat", alamat);
     formData.append("jk", jk);
+    formData.append("tersisa", tersisa);
     formData.append("spesifikasi", spesifikasi);
     formData.append("nama_f", nama_f);
     formData.append("f_keamanan", f_keamanan);
@@ -275,6 +278,32 @@ const FormEditKost = () => {
                 </Form.Select>
               </div>
 
+              {/* Sisa Kamar */}
+              <div className="field mb-4">
+                  <label className="label">Sisa Kamar</label>
+                  <Form.Select
+                    onChange={(e) => setTersisa(e.target.value)}
+                    value={tersisa}
+                  >
+                    <option hidden>Jumlah kamar yang tersisa</option>
+                    <option>Sisa 1 kamar</option>
+                    <option>Sisa 2 kamar</option>
+                    <option>Sisa 3 kamar</option>
+                    <option>Sisa 4 kamar</option>
+                    <option>Sisa 5 kamar</option>
+                    <option>Sisa 6 kamar</option>
+                    <option>Sisa 7 kamar</option>
+                    <option>Sisa 8 kamar</option>
+                    <option>Sisa 9 kamar</option>
+                    <option>Sisa 10 kamar</option>
+                    <option>Sisa 11 kamar</option>
+                    <option>Sisa 12 kamar</option>
+                    <option>Sisa 13 kamar</option>
+                    <option>Sisa 14 kamar</option>
+                    <option>Sisa 15 kamar</option>
+                  </Form.Select>
+                </div>
+
               {/* Spesifikasi tipe kamar */}
               <div className="field mb-4">
                 <label className="label">Spesifikasi Kamar</label>
@@ -310,18 +339,18 @@ const FormEditKost = () => {
                 <div className="control ml-5 checkbox-container">
                   <Form.Check
                     inline
-                    label="Lemari"
-                    value="Lemari"
-                    className="checkbox-item"
-                    checked={nama_f.includes("Lemari")}
-                    onChange={handleCheckboxChangeFasilitas}
-                  />
-                  <Form.Check
-                    inline
                     label="Kasur"
                     value="Kasur"
                     className="checkbox-item"
                     checked={nama_f.includes("Kasur")}
+                    onChange={handleCheckboxChangeFasilitas}
+                  />
+                  <Form.Check
+                    inline
+                    label="Kamar Mandi di Dalam"
+                    value="Kamar Mandi di Dalam"
+                    className="checkbox-item"
+                    checked={nama_f.includes("Kamar Mandi di Dalam")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                   <Form.Check
@@ -334,10 +363,10 @@ const FormEditKost = () => {
                   />
                   <Form.Check
                     inline
-                    label="Kamar Mandi di Dalam"
-                    value="Kamar Mandi di Dalam"
+                    label="Lemari Pakaian"
+                    value="Lemari Pakaian"
                     className="checkbox-item"
-                    checked={nama_f.includes("Kamar Mandi di Dalam")}
+                    checked={nama_f.includes("Lemari Pakaian")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                   <Form.Check
@@ -444,10 +473,10 @@ const FormEditKost = () => {
                   />
                   <Form.Check
                     inline
-                    label="Pasutri"
-                    value="Pasutri"
+                    label="Boleh Pasutri"
+                    value="Boleh Pasutri"
                     className="checkbox-item"
-                    checked={peraturan.includes("Pasutri")}
+                    checked={peraturan.includes("Boleh Pasutri")}
                     onChange={handleCheckboxChangePeraturan}
                   />
                   <Form.Check
