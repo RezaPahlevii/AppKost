@@ -9,9 +9,6 @@ const Spesifikasi = db.define(
     spesifikasi: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        notEmpty: true,
-      }
     }
   },
   {

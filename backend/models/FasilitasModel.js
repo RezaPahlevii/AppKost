@@ -10,9 +10,6 @@ const Fasilitas = db.define(
     nama_f: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        notEmpty: true,
-      }
     }
   },
   {

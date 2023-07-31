@@ -9,9 +9,6 @@ const FasilitasKeamanan = db.define(
     f_keamanan: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        notEmpty: true,
-      }
     }
   },
   {

@@ -9,9 +9,6 @@ const FasilitasUmum = db.define(
     f_umum: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        notEmpty: true,
-      }
     }
   },
   {
