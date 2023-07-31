@@ -56,6 +56,10 @@ const Kost = db.define('kost',{
            notEmpty: true
        }
    },
+   tersisa:{
+       type: DataTypes.TEXT,
+       allowNull: false
+   },
    catatan_tambahan:{
        type: DataTypes.TEXT,
        allowNull: false
