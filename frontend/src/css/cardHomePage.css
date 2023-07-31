@@ -40,4 +40,15 @@
   .arrow-btn:focus {
     outline: none;
   }
-  
+
+.card-img-container {
+  height: 300px;
+  width: auto;
+
+}
+
+.card-img-container img {
+  height: 140px;
+  width: 100%;
+  object-fit: cover; 
+}

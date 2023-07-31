@@ -376,7 +376,7 @@ const ListKost = () => {
                           </Row>
                           <Row>
                             <Col>
-                              <Card.Text></Card.Text>
+                              <Card.Text style={{ fontSize: "15px" }} className="text-danger fst-italic fw-light mt-1">{kost.tersisa}</Card.Text>
                             </Col>
                             <Col>
                               <Card.Text className="text-end">

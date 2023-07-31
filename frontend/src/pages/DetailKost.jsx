@@ -14,15 +14,39 @@ import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { Icon, divIcon } from "leaflet";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-import Modal from "react-bootstrap/Modal";
-import { FaLocationDot } from "react-icons/fa6";
-import { FaBed, FaWifi, FaShower, FaTv, FaUtensils } from "react-icons/fa";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { reset, getMe } from "../features/authSlice";
-import PageNotFound from "../image/404 home.webp"
+import PageNotFound from "../image/404 home.webp";
+import Modal from "react-bootstrap/Modal";
+import {
+  PiFanLight,
+  PiToiletLight,
+  PiStudentLight,
+  PiMotorcycleLight,
+  PiWallLight,
+} from "react-icons/pi";
+import { SlLocationPin } from "react-icons/sl";
+import { TbWindow } from "react-icons/tb";
+import { LuClock9 } from "react-icons/lu";
+import { AiOutlineThunderbolt } from "react-icons/ai";
+import { IoBedOutline } from "react-icons/io5";
+import { GiPillow, GiLovers, GiCctvCamera } from "react-icons/gi";
+import { SiAirtable } from "react-icons/si";
+import { LiaPeopleCarrySolid } from "react-icons/lia";
+import {
+  MdOutlineNotInterested,
+  MdOutlineLocalLaundryService,
+} from "react-icons/md";
+import { FaWifi, FaTv, FaUtensils, FaWindowClose } from "react-icons/fa";
+import { IoWaterOutline } from "react-icons/io5";
+import { BsBox } from "react-icons/bs";
+import { RiArchiveDrawerLine } from "react-icons/ri";
+import { TfiLayoutMediaCenterAlt } from "react-icons/tfi";
+import "../css/detailKost.css";
 
 const DetailKost = () => {
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const [foto1, setFoto1] = useState("");
@@ -51,10 +75,10 @@ const DetailKost = () => {
     });
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getMe());
   }, [dispatch]);
-  
+
   useEffect(() => {
     const getKostById = async () => {
       try {
@@ -113,9 +137,13 @@ const DetailKost = () => {
             style={{ fontSize: "16px", color: "#666", marginBottom: "20px" }}
           >
             <p></p>
-           Halaman yang Anda cari mungkin telah dihapus atau untuk sementara tidak tersedia.
+            Halaman yang Anda cari mungkin telah dihapus atau untuk sementara
+            tidak tersedia.
           </div>
-          <a style={{ color: "#007bff", textDecoration: "none" }} href="/kost-list">
+          <a
+            style={{ color: "#007bff", textDecoration: "none" }}
+            href="/kost-list"
+          >
             Go back
           </a>
         </div>
@@ -141,41 +169,53 @@ const DetailKost = () => {
   const renderIcon = (namaFasilitas) => {
     switch (namaFasilitas) {
       case "Kasur":
-        return <FaBed />;
+        return <IoBedOutline />;
       case "Wifi":
         return <FaWifi />;
       case "Kipas Angin":
-        return <FaWifi />;
+        return <PiFanLight />;
       case "Pagar":
-        return <FaWifi />;
+        return <PiWallLight />;
       case "Parkir Motor":
-        return <FaWifi />;
-      case "Lemari":
-        return <FaWifi />;
+        return <PiMotorcycleLight />;
+      case "Lemari Pakaian":
+        return <RiArchiveDrawerLine />;
       case "Meja":
-        return <FaWifi />;
+        return <SiAirtable />;
       case "Pengurus Kost":
-        return <FaShower />;
+        return <LiaPeopleCarrySolid />;
       case "Jemuran":
-        return <FaShower />;
+        return <MdOutlineLocalLaundryService />;
       case "Bantal":
-        return <FaShower />;
+        return <GiPillow />;
       case "Kamar Mandi di Dalam":
-        return <FaShower />;
+        return <PiToiletLight />;
       case "Jendela Bertrali":
-        return <FaShower />;
+        return <TbWindow />;
       case "CCTV":
-        return <FaShower />;
+        return <GiCctvCamera />;
       case "TV":
         return <FaTv />;
       case "Dapur":
         return <FaUtensils />;
       case "Khusus Mahasiswa":
-        return <FaUtensils />;
+        return <PiStudentLight />;
       case "Jam Malam":
-        return <FaUtensils />;
+        return <LuClock9 />;
+      case "Sudah termasuk listrik":
+        return <AiOutlineThunderbolt />;
+      case "3 x 2 meter":
+        return <BsBox />;
+      case "Sudah termasuk Air":
+        return <IoWaterOutline />;
+      case "Lawan jenis dilarang ke kamar":
+        return <MdOutlineNotInterested />;
+      case "Boleh Pasutri":
+        return <GiLovers />;
+      case "R. Tengah":
+        return <TfiLayoutMediaCenterAlt />;
       default:
-        return <FaShower />;;
+        return <FaWindowClose />;
     }
   };
 
@@ -197,6 +237,13 @@ const DetailKost = () => {
     }
     return numberValue.toLocaleString("id-ID");
   };
+
+  const bigMaps = () => {
+    navigate("/maps");
+  };
+  const isPeraturansEmpty = peraturans.length === 0;
+  const isCatatanEmpty = catatan_tambahan.length === 0;
+  const isfasilitasEmpty = fasilitas.length === 0;
   return (
     <div>
       <Nav2 />
@@ -228,15 +275,45 @@ const DetailKost = () => {
             </Breadcrumb>
           </Col>
         </Row>
+
+        <Card className="mt-2">
+          <Row>
+            <Col
+              style={{ marginRight: "-15px", marginBottom: "-15px" }}
+              xs={12}
+              md={8}
+            >
+              <div className="foto-container">
+                <Card.Img src={foto1} />
+              </div>
+            </Col>
+            <Col>
+              <Col className="mb-2">
+                <div className="foto2-container">
+                  <Card.Img src={foto2} />
+                </div>
+              </Col>
+              <Col>
+              <div className="foto2-container">
+                <Card.Img src={foto3} />
+                </div>
+              </Col>
+            </Col>
+          </Row>
+        </Card>
+
+        {/* <Card>
         <Row style={{ marginBottom: "30px" }}>
           <Col
             style={{ marginRight: "-15px", marginBottom: "-15px" }}
             xs={12}
             md={8}
           >
+            <div className="foto-container">
             <Figure>
               <Figure.Image alt="Foto 1" src={foto1} />
             </Figure>
+            </div>
           </Col>
           <Col xs={12} md={4}>
             <Row style={{ marginRight: "-15px", marginBottom: "-15px" }}>
@@ -247,187 +324,223 @@ const DetailKost = () => {
             <Row style={{ marginRight: "-15px", marginBottom: "-15px" }}>
               <Figure>
                 <Figure.Image alt="Foto 3" src={foto3} />
-                {/* <Button variant="primary" onClick={handleShow}>
-                  Launch demo modal
-                </Button> */}
               </Figure>
             </Row>
           </Col>
         </Row>
-        <Row>
-          <Col md={8}>
-            <div>
-              <h3>
-                <strong>{nama}</strong>
-              </h3>
-              <p>
-                <Button className="mr-3" variant="outline-success">
-                  Kost {jk}
-                </Button>
-                <FaLocationDot /> {alamat}, Desa {desa}
-              </p>
-              <div className="mt-5">
-                <h3>
-                  <strong>Spesifikasi tipe kamar</strong>
-                </h3>
-                <Row>
-                {spesifikasis.map((item) => (
-                    <div key={item.spesifikasi} className="fasilitas-item">
-                      {renderIcon(item.spesifikasi)}
-                      {item.spesifikasi}
-                    </div>
-                  ))} 
-                  </Row>
-                <hr />
-              </div>
-              <div className="mt-2">
-                <h3>
-                  <strong>Fasilitas kamar</strong>
-                </h3>
-                <Row>
-                  <Col xs={6}>
-                    {fasilitas
-                      .slice(0, Math.ceil(fasilitas.length / 2))
-                      .map((item) => (
-                        <div key={item.nama_f} className="fasilitas-item">
-                          <div className="icon">{renderIcon(item.nama_f)}</div>
-                          <div className="text">{item.nama_f}</div>
-                        </div>
-                      ))}
-                  </Col>
-                  <Col xs={6}>
-                    {fasilitas
-                      .slice(Math.ceil(fasilitas.length / 2))
-                      .map((item) => (
-                        <div key={item.nama_f} className="fasilitas-item">
-                          {renderIcon(item.nama_f)}
-                          {item.nama_f}
-                        </div>
-                      ))}
-                  </Col>
-                  <style jsx>{`
-                    .fasilitas-item {
-                      display: flex;
-                      align-items: center;
-                      margin-bottom: 10px;
-                      gap: 10px;
-                    }
-                  `}</style>
-                </Row>
-                <hr />
-              </div>
-              <div className="mt-2">
-                <h3>
-                  <strong>Peraturan kost</strong>
-                </h3>
-                <Row>
-                  {peraturans.map((item) => (
-                    <div key={item.peraturan} className="fasilitas-item">
-                      {renderIcon(item.peraturan)}
-                      {item.peraturan}
-                    </div>
-                  ))}
-                </Row>
-                <hr />
-              </div>
-              <div className="mt-2">
-                <h3>
-                  <strong>Catatan Tambahan</strong>
-                </h3>
-                <p>{catatan_tambahan}</p>
-                <hr />
-              </div>
-              <div className="mt-2">
-                <h3>
-                  <strong>Fasilitas Umum</strong>
-                </h3>
-                <Row>
-                  <Col xs={6}>
-                    {fasilitas_umums
-                      .slice(0, Math.ceil(fasilitas_umums.length / 2))
-                      .map((item) => (
-                        <div key={item.f_umum} className="fasilitas-item">
-                          <div className="icon">{renderIcon(item.f_umum)}</div>
-                          <div className="text">{item.f_umum}</div>
-                        </div>
-                      ))}
-                  </Col>
-                  <Col xs={6}>
-                    {fasilitas_umums
-                      .slice(Math.ceil(fasilitas_umums.length / 2))
-                      .map((item) => (
-                        <div key={item.f_umum} className="fasilitas-item">
-                          {renderIcon(item.f_umum)}
-                          {item.f_umum}
-                        </div>
-                      ))}
-                  </Col>
-                </Row>
-                <hr />
-              </div>
-              <div className="mt-2">
-                <h3>
-                  <strong>Fasilitas Keamanan</strong>
-                </h3>
-                <Row>
-                {fasilitas_keamanans.map((item) => (
-                    <div key={item.f_keamanan} className="fasilitas-item">
-                      {renderIcon(item.f_keamanan)}
-                      {item.f_keamanan}
-                    </div>
-                  ))} 
-                </Row>
-                <hr />
-              </div>
-              <div className="mt-2">
-                <h3>
-                  <strong>Lokasi dan Lingkungan Sekitar</strong>
-                </h3>
-                <MapContainer
-                  style={{ height: "400px", width: "100%" }}
-                  center={petaPosition}
-                  zoom={16}
-                  scrollWheelZoom={false}
-                >
-                  <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                  />
+        </Card> */}
 
-                  <MarkerClusterGroup
-                    chunkedLoading
-                    iconCreateFunction={createCustomClusterIcon}
+        {/* <Button variant="primary" onClick={handleShow}>
+                  Launch demo modal
+                </Button> */}
+        <div className="mt-5">
+          <Row>
+            <Col md={8}>
+              <div>
+                <div className="d-flex">
+                  <h3 className="mr-2">
+                    <strong>{nama}</strong>
+                  </h3>
+                  <Button
+                    size="sm"
+                    style={{ padding: "", margin: "8px", marginBottom: "8px" }}
+                    variant="outline-dark"
                   >
-                    {markers.map((marker, index) => (
-                      <Marker
-                        key={index}
-                        position={marker.geocode}
-                        icon={customIcon}
-                      ></Marker>
+                    Kost {jk}
+                  </Button>
+                </div>
+                <p
+                  onClick={bigMaps}
+                  style={{
+                    cursor: "pointer",
+                  }}
+                >
+                  <SlLocationPin className="mr-2" />
+                  {alamat}, Desa {desa}
+                </p>
+                <div className="mt-5">
+                  <h3>
+                    <strong>Spesifikasi tipe kamar</strong>
+                  </h3>
+                  <Row>
+                    {spesifikasis.map((item) => (
+                      <div key={item.spesifikasi} className="fasilitas-item">
+                        <div style={{ fontSize: "2em" }} className="icon">
+                          {renderIcon(item.spesifikasi)}
+                        </div>
+                        {item.spesifikasi}
+                      </div>
                     ))}
-                  </MarkerClusterGroup>
-                </MapContainer>
-                <hr />
+                  </Row>
+                  <hr />
+                </div>
+                <div className="mt-2">
+                  <h3>
+                    <strong>Fasilitas kamar</strong>
+                  </h3>
+                  <Row>
+                    <Col xs={6}>
+                      {fasilitas
+                        .slice(0, Math.ceil(fasilitas.length / 2))
+                        .map((item) => (
+                          <div key={item.nama_f} className="fasilitas-item">
+                            <div style={{ fontSize: "2em" }} className="icon">
+                              {renderIcon(item.nama_f)}
+                            </div>
+                            <div className="text">{item.nama_f}</div>
+                          </div>
+                        ))}
+                    </Col>
+                    <Col xs={6}>
+                      {fasilitas
+                        .slice(Math.ceil(fasilitas.length / 2))
+                        .map((item) => (
+                          <div key={item.nama_f} className="fasilitas-item">
+                            <div style={{ fontSize: "2em" }} className="icon">
+                              {renderIcon(item.nama_f)}
+                            </div>
+                            <div className="text">{item.nama_f}</div>
+                          </div>
+                        ))}
+                    </Col>
+                    <style jsx>{`
+                      .fasilitas-item {
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 10px;
+                        gap: 10px;
+                      }
+                    `}</style>
+                  </Row>
+                  <hr />
+                </div>
+                <div className="mt-2">
+                  <h3>
+                    <strong>Peraturan kost</strong>
+                  </h3>
+                  <Row>
+                    {peraturans.map((item) => (
+                      <div key={item.peraturan} className="fasilitas-item">
+                        <div style={{ fontSize: "2em" }} className="icon">
+                          {renderIcon(item.peraturan)}
+                        </div>
+                        <div className="text">{item.peraturan}</div>
+                      </div>
+                    ))}
+                  </Row>
+                  <hr />
+                </div>
+                <div className="mt-2">
+                  <h3>
+                    <strong>Catatan Tambahan</strong>
+                  </h3>
+                  {isCatatanEmpty ? (
+                    <div className="text-black-50 fst-italic">Tidak ada</div>
+                  ) : (
+                    <>
+                      <p>{catatan_tambahan}</p>
+                    </>
+                  )}
+                  <hr />
+                </div>
+                <div className="mt-2">
+                  <h3>
+                    <strong>Fasilitas Umum</strong>
+                  </h3>
+                  <Row>
+                    <Col xs={6}>
+                      {fasilitas_umums
+                        .slice(0, Math.ceil(fasilitas_umums.length / 2))
+                        .map((item) => (
+                          <div key={item.f_umum} className="fasilitas-item">
+                            <div style={{ fontSize: "2em" }} className="icon">
+                              {renderIcon(item.f_umum)}
+                            </div>
+                            <div className="text">{item.f_umum}</div>
+                          </div>
+                        ))}
+                    </Col>
+                    <Col xs={6}>
+                      {fasilitas_umums
+                        .slice(Math.ceil(fasilitas_umums.length / 2))
+                        .map((item) => (
+                          <div key={item.f_umum} className="fasilitas-item">
+                            <div style={{ fontSize: "2em" }} className="icon">
+                              {renderIcon(item.f_umum)}
+                            </div>
+                            {item.f_umum}
+                          </div>
+                        ))}
+                    </Col>
+                  </Row>
+                  <hr />
+                </div>
+                <div className="mt-2">
+                  <h3>
+                    <strong>Fasilitas Keamanan</strong>
+                  </h3>
+                  <Row>
+                    {fasilitas_keamanans.map((item) => (
+                      <div key={item.f_keamanan} className="fasilitas-item">
+                        <div style={{ fontSize: "2em" }} className="icon">
+                          {renderIcon(item.f_keamanan)}
+                        </div>
+                        {item.f_keamanan}
+                      </div>
+                    ))}
+                  </Row>
+                  <hr />
+                </div>
+                <div className="mt-2">
+                  <h3>
+                    <strong>Lokasi dan Lingkungan Sekitar</strong>
+                  </h3>
+                  <MapContainer
+                    style={{ height: "400px", width: "100%" }}
+                    center={petaPosition}
+                    zoom={16}
+                    scrollWheelZoom={false}
+                  >
+                    <TileLayer
+                      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+
+                    <MarkerClusterGroup
+                      chunkedLoading
+                      iconCreateFunction={createCustomClusterIcon}
+                    >
+                      {markers.map((marker, index) => (
+                        <Marker
+                          key={index}
+                          position={marker.geocode}
+                          icon={customIcon}
+                        ></Marker>
+                      ))}
+                    </MarkerClusterGroup>
+                  </MapContainer>
+                  <hr />
+                </div>
               </div>
-            </div>
-          </Col>
-          <Col>
-            <Card className="py-4 px-5">
-              <h4 className="mb-3">
-                <strong>{formatCurrency(kost.harga)}</strong> / bulan
-              </h4>
-              {user == null ? (
-                <Button onClick={loginDulu} variant="success">
-                  Hubungi Pemilik
-                </Button>
-              ) : (
-                <Button onClick={ajukanSewa} variant="success">
-                  Hubungi Pemilik
-                </Button>
-              )}
-            </Card>
-          </Col>
-        </Row>
+            </Col>
+            <Col>
+              <Card className="py-4 px-5">
+                <h4 className="mb-3">
+                  <strong>{formatCurrency(harga)}</strong> / bulan
+                </h4>
+                {user == null ? (
+                  <Button onClick={loginDulu} variant="success">
+                    Hubungi Pemilik
+                  </Button>
+                ) : (
+                  <Button onClick={ajukanSewa} variant="success">
+                    Hubungi Pemilik
+                  </Button>
+                )}
+              </Card>
+            </Col>
+          </Row>
+        </div>
       </Container>
       <Footer2 />
     </div>

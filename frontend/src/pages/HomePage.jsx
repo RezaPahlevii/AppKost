@@ -121,7 +121,6 @@ const HomePage = () => {
     return numberValue.toLocaleString("id-ID");
   };
   
-
   return (
     <div>
       <Nav2 />
@@ -164,23 +163,24 @@ const HomePage = () => {
                       rel="noopener noreferrer"
                     >
                       <Card>
+                        <div className="card-img-container">
                         <CardImg variant="top" src={kost.fotos[0].url1} />
                         <Card.Body>
                           <Card.Title>{kost.nama}</Card.Title>
                           <Card.Text className="my-1">{kost.jk}</Card.Text>
-                          <Card.Text className="my-1">
+                          {/* <Card.Text className="my-1">
                             {kost.desa} <br />
                             {kost.alamat}
-                          </Card.Text>
+                          </Card.Text> */}
                           <Card.Text>
-                            {kost.fasilitas.slice(0, 5).map((item, index) => (
+                            {kost.fasilitas.slice(0, 3).map((item, index) => (
                               <span
                                 key={item.nama_f}
                                 className="mr-1 text-muted"
                                 style={{ fontSize: "13px" }}
                               >
                                 {item.nama_f}
-                                {index !== 4 && ","}
+                                {index !== 2 && ","}
                               </span>
                             ))}
                           </Card.Text>
@@ -188,6 +188,7 @@ const HomePage = () => {
                            Rp <strong>{formatCurrency(kost.harga)}</strong> /bulan
                           </Card.Text>
                         </Card.Body>
+                        </div>
                       </Card>
                     </Link>
                   </Col>
