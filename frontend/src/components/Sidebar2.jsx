@@ -53,8 +53,8 @@ const Sidebar = () => {
                     src={url}
                     alt="Profile Picture"
                     style={{
-                      width: "100px",
-                      height: "100px",
+                      width: "160px",
+                      height: "160px",
                       objectFit: "cover",
                       objectPosition: "center center",
                       borderRadius: "50%",
