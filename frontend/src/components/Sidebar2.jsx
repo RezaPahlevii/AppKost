@@ -10,16 +10,19 @@ import { AiOutlineSetting } from "react-icons/ai";
 import { VscDashboard } from "react-icons/vsc";
 import { BsQuestion } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { LogOut, reset } from "../features/authSlice";
 import Avatar from "../image/Avatar.jpg";
 import {Col, Row} from "react-bootstrap"
+import axios from "axios";
 
 
 const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [bio, setBio] = useState("");
   const { user } = useSelector((state) => state.auth);
+  const { nama, asal, jk, umur, NoWA, url } = bio;
 
   const logout = () => {
     dispatch(LogOut());
@@ -27,16 +30,49 @@ const Sidebar = () => {
     navigate("/");
   };
 
+  useEffect(() => {
+    getBio();
+  }, []);
+
+  const getBio = async () => {
+    const response = await axios.get("http://localhost:5000/biodata");
+    if (response.data.length > 0) {
+      setBio(response.data[0]);
+    }else {
+      // Jika biodata kosong, tetapkan bio dengan objek kosong
+      setBio({});
+    }
+  };
+
   return (
     <div className="sideBar grid">
       <Row className="">
         <Col className="text-center">
-          <img
-            src={Avatar}
-            alt="Imge Name"
-            class="rounded-circle"
-            style={{ width: "100px" }}
-          />
+        {bio.url ? (
+                  <img
+                    src={url}
+                    alt="Profile Picture"
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      objectFit: "cover",
+                      objectPosition: "center center",
+                      borderRadius: "50%",
+                    }}
+                  />
+                ) : (
+                  <img
+                    src={Avatar}
+                    alt="Default Profile Picture"
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      objectFit: "cover",
+                      objectPosition: "center center",
+                      borderRadius: "50%",
+                    }}
+                  />
+                )}
         </Col>
       </Row>
       <Row className="">
@@ -72,16 +108,6 @@ const Sidebar = () => {
                 </a>
               </li>
             )}
-
-            {user && user.role === "pencari kost" && (
-              <li className="listItem ">
-                <a href="/pengaturan-akun" className="menuLink flex">
-                  <AiOutlineSetting className="icon" />
-                  <span className="smallText">Pengaturan Akun</span>
-                </a>
-              </li>
-            )}
-
             {user && user.role === "admin" && (
               <>
                 <li className="listItem">
@@ -92,13 +118,14 @@ const Sidebar = () => {
                 </li>
               </>
             )}
-
-            <li className="listItem">
-              <a href="/biodata" className="menuLink flex">
-                <IoIosPeople className="icon" />
-                <span className="smallText">Biodata</span>
-              </a>
-            </li>
+            {user && (user.role === "pemilik kost" || user.role === "admin" || user.role === "pencari kost") && (
+              <li className="listItem ">
+                <a href="/biodata" className="menuLink flex">
+                  <AiOutlineSetting className="icon" />
+                  <span className="smallText">Pengaturan</span>
+                </a>
+              </li>
+            )}
           </ul>
         </div>
       </Row>

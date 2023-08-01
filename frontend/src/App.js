@@ -20,7 +20,6 @@ import EditProfilPemilik from './pages/EditProfilPemilik';
 import AddProfilPemilik from './pages/AddProfilPemilik';
 import LoginRegister from './pages/LoginRegister';
 import BigMaps from './pages/BigMaps';
-import PengaturanAkunPencari from './components/PengaturanAkunPencari';
 import FormBiodataPenyewa from './pages/FormBiodataPenyewa';
 import BiodataPenyewa from './components/BiodataPenyewa';
 import PageNotFound from './components/PageNotFound';
@@ -42,7 +41,6 @@ function App() {
         <Route path="/footer-edit" element={<EditFooter/>}/>
         <Route path="/banner-edit" element={<EditBanner/>}/>
         <Route path="/pencari-kost" element={<PencariKost/>}/>
-        <Route path="/pengaturan-akun" element={<PengaturanAkunPencari/>}/>
         <Route path="/biodata/edit/:id" element={<EditProfilPemilik/>}/>
         <Route path="/biodata" element={<AddProfilPemilik/>}/>
       </Routes>

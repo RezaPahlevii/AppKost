@@ -4,34 +4,32 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, Table } from "react-bootstrap";
 
 const Userlist = () => {
-  const [bios, setBios] = useState([]);
+  const [users, setUsers] = useState([]);
   const tableRef = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    getBios();
+    getUsers();
   }, []);
 
-  const getBios = async () => {
-    const response = await axios.get("http://localhost:5000/biodata");
-    setBios(response.data);
+  const getUsers = async () => {
+    const response = await axios.get("http://localhost:5000/users");
+    setUsers(response.data);
   };
 
   const deleteUser = async (userId) => {
     await axios.delete(`http://localhost:5000/users/${userId}`);
     getUsers();
   };
-  const handleDeleteClick = (kostId) => {
-    const isConfirmed = window.confirm(
-      "Apakah Anda yakin ingin Pengguna ini?"
-    );
+  const handleDeleteClick = (userId) => {
+    const isConfirmed = window.confirm("Apakah Anda yakin ingin Pengguna ini?");
     if (isConfirmed) {
-      deleteKost(kostId);
+      deleteUser(userId);
     }
   };
   const editUser = async (userId) => {
     navigate(`/users/edit/${userId}`);
-  }
+  };
 
   const handlePrint = () => {
     const printWindow = window.open("", "_blank");
@@ -106,16 +104,16 @@ const Userlist = () => {
           </tr>
         </thead>
         <tbody>
-          {bios.map((bios, index) => (
-            <tr key={bios.uuid}>
+          {users.map((user, index) => (
+            <tr key={user.uuid}>
               <td>{index + 1}</td>
-              <td>{bios.user.name}</td>
-              <td>{bios.user.email}</td>
-              <td>{bios.jk}</td>
-              <td>{bios.NoWA}</td>
-              <td>{bios.asal}</td>
-              <td>{bios.umur}</td>
-              <td>{bios.user.role}</td>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+              <td>{user?.biodata_user?.jk || "-"}</td>
+              <td>{user?.biodata_user?.NoWA || "-"}</td>
+              <td>{user?.biodata_user?.asal || "-"}</td>
+              <td>{user?.biodata_user?.umur || "-"}</td>
+              <td>{user.role}</td>
               <td className="action-buttons">
                 <Button
                   size="sm"

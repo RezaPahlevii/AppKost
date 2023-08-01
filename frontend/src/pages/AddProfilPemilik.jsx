@@ -58,6 +58,17 @@ const FormBiodataPenyewa = () => {
       console.log(error);
     }
   };
+  function generateAgeOptions(start, end) {
+    const ageOptions = [];
+    for (let i = start; i <= end; i++) {
+      ageOptions.push(
+        <option key={i} value={i}>
+          {i}
+        </option>
+      );
+    }
+    return ageOptions;
+  }
 
   return (
     <div>
@@ -133,6 +144,21 @@ const FormBiodataPenyewa = () => {
                             <div className="field">
                               <label className="label">Umur</label>
                               <div className="control">
+                                <div className="select is-fullwidth">
+                                  <select
+                                    value={umur}
+                                    onChange={(e) => setUmur(e.target.value)}
+                                  >
+                                    <option hidden>Umur</option>
+                                    {generateAgeOptions(13, 100)}
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* <div className="field">
+                              <label className="label">Umur</label>
+                              <div className="control">
                                 <input
                                   type="text"
                                   className="input"
@@ -141,7 +167,8 @@ const FormBiodataPenyewa = () => {
                                   placeholder="25 Tahun"
                                 />
                               </div>
-                            </div>
+                            </div> */}
+
                             <div className="field">
                               <label className="label">No WA</label>
                               <div className="control">
