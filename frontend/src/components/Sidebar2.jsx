@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { LogOut, reset } from "../features/authSlice";
 import Avatar from "../image/Avatar.jpg";
+import {Col, Row} from "react-bootstrap"
 
 
 const Sidebar = () => {
