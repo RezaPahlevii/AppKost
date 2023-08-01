@@ -1,45 +1,37 @@
 import React, { useEffect, useState } from "react";
 import "../css/sidebar.css";
-// import logo from "../../Asset/logo.png";
 import {
   IoIosHome,
   IoIosLogOut,
   IoIosPeople,
   IoMdSpeedometer,
 } from "react-icons/io";
-import { ImPlay } from "react-icons/im";
 import { AiOutlineSetting } from "react-icons/ai";
 import { VscDashboard } from "react-icons/vsc";
 import { BsQuestion } from "react-icons/bs";
-import { BiCarousel } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { LogOut, reset } from "../features/authSlice";
 import Avatar from "../image/Avatar.jpg";
+<<<<<<< HEAD
 import { Button, Col, Row } from "react-bootstrap";
 import axios from "axios";
 
 // Import Icons =================>
+=======
+import { Col, Row } from "react-bootstrap";
+>>>>>>> febe3-biodata
 
 const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
-  const [bios, setBios] = useState([]);
 
   const logout = () => {
     dispatch(LogOut());
     dispatch(reset());
     navigate("/");
   };
-
-  // useEffect(() => {
-  //   getBios();
-  // }, []);
-  // const getBios = async () => {
-  //   const response = await axios.get("http://localhost:5000/biodata");
-  //   setBios(response.data);
-  // };
 
   return (
     <div className="sideBar grid">
@@ -52,24 +44,6 @@ const Sidebar = () => {
             style={{ width: "100px" }}
           />
         </Col>
-        {/* {bios.length > 0 && bios.some((bio) => bio.userId === user.userId) ? (
-          <Col className="mt-4">
-            <Link
-              to={`/profil/edit/${
-                bios.find((bio) => bio.userId === user.userId).uuid
-              }`}
-              className="btn btn-warning mr-1"
-            >
-              Edit
-            </Link>
-          </Col>
-        ) : (
-          <Col className="mt-4">
-            <Link to="/profil" className="btn btn-warning mr-1">
-              Edit
-            </Link>
-          </Col>
-        )} */}
       </Row>
       <Row className="">
         <div className="menuDiv">
@@ -122,32 +96,15 @@ const Sidebar = () => {
                     <span className="smallText">Users</span>
                   </a>
                 </li>
-                {/* <li className="listItem">
-            <a href="/dashboard" className="menuLink flex">
-              <ImPlay className="icon" />
-              <span className="smallText">Sosmed</span>
-            </a>
-          </li>
-          <li className="listItem">
-            <a href="/dashboard" className="menuLink flex">
-              <BiCarousel className="icon" />
-              <span className="smallText">Carousel</span>
-            </a>
-          </li>
-          <li className="listItem">
-            <a href="/dashboard" className="menuLink flex">
-              <IoIosPeople className="icon" />
-              <span className="smallText">Footer</span>
-            </a>
-          </li> */}
               </>
             )}
-            {/* <li className="listItem">
-              <a href="/biodata-penyewa" className="menuLink flex">
+
+            <li className="listItem">
+              <a href="/biodata" className="menuLink flex">
                 <IoIosPeople className="icon" />
-                <span className="smallText">Biodata Penyewa</span>
+                <span className="smallText">Biodata</span>
               </a>
-            </li> */}
+            </li>
           </ul>
         </div>
       </Row>
