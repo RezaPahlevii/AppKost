@@ -4,17 +4,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, Table } from "react-bootstrap";
 
 const Userlist = () => {
-  const [users, setUsers] = useState([]);
+  const [bios, setBios] = useState([]);
   const tableRef = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    getUsers();
+    getBios();
   }, []);
 
-  const getUsers = async () => {
-    const response = await axios.get("http://localhost:5000/users");
-    setUsers(response.data);
+  const getBios = async () => {
+    const response = await axios.get("http://localhost:5000/biodata");
+    setBios(response.data);
   };
 
   const deleteUser = async (userId) => {
@@ -97,17 +97,25 @@ const Userlist = () => {
             <th>No</th>
             <th>Name</th>
             <th>Email</th>
+            <th>Gender</th>
+            <th>No WA</th>
+            <th>Asal</th>
+            <th>Umur</th>
             <th>Role</th>
             <th className="action-buttons">Actions</th>
           </tr>
         </thead>
         <tbody>
-          {users.map((user, index) => (
-            <tr key={user.uuid}>
+          {bios.map((bios, index) => (
+            <tr key={bios.uuid}>
               <td>{index + 1}</td>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>{user.role}</td>
+              <td>{bios.user.name}</td>
+              <td>{bios.user.email}</td>
+              <td>{bios.jk}</td>
+              <td>{bios.NoWA}</td>
+              <td>{bios.asal}</td>
+              <td>{bios.umur}</td>
+              <td>{bios.user.role}</td>
               <td className="action-buttons">
                 <Button
                   size="sm"
