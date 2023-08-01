@@ -13,12 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { LogOut, reset } from "../features/authSlice";
 import Avatar from "../image/Avatar.jpg";
-<<<<<<< HEAD
 
-// Import Icons =================>
-=======
-import { Col, Row } from "react-bootstrap";
->>>>>>> febe3-biodata
 
 const Sidebar = () => {
   const dispatch = useDispatch();
