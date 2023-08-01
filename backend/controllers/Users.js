@@ -1,10 +1,17 @@
+import Bio from "../models/BioUserModel.js";
 import User from "../models/UserModel.js";
 import argon2 from "argon2";
 
  export const getUsers = async(req, res) =>{
     try {
         const response = await User.findAll({
-            attributes:['uuid','name','email','role']
+            attributes:['uuid','name','email','role'],
+            include: [
+                {
+                  model: Bio,
+                  attributes: ["nama","jk","umur","NoWA","asal","url"],
+                },
+              ],
         });
         res.status(200).json(response);
     } catch (error) {
@@ -18,7 +25,13 @@ import argon2 from "argon2";
             attributes:['uuid','name','email','role'],
             where:{
                 uuid: req.params.id
-            }
+            },
+            include: [
+                {
+                  model: Bio,
+                  attributes: ["nama","jk","umur","NoWA","asal","url"],
+                },
+              ],
         });
         res.status(200).json(response);
     } catch (error) {
