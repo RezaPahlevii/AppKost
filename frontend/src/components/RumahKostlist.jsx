@@ -33,7 +33,7 @@ const RumahKostlist = () => {
   };
   const editKost = async (kostId) => {
     navigate(`/rumah-kost/edit/${kostId}`);
-  }
+  };
   const formatCurrency = (value) => {
     const numberValue = Number(value);
     if (isNaN(numberValue)) {
@@ -133,15 +133,24 @@ const RumahKostlist = () => {
                 </td>
                 <td>{kost.jk}</td>
                 <td>
-                  {kost.fasilitas.map((fasilitas, index) => (
-                    <span key={index}>{fasilitas.nama_f}</span>
-                  ))}
+                  {kost.fasilitas
+                    .map((fasilitas, index) => (
+                      <span key={index}>
+                        {index > 0 ? ", " : ""}
+                        {fasilitas.nama_f}
+                      </span>
+                    ))}
                 </td>
                 <td>
-                  {kost.peraturans.map((peraturans, index) => (
-                    <span key={index}>{peraturans.peraturan}</span>
-                  ))}
+                  {kost.peraturans
+                    .map((peraturan, index) => (
+                      <span key={index}>
+                        {index > 0 ? ", " : ""}
+                        {peraturan.peraturan}
+                      </span>
+                    ))}
                 </td>
+
                 <td>{kost.catatan_tambahan}</td>
                 <td className="action-buttons">
                   <Button

@@ -71,13 +71,21 @@ const TentangKami = () => {
                 <strong>TENTANG KOS</strong>
               </h4>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
+                Selamat datang di halaman kami! Dengan bangga kami
+                mempersembahkan Aplikasi Pencarian Kost berbasis web dan mobile
+                yang kami kembangkan sebagai bagian dari tugas akhir kami dalam
+                program D3 Teknik Informatika. Aplikasi ini kami rancang dengan
+                tujuan untuk memudahkan mahasiswa yang melanjutkan studi di
+                Politeknik Negeri Bengkalis dalam mencari informasi detail
+                tentang kost di sekitar kampus. Kami menyadari bahwa menemukan
+                tempat tinggal yang nyaman dan sesuai dengan kebutuhan mahasiswa
+                baru adalah hal yang penting. <br />
+                Aplikasi Pencarian Kost yang kami rancang bertujuan untuk
+                memberikan kemudahan bagi para mahasiswa Politeknik Negeri
+                Bengkalis dalam mencari kost yang terdekat dengan kampus. Dengan
+                fitur pencarian yang canggih, kami berharap para pengguna dapat
+                menemukan kost yang sesuai dengan kebutuhan mereka dengan mudah
+                dan cepat.
               </p>
             </div>
           </section>
@@ -87,13 +95,19 @@ const TentangKami = () => {
                 <strong>KISAH PENDIRI</strong>
               </h4>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
+                Aplikasi Pencarian Kost ini didirikan oleh dua individu berbakat
+                dengan pengalaman lebih dari 5 tahun di bidang teknologi
+                informasi dan perfilman. Salah satu pendiri adalah seorang
+                fullstack web developer dan pemilik bisnis jasa videografi,
+                Studio Artinema. Pendiri lainnya adalah seorang fullstack mobile
+                developer yang juga ahli di bidang editing dan videografi.
+                Selain itu, kami memiliki tim IT yang berdedikasi tinggi dalam
+                pengembangan aplikasi web dan mobile, menggunakan teknologi
+                terkini seperti ReactJS, ExpressJS, dan Flutter. Dengan semangat
+                inovasi dan ketekunan dalam mencari solusi teknologi, kami
+                berusaha memberikan aplikasi Pencarian Kost yang canggih,
+                user-friendly, dan memberikan manfaat bagi para mahasiswa
+                Politeknik Negeri Bengkalis serta pemilik kost.
               </p>
             </div>
           </section>
@@ -120,14 +134,12 @@ const TentangKami = () => {
                   <h6>Fullstack Web Development</h6>
                 </div>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
+                  Sebagai seorang fullstack web developer, Muhammad Syah Reza
+                  Pahlevi adalah salah satu pendiri dari aplikasi ini. Dia
+                  memiliki pengalaman luas dalam mengembangkan solusi web yang
+                  inovatif dan user-friendly. Dengan keahliannya dalam ReactJS
+                  dan ExpressJS, Levi berperan penting dalam merancang tampilan
+                  dan fungsionalitas aplikasi berbasis web.
                 </p>
               </Col>
             </Row>
@@ -152,14 +164,13 @@ const TentangKami = () => {
                   <h6>Fullstack Mobile Development</h6>
                 </div>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
+                  Bima Fadi Lana adalah seorang fullstack mobile developer yang
+                  juga merupakan salah satu pendiri dari aplikasi pencarian kost
+                  ini. Dengan dedikasi tinggi dalam memahami kebutuhan pengguna,
+                  Bima berfokus pada pengembangan aplikasi mobile yang responsif
+                  dan mudah digunakan. Ia menggunakan Flutter sebagai kerangka
+                  kerja utama untuk menghasilkan aplikasi mobile yang canggih
+                  dan dapat dijalankan di berbagai platform.
                 </p>
               </Col>
             </Row>

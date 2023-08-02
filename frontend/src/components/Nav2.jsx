@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Button,
   Container,
@@ -9,12 +9,13 @@ import {
   Offcanvas,
 } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
-import "../css/Nav.css"; // Import file CSS untuk mengatur tampilan
+import "../css/Nav.css";
 import { useDispatch, useSelector } from "react-redux";
 import { LogOut, reset, getMe } from "../features/authSlice";
 import Avatar from "@mui/material/Avatar";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Logo from "../image/logo bengkalis kost.png"
 
 const navbar = () => {
   const expand = "md";
@@ -40,11 +41,8 @@ const navbar = () => {
   return (
     <Navbar fixed="top" expand={expand} className="bg-body-tertiary mb-3">
       <Container style={{ maxWidth: "1250px" }}>
-        <NavLink
-          style={{ textDecoration: "none", paddingRight: 15, color: "Black" }}
-          to={"/"}
-        >
-          AppKost
+        <NavLink style={{ textDecoration: "none", paddingRight: 15 }} to={"/"}>
+          <img src={Logo} alt="Logo" width="80" />
         </NavLink>
         <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
         <Navbar.Offcanvas
@@ -97,7 +95,7 @@ const navbar = () => {
                   paddingRight: 15,
                   color: "Black",
                 }}
-               href="/kost-list"
+                href="/kost-list"
               >
                 List Rumah Kost
               </Nav.Link>
@@ -114,7 +112,10 @@ const navbar = () => {
                         id="avatar-dropdown"
                         className="no-caret"
                       >
-                        <FontAwesomeIcon icon={faUser} className="avatar-icon" />
+                        <FontAwesomeIcon
+                          icon={faUser}
+                          className="avatar-icon"
+                        />
                       </Dropdown.Toggle>
                       <Dropdown.Menu>
                         <Dropdown.Item onClick={dashboard}>Akun</Dropdown.Item>
