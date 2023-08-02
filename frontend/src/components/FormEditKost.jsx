@@ -15,6 +15,7 @@ const FormEditKost = () => {
   const [desa, setDesa] = useState("");
   const [alamat, setAlamat] = useState("");
   const [jk, setJk] = useState("");
+  const [tersisa, setTersisa] = useState("");
   const [nama_f, setNama_f] = useState([]);
   const [f_umum, setF_umum] = useState([]);
   const [f_keamanan, setF_keamanan] = useState([]);
@@ -55,10 +56,13 @@ const FormEditKost = () => {
         setDesa(response.data.desa);
         setAlamat(response.data.alamat);
         setJk(response.data.jk);
+        setTersisa(response.data.tersisa);
         setNama_f(response.data.fasilitas.map((item) => item.nama_f));
         setPeraturan(response.data.peraturans.map((item) => item.peraturan));
         setF_umum(response.data.fasilitas_umums.map((item) => item.f_umum));
-        setF_keamanan(response.data.fasilitas_keamanans.map((item) => item.f_keamanan));
+        setF_keamanan(
+          response.data.fasilitas_keamanans.map((item) => item.f_keamanan)
+        );
         setCatatan_tambahan(response.data.catatan_tambahan);
         setUrl1(response.data.url1);
         setUrl2(response.data.url2);
@@ -83,6 +87,7 @@ const FormEditKost = () => {
     formData.append("desa", desa);
     formData.append("alamat", alamat);
     formData.append("jk", jk);
+    formData.append("tersisa", tersisa);
     formData.append("nama_f", nama_f);
     formData.append("f_keamanan", f_keamanan);
     formData.append("f_umum", f_umum);
@@ -94,7 +99,7 @@ const FormEditKost = () => {
     formData.append("url4", url4);
     formData.append("kordinat", kordinat);
     try {
-      await axios.patch(`http://localhost:5000/rumah-kost/${id}`, formData,{
+      await axios.patch(`http://localhost:5000/rumah-kost/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -259,6 +264,33 @@ const FormEditKost = () => {
                   <option>Campur</option>
                 </Form.Select>
               </div>
+
+              {/* Sisa Kamar */}
+              <div className="field mb-4">
+                <label className="label">Sisa Kamar</label>
+                <Form.Select
+                  onChange={(e) => setTersisa(e.target.value)}
+                  value={tersisa}
+                >
+                  <option hidden>Jumlah kamar yang tersisa</option>
+                  <option>Sisa 1 kamar</option>
+                  <option>Sisa 2 kamar</option>
+                  <option>Sisa 3 kamar</option>
+                  <option>Sisa 4 kamar</option>
+                  <option>Sisa 5 kamar</option>
+                  <option>Sisa 6 kamar</option>
+                  <option>Sisa 7 kamar</option>
+                  <option>Sisa 8 kamar</option>
+                  <option>Sisa 9 kamar</option>
+                  <option>Sisa 10 kamar</option>
+                  <option>Sisa 11 kamar</option>
+                  <option>Sisa 12 kamar</option>
+                  <option>Sisa 13 kamar</option>
+                  <option>Sisa 14 kamar</option>
+                  <option>Sisa 15 kamar</option>
+                </Form.Select>
+              </div>
+
               <div className="field mb-4">
                 <label className="label">Fasilitas Kamar</label>
                 <div className="control ml-5 checkbox-container">

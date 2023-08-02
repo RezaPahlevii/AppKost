@@ -62,8 +62,8 @@ const HomePage = () => {
           display: "block",
           background: "transparent",
           fontSize: "24px",
-          width: "40px", // Customize the width of the arrow container
-          height: "40px", // Customize the height of the arrow container
+          width: "40px", 
+          height: "40px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -85,8 +85,8 @@ const HomePage = () => {
           display: "block",
           background: "transparent",
           fontSize: "24px",
-          width: "40px", // Customize the width of the arrow container
-          height: "40px", // Customize the height of the arrow container
+          width: "40px",
+          height: "40px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -164,14 +164,15 @@ const HomePage = () => {
                       rel="noopener noreferrer"
                     >
                       <Card>
+                      <div className="card-img-container">
                         <CardImg variant="top" src={kost.fotos[0].url1} />
                         <Card.Body>
                           <Card.Title>{kost.nama}</Card.Title>
                           <Card.Text className="my-1">{kost.jk}</Card.Text>
-                          <Card.Text className="my-1">
+                          {/* <Card.Text className="my-1">
                             {kost.desa} <br />
                             {kost.alamat}
-                          </Card.Text>
+                          </Card.Text> */}
                           <Card.Text>
                             {kost.fasilitas.slice(0, 5).map((item, index) => (
                               <span
@@ -188,6 +189,7 @@ const HomePage = () => {
                            Rp <strong>{formatCurrency(kost.harga)}</strong> /bulan
                           </Card.Text>
                         </Card.Body>
+                        </div>
                       </Card>
                     </Link>
                   </Col>

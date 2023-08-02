@@ -15,6 +15,7 @@ const FormAddKost = () => {
   const [desa, setDesa] = useState("");
   const [alamat, setAlamat] = useState("");
   const [jk, setJk] = useState("");
+  const [tersisa, setTersisa] = useState("");
   const [spesifikasi, setSpesifikasi] = useState("");
   const [nama_f, setNama_f] = useState("");
   const [f_keamanan, setF_keamanan] = useState("");
@@ -45,6 +46,7 @@ const FormAddKost = () => {
     formData.append("desa", desa);
     formData.append("alamat", alamat);
     formData.append("jk", jk);
+    formData.append("tersisa", tersisa);
     formData.append("spesifikasi", JSON.stringify(spesifikasi));
     formData.append("nama_f", nama_f);
     formData.append("f_keamanan", f_keamanan);
@@ -236,6 +238,32 @@ const FormAddKost = () => {
                     <option>Putra</option>
                     <option>Putri</option>
                     <option>Campur</option>
+                  </Form.Select>
+                </div>
+
+                 {/* Sisa Kamar */}
+                 <div className="field mb-4">
+                  <label className="label">Sisa Kamar</label>
+                  <Form.Select
+                    onChange={(e) => setTersisa(e.target.value)}
+                    value={tersisa}
+                  >
+                    <option hidden>Jumlah kamar yang tersisa</option>
+                    <option>Sisa 1 kamar</option>
+                    <option>Sisa 2 kamar</option>
+                    <option>Sisa 3 kamar</option>
+                    <option>Sisa 4 kamar</option>
+                    <option>Sisa 5 kamar</option>
+                    <option>Sisa 6 kamar</option>
+                    <option>Sisa 7 kamar</option>
+                    <option>Sisa 8 kamar</option>
+                    <option>Sisa 9 kamar</option>
+                    <option>Sisa 10 kamar</option>
+                    <option>Sisa 11 kamar</option>
+                    <option>Sisa 12 kamar</option>
+                    <option>Sisa 13 kamar</option>
+                    <option>Sisa 14 kamar</option>
+                    <option>Sisa 15 kamar</option>
                   </Form.Select>
                 </div>
 

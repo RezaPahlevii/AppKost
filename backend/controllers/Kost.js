@@ -28,6 +28,7 @@ export const getKost = async (req, res) => {
           "desa",
           "alamat",
           "jk",
+          "tersisa",
           "catatan_tambahan",
           "kordinat",
         ],
@@ -53,6 +54,10 @@ export const getKost = async (req, res) => {
             attributes: ["f_keamanan"],
           },
           {
+            model: Spesifikasi,
+            attributes: ["spesifikasi"],
+          },
+          {
             model: Foto,
             attributes: ["url1", "url2", "url3", "url4"],
           },
@@ -68,6 +73,7 @@ export const getKost = async (req, res) => {
           "desa",
           "alamat",
           "jk",
+          "tersisa",
           "catatan_tambahan",
           "kordinat",
         ],
@@ -94,6 +100,10 @@ export const getKost = async (req, res) => {
           {
             model: FasilitasKeamanan,
             attributes: ["f_keamanan"],
+          },
+          {
+            model: Spesifikasi,
+            attributes: ["spesifikasi"],
           },
           {
             model: Foto,
@@ -127,6 +137,7 @@ export const getKostById = async (req, res) => {
           "desa",
           "alamat",
           "jk",
+          "tersisa",
           "catatan_tambahan",
           "kordinat",
         ],
@@ -155,6 +166,10 @@ export const getKostById = async (req, res) => {
             attributes: ["f_keamanan"],
           },
           {
+            model: Spesifikasi,
+            attributes: ["spesifikasi"],
+          },
+          {
             model: Foto,
             attributes: ["url1", "url2", "url3", "url4"],
           },
@@ -170,6 +185,7 @@ export const getKostById = async (req, res) => {
           "desa",
           "alamat",
           "jk",
+          "tersisa",
           "catatan_tambahan",
           "kordinat",
         ],
@@ -198,6 +214,10 @@ export const getKostById = async (req, res) => {
             attributes: ["f_keamanan"],
           },
           {
+            model: Spesifikasi,
+            attributes: ["spesifikasi"],
+          },
+          {
             model: Foto,
             attributes: ["url1", "url2", "url3", "url4"],
           },
@@ -219,6 +239,7 @@ export const createKost = async (req, res) => {
       desa,
       alamat,
       jk,
+      tersisa,
       spesifikasi,
       peraturan,
       nama_f,
@@ -235,6 +256,7 @@ export const createKost = async (req, res) => {
       desa: desa,
       alamat: alamat,
       jk: jk,
+      tersisa: tersisa,
       catatan_tambahan: catatan_tambahan,
       kordinat: kordinat,
       userId: req.userId,
@@ -440,6 +462,7 @@ export const updateKost = async (req, res) => {
       peraturan,
       nama_f,
       f_keamanan,
+      tersisa,
       f_umum,
       catatan_tambahan,
       kordinat,
@@ -458,6 +481,7 @@ export const updateKost = async (req, res) => {
         desa: desa,
         alamat: alamat,
         jk: jk,
+        tersisa: tersisa,
         catatan_tambahan: catatan_tambahan,
         kordinat: kordinat,
         userId: req.userId,
@@ -594,6 +618,34 @@ export const updateKost = async (req, res) => {
         console.log(fasilitas);
       }
     } catch (error) {}
+        //==================================================================
+    // Menyimpan fasilitas umum kost
+    try {
+      await KostFasilitasUmum.destroy({ where: { kostId: kost.id } });
+      const existingFasilitasUmum = [];
+      const fasilitasUmumArray = f_umum.split(","); // Ubah string menjadi array
+      for (let i = 0; i < fasilitasUmumArray.length; i++) {
+        const fasilitasUmumName = fasilitasUmumArray[i];
+
+        let fasilitasUmum = await FasilitasUmum.findOne({
+          where: { f_umum: fasilitasUmumName },
+        });
+
+        if (!fasilitasUmum) {
+          fasilitasUmum = await FasilitasUmum.create({
+            f_umum: fasilitasUmumName,
+          });
+        }
+
+        if (fasilitasUmum) {
+          existingFasilitasUmum.push(fasilitasUmum.id); // Simpan ID fasilitas yang ada atau yang baru dibuat
+          await KostFasilitasUmum.create({
+            kostId: kost.id,
+            fasilitasUmumId: fasilitasUmum.id, // Gunakan ID fasilitas yang ada atau yang baru dibuat
+          });
+        }
+      }
+    } catch (error) {}
     //==================================================================
     // Menyimpan fasilitas keamanan kost
     try {
@@ -621,6 +673,35 @@ export const updateKost = async (req, res) => {
           });
         }
         console.log(fasilitasKeamanan);
+      }
+    } catch (error) {}
+        //==================================================================
+    // Menyimpan spesifikasi kamar
+    try {
+      await KostSpesifikasi.destroy({ where: { kostId: kost.id } });
+      const existingFasilitasspesifikasi = [];
+      const spesifikasiArray = spesifikasi.split(","); // Ubah string menjadi array
+      for (let i = 0; i < spesifikasiArray.length; i++) {
+        const spesifikasiName = spesifikasiArray[i];
+
+        let spesifikasi = await Spesifikasi.findOne({
+          where: { spesifikasi: spesifikasiName },
+        });
+
+        if (!spesifikasi) {
+          spesifikasi = await Spesifikasi.create({
+            spesifikasi: spesifikasiName,
+          });
+        }
+
+        if (spesifikasi) {
+          existingFasilitasspesifikasi.push(spesifikasi.id); // Simpan ID fasilitas yang ada atau yang baru dibuat
+          await KostSpesifikasi.create({
+            kostId: kost.id,
+            spesifikasiId: spesifikasi.id, // Gunakan ID fasilitas yang ada atau yang baru dibuat
+          });
+        }
+        console.log(spesifikasi);
       }
     } catch (error) {}
 
@@ -703,6 +784,7 @@ export const getRekomendasiKost = async (req, res) => {
         "desa",
         "alamat",
         "jk",
+        "tersisa",
         "catatan_tambahan",
         "kordinat",
       ],
@@ -726,6 +808,10 @@ export const getRekomendasiKost = async (req, res) => {
         {
           model: FasilitasKeamanan,
           attributes: ["f_keamanan"],
+        },
+        {
+          model: Spesifikasi,
+          attributes: ["spesifikasi"],
         },
         {
           model: Foto,
@@ -791,6 +877,7 @@ export const getKostView = async (req, res) => {
         "desa",
         "alamat",
         "jk",
+        "tersisa",
         "catatan_tambahan",
         "kordinat",
       ],
@@ -814,6 +901,10 @@ export const getKostView = async (req, res) => {
         {
           model: FasilitasKeamanan,
           attributes: ["f_keamanan"],
+        },
+        {
+          model: Spesifikasi,
+          attributes: ["spesifikasi"],
         },
         {
           model: Foto,
@@ -845,6 +936,7 @@ export const getKostViewById = async (req, res) => {
         "desa",
         "alamat",
         "jk",
+        "tersisa",
         "catatan_tambahan",
         "kordinat",
       ],
@@ -871,6 +963,10 @@ export const getKostViewById = async (req, res) => {
         {
           model: FasilitasKeamanan,
           attributes: ["f_keamanan"],
+        },
+        {
+          model: Spesifikasi,
+          attributes: ["spesifikasi"],
         },
         {
           model: Foto,
