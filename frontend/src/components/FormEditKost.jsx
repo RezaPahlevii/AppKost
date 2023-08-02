@@ -103,7 +103,7 @@ const FormEditKost = () => {
       navigate("/rumah-kost");
     } catch (error) {
       if (error.response) {
-        setMsg("ada error");
+        setMsg(error.response.data.msg);
       }
     }
   };
@@ -264,10 +264,10 @@ const FormEditKost = () => {
                 <div className="control ml-5 checkbox-container">
                   <Form.Check
                     inline
-                    label="Lemari"
-                    value="Lemari"
+                    label="Lemari Pakaian"
+                    value="Lemari Pakaian"
                     className="checkbox-item"
-                    checked={nama_f.includes("Lemari")}
+                    checked={nama_f.includes("Lemari Pakaian")}
                     onChange={handleCheckboxChangeFasilitas}
                   />
                   <Form.Check

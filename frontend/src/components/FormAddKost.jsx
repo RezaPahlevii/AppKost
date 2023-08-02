@@ -468,18 +468,6 @@ const FormAddKost = () => {
                     />
                   </div>
                 </div>
-                <div className="field mb-4">
-                  <Form.Select
-                    className="mb-2 mx-4"
-                    style={{ maxWidth: "450px" }}
-                    onChange={(e) => setJk(e.target.value)}
-                    value={jk}
-                  >
-                    <option hidden>jumlah maksimal orang/kamar</option>
-                    <option>Tipe ini bisa diisi maks. 3 orang/ kamar</option>
-                    <option>Tipe ini bisa diisi maks. 2 orang/ kamar</option>
-                  </Form.Select>
-                </div>
 
                 {/* Catatan Tambahan*/}
                 <div className="field mb-4">
