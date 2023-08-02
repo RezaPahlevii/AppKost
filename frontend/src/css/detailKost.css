@@ -1,0 +1,29 @@
+.foto-container {
+    height: 410px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    
+  }
+  .foto-container img {
+      flex: 1;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      max-width: 100%; 
+  }
+  .foto2-container {
+    height: 200px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    
+  }
+  
+  .foto2-container img {
+      flex: 1;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      max-width: 100%; 
+  }

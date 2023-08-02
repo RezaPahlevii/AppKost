@@ -14,15 +14,32 @@ import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { Icon, divIcon } from "leaflet";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
-import { FaLocationDot } from "react-icons/fa6";
-import { FaBed, FaWifi, FaShower, FaTv, FaUtensils } from "react-icons/fa";
+import { SlLocationPin } from "react-icons/sl";
+import { TbWindow } from "react-icons/tb";
+import { LuClock9 } from "react-icons/lu";
+import { AiOutlineThunderbolt } from "react-icons/ai";
+import { IoBedOutline } from "react-icons/io5";
+import { GiPillow, GiLovers, GiCctvCamera } from "react-icons/gi";
+import { SiAirtable } from "react-icons/si";
+import { LiaPeopleCarrySolid } from "react-icons/lia";
+import {
+  MdOutlineNotInterested,
+  MdOutlineLocalLaundryService,
+} from "react-icons/md";
+import { FaWifi, FaTv, FaUtensils, FaWindowClose } from "react-icons/fa";
+import { IoWaterOutline } from "react-icons/io5";
+import { BsBox } from "react-icons/bs";
+import { RiArchiveDrawerLine } from "react-icons/ri";
+import { TfiLayoutMediaCenterAlt } from "react-icons/tfi";
 import { useDispatch, useSelector } from "react-redux";
 import { reset, getMe } from "../features/authSlice";
-import PageNotFound from "../image/404 home.webp"
+import PageNotFound from "../image/404 home.webp";
+import "../css/detailKost.css";
 
 const DetailKost = () => {
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const [foto1, setFoto1] = useState("");
@@ -51,10 +68,10 @@ const DetailKost = () => {
     });
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getMe());
   }, [dispatch]);
-  
+
   useEffect(() => {
     const getKostById = async () => {
       try {
@@ -113,9 +130,13 @@ const DetailKost = () => {
             style={{ fontSize: "16px", color: "#666", marginBottom: "20px" }}
           >
             <p></p>
-           Halaman yang Anda cari mungkin telah dihapus atau untuk sementara tidak tersedia.
+            Halaman yang Anda cari mungkin telah dihapus atau untuk sementara
+            tidak tersedia.
           </div>
-          <a style={{ color: "#007bff", textDecoration: "none" }} href="/kost-list">
+          <a
+            style={{ color: "#007bff", textDecoration: "none" }}
+            href="/kost-list"
+          >
             Go back
           </a>
         </div>
@@ -138,44 +159,6 @@ const DetailKost = () => {
   } = kost;
 
   const renderIcon = (namaFasilitas) => {
-    switch (namaFasilitas) {
-      case "Kasur":
-        return <FaBed />;
-      case "Wifi":
-        return <FaWifi />;
-      case "Kipas Angin":
-        return <FaWifi />;
-      case "Pagar":
-        return <FaWifi />;
-      case "Parkir Motor":
-        return <FaWifi />;
-      case "Lemari":
-        return <FaWifi />;
-      case "Meja":
-        return <FaWifi />;
-      case "Pengurus Kost":
-        return <FaShower />;
-      case "Jemuran":
-        return <FaShower />;
-      case "Bantal":
-        return <FaShower />;
-      case "Kamar Mandi di Dalam":
-        return <FaShower />;
-      case "Jendela Bertrali":
-        return <FaShower />;
-      case "CCTV":
-        return <FaShower />;
-      case "TV":
-        return <FaTv />;
-      case "Dapur":
-        return <FaUtensils />;
-      case "Khusus Mahasiswa":
-        return <FaUtensils />;
-      case "Jam Malam":
-        return <FaUtensils />;
-      default:
-        return null;
-    }
   };
 
   const loginDulu = () => {
@@ -195,6 +178,9 @@ const DetailKost = () => {
       return "Invalid Number";
     }
     return numberValue.toLocaleString("id-ID");
+  };
+  const bigMaps = () => {
+    navigate("/maps");
   };
   return (
     <div>
@@ -259,11 +245,14 @@ const DetailKost = () => {
               <h3>
                 <strong>{nama}</strong>
               </h3>
-              <p>
-                <Button className="mr-3" variant="outline-success">
-                  Kost {jk}
-                </Button>
-                <FaLocationDot /> {alamat}, Desa {desa}
+              <p
+                onClick={bigMaps}
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                <SlLocationPin className="mr-2" />
+                {alamat}, Desa {desa}
               </p>
               <div className="mt-5">
                 <h3>
@@ -365,12 +354,12 @@ const DetailKost = () => {
                   <strong>Fasilitas Keamanan</strong>
                 </h3>
                 <Row>
-                {fasilitas_keamanans.map((item) => (
+                  {fasilitas_keamanans.map((item) => (
                     <div key={item.f_keamanan} className="fasilitas-item">
                       {renderIcon(item.f_keamanan)}
                       {item.f_keamanan}
                     </div>
-                  ))} 
+                  ))}
                 </Row>
                 <hr />
               </div>
