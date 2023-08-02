@@ -241,7 +241,7 @@ export const createKost = async (req, res) => {
     });
     //================================================================================
     if (req.files === null)
-      return res.status(400).json({ msg: "No File Uploaded" });
+      return res.status(400).json({ msg: "Masukkan minimal 3 foto kost" });
     const fotoFiles = req.files; // Mengambil semua file foto yang diupload
 
     // Mengatur ukuran maksimal dan jenis file yang diizinkan
@@ -468,8 +468,6 @@ export const updateKost = async (req, res) => {
     );
     //================================================================================
     try {
-      if (req.files === null)
-        return res.status(400).json({ msg: "No File Uploaded" });
       const fotoFiles = req.files; // Mengambil semua file foto yang diupload
 
       // Mengatur ukuran maksimal dan jenis file yang diizinkan
