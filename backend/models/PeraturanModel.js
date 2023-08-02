@@ -9,10 +9,6 @@ const Peraturan = db.define(
   {
     peraturan: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      }
     }
   },
   {
