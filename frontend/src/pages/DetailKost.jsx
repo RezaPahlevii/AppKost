@@ -310,6 +310,9 @@ const DetailKost = () => {
                     cursor: "pointer",
                   }}
                 >
+                  <Button className="mr-3" variant="outline-success">
+                  Kost {jk}
+                </Button>
                   <SlLocationPin className="mr-2" />
                   {alamat}, Desa {desa}
                 </p>
