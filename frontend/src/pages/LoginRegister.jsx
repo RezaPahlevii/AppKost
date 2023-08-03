@@ -112,7 +112,7 @@ const LoginRegister = () => {
             <Components.Title>Sign in</Components.Title>
             <Components.Input
               type="email"
-              className="input"
+              className="input mt-3"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
@@ -124,8 +124,8 @@ const LoginRegister = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Components.Anchor href="#">Lupa Password?</Components.Anchor>
-            <Components.Button>
+            {/* <Components.Anchor href="#">Lupa Password?</Components.Anchor> */}
+            <Components.Button className="mt-3">
               {isLoading ? "loading..." : "Masuk"}
             </Components.Button>
           </Components.Form>
