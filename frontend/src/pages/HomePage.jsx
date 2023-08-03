@@ -103,7 +103,7 @@ const HomePage = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: windowWidth >= 768 ? 4 : 2,
+    slidesToShow: windowWidth >= 768 ? 4 : 1,
     slidesToScroll: windowWidth >= 768 ? 1 : 1,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
@@ -174,14 +174,14 @@ const HomePage = () => {
                             {kost.alamat}
                           </Card.Text> */}
                           <Card.Text>
-                            {kost.fasilitas.slice(0, 5).map((item, index) => (
+                            {kost.fasilitas.slice(0, 3).map((item, index) => (
                               <span
                                 key={item.nama_f}
                                 className="mr-1 text-muted"
                                 style={{ fontSize: "13px" }}
                               >
                                 {item.nama_f}
-                                {index !== 4 && ","}
+                                {index !== 2 && ","}
                               </span>
                             ))}
                           </Card.Text>
